@@ -20,12 +20,114 @@ Many point to America for being a great example of what government should look l
 Our founders did it the old fashioned way. They got together in a room and hashed it out until they arrived at a solution and then they wrote it down. They reviewed it, hashed it out some more and changed what they wrote. They repeated that process until that came up with a solution that was worthy of codification.  This is the basic premise that The Freedom Project will follow, with one caveat. Computers, and the internet have given us powerful new tools to communicate and organize. This is merely a modern extension of what was done the first time. It is both a forum with which we can discuss our ideas and a framework to document our will.
 
 
+Ideas, Beliefs, Principles, Rules and Laws
+        We are conscious beings. Our eyes see, our ears hear, but our consciousness is locked away in our brains.  Our understanding of how the brain works advances daily and we know how our visual and auditory cortices process the world.  We see how they store the information we see in our memory centers but we still don’t understand the nature of consciousness. Where “the spark” comes from.  It is this lack that forces me to use a metaphor to represent how our consciousness gets access to the world around us through use of the physical structures in our brains.  I call it “the lens of perception.”  To me the lens of perception is the physical wiring of our brain and how our consciousness is connected to the outside world.  It has to use the visual cortex to gain access to the impulses delivered from our eyes.  It has to use our stored memories to get access to our past experiences and it is the wiring of these experiences, and the rest of the organ that physically comprise this lens.
+        We don’t get to choose what information the environment provides us but we do get to choose what to do with it.  This choice is a critical idea.
+It all begins with ideas. I pose that ideas are the fundamental quantity on which everything else is based.  Ideas build on other ideas.  Choices are made based on understanding of ideas.  Ideas and choices combine to guide behaviors.  So it is here that everything begins.  We must choose what to do with the idea though. Should we accept it, reject it, use it, act upon it or not, etc.
+        Beliefs are ideas at their core, but more importantly they are ideas that the individual has taken into their understanding.  It is only after an ideas is held as part of our understanding that we can build upon it to form other beliefs or to guide our actions.  We as humans use relation to understand the world around us.  Our brains are non-linear, biological, relational databases. We relate one idea to another on a physiological level when the axon of one neuron connects to another neuron.  It’s how the brain physically works.  When we see something new our brains search through our understanding and relate to our existing understanding so it can be incorporated into our now expanded understanding of the world.  A belief is the representation of this process.  Only after something is held as a belief can it be used further.  
+
+
+
+
+
+
+
+
+How it works
+Each of us will CODEify our own Constitution. It will be the law that we choose to live our life by. All laws will be phrased from the perspective of the individual (I, My, Me, You, Others, etc.) so it is easy to understand. 
+
+
+Ex. “I will not kill another human” or “I will not steal”
+
+
+As each of us agrees to live by a 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Many smart, but more importantly learned individuals, have worked on this idea before us. It on the shoulders of these giants that we will stand.  We the People is one of the most important ideas in governance and it is where I suggest we begin.  The Preamble of the Constitution (the US Constitution has been used as a basis of liberty for most democratic constitutions currently in existence) is composed of six separate ideas. Each of these ideas will be a heading under which everything else will be filed.  If an idea doesn’t fall under one of these topics than I pose that it should not be part of government.
+
+
+
+
+
+
+
+
+
+
+
+
+ t is beautiful in its simplicity and thoroughness for answering the question of “why?”  “Why should I participate in this organization?”
+
+
+By taking The Preamble to the Constitution and using it as a framework to organize our thoughts, beliefs, principles, rules and laws it will allow us to decide what government should do. All law should stem from the same why and this is how I pose we organize each of our CODEified understanding of how to lead our lives.
+
+
+
+
+The Framework
+---------------------
+We The People…
+* In order to find a more perfect Union
+* Establish justice
+* Insure domestic tranquility
+* Provide for the common defense
+* Promote the general welfare
+* Secure the Blessings of Liberty to ourselves and our posterity
+… do ordain and establish this Constitution.
+
+
+That is the why, now we must talk with each other to figure out the how.
+
+
+
+
+The discussion
+--------------------
+When the original framers created the above they did so through discussion. When emotions get involved, as they should when deciding the fate of each of our lives, there needs to be a way to organize the discussion. We need a proper round table, and a ma
+
+
+
+
+
+
+
+
+Definitions
+* The syste
+
+
+
+
 Functional Requirements
 * The system, process and results must be completely transparent
 * It must be secure
-* It must be simple so everyone 
-* 
-
+* It must be simple so anyone and everyone can understand 
+* It must stem from common/shared cause
+* It must adequately balance the needs of the individual with the needs of the many
+* Aggregation of The Will of the People will coalesce from The Will of individuals
+* Will shall use neurobiological organization to accurately represent human understanding
+* System will use bottom-up organization instead of top-down delegation
+* Jurisdictions shall be fluid and self-organizing/self-aggregating
 
 
 
@@ -58,37 +160,3 @@ Instead of building from the top down I pose that we build from the bottom up.  
 
 
 Each individual must buy-in on their own. Free will is the basis of all that we choose to share and all that we choose to not to share. We must each willingly join, or not, and we must all willingly accept The Will of the People. Without individual acceptance The Will will not be representative of our shared understanding (at our own level, paramount that each of us understand why we choose what we choose) of compromise.
-
-
-
-
-Our Forefathers
----------------------
-Many smart, but more importantly learned individuals, have worked on this idea before us. It on the shoulders of these giants that we will all stand together.  We the people is one of the most important ideas in governance and it is on this that I have chosen to begin.  By taking the Preamble of the Constitution (the US Constitution has been used as a basis of freedom for most democratic constitutions currently in existence) and using as a framework with which to build I pose that We The People can find a more perfect solution. It is beautiful in its simplicity and thoroughness for answering the question of “why?”  “Why should I participate in this organization?”
-
-
-By taking The Preamble to the Constitution and using it as a framework to organize our thoughts, beliefs, principles, rules and laws it will allow us to decide what government should do. All law should stem from the same why and this is how I pose we organize each of our CODEified understanding of how to lead our lives.
-
-
-
-
-The Framework
----------------------
-We The People…
-* In order to FIND a more perfect Union
-* Establish justice
-* Insure domestic tranquility
-* Provide for the common defense
-* Promote the general welfare
-* Secure the Blessings of Liberty to ourselves and our posterity
-… do ordain and establish this Constitution.
-
-
-That is the why, now we must talk with each other to figure out the how.
-
-
-
-
-The discussion
---------------------
-When the original framers created the above they did so through discussion. When emotions get involved, as they should when deciding the fate of each of our lives, there needs to be a way to organize the discussion. We need a proper round table, and a ma
