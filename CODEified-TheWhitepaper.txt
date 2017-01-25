@@ -1,16 +1,16 @@
 ﻿The Freedom Project - CODEified
 
 
-
-
 Original document can be viewed at:
 https://docs.google.com/document/d/1BK6GJBbY6a2WvVgXhVfNibtTTsE45OVOjYjP8OiI2uo/edit?usp=sharing
 
 
 An Overview
-The Freedom Project is a multi-faceted idea to help remake government for the 21st century.  It, at its core, is based upon transparent, direct democracy.  Open discussion with people governing directly through voting, where majority rules.  The major difference is that it seeks to create a decentralized structure.  All governments, up to this point have been created from the top-down.  This is where we will break with tradition.  We will seek to form an organization from the bottom up.  Grassroots.  One based upon upward delegation of authority instead of downward delegation of responsibility.
-With that in mind, everything in this document is simply my opinion of how this thing could work.  My best guess of how to organize our discussion and frame the Constitution.  I am not arrogant enough to assume that I can do this by myself, nor that everything in here is “correct,” “accurate,” or “fact.”  It is simply my understanding of this idea.  An idea I was blessed with having, but it could have been anyone.  This is just where I have chosen for a starting point.  I pose that everything in this document should be up for vote.
-The Framework, CODEified, is the organization structure for the Constitution we are creating, more on this to follow, not the law of the land.  Just the framework to house each of our Will.  This is a critical idea that I will explain further.  The other big piece of things is the discussion forum, ShareDiscussion, for us to have a Constitutional Convention in the 21st (and beyond?) century.  The third piece of things will be a digital representation of us.  The user database is a persistent social-media-styled information source that will house our public records (think passport, violations, legal documents and tax records).  Together all of these things will work together to make up The Freedom Project.
+
+
+The Freedom Project is a multi-faceted idea to help remake government for the 21st century.  It is, at its core, based upon transparent, direct democracy.  Open discussion with people governing directly through voting, where majority rules.  The major difference is that it seeks to create a decentralized structure.  All governments, up to this point have been created from the top-down.  This is where we will break with tradition.  We will seek to form an organization from the bottom up.  Grassroots.  One based upon upward delegation of authority instead of downward delegation of responsibility.  Technology will help us make this happen.
+With that in mind, everything in this document is simply my opinion of how this thing could work.  My best guess of how to organize our discussion and frame the Constitution.  I am not arrogant enough to assume that I can do this by myself, nor that everything in here is “correct” or “fact.”  It is simply my understanding of this idea.  An idea I was blessed with having, but it could have been gifted to anyone.  This is just where I have chosen to start.  I pose that everything in this document, and the project should be open source and up for vote.
+The Framework, CODEified, is the organization structure for the Constitution we are creating, not the law of the land.  Just the framework to house each of our documents as well as the jointly CODEified Constitution.  This is a critical idea that I will explain further.  The other big piece of things is the discussion forum, ShareDiscussion, for us to have a Constitutional Convention for the 21st (and beyond?) century.  The third piece of things will be a digital representation of us.  The user database is a persistent social-media-styled information source that will house our public records (think passport, violations, legal documents and tax records).  Together all of these things will work together to make up The Freedom Project.
 
 
 Fundamental Requirements
@@ -18,7 +18,7 @@ Fundamental Requirements
 * Secure
 * Accountable
 * Representative
-* Works for All (Use Cases) People
+* Works for All Use Cases (People and Places)
 * Simple to Understand and Easy to Use
 * Bottom-up Organization
 * Balances Needs of the Individual With Needs of the Many
@@ -33,40 +33,46 @@ It all begins with an idea.
 
 
 The Preamble to the Constitution is a marvel even today and is as relevant as ever.  Beautiful in its simplicity and thoroughness.  It encompasses government’s purpose. Nothing more and nothing less.  This is the end goal of The Freedom Project.  Nothing more and nothing less.  Thorough enough to cover all the necessities of a complex world and simple enough to fully understand so our interest in participation persists.  A solid foundation upon which we can build, yet flexible to recognise that mistakes are made and opinions can change.  After all we are human; all of us…  We the People are just a group of humans standing in the shadow of something greater than ourselves. 
-Frustration is all around us.  Government at the moment is both the problem and the purported solution.  What I say is that we have not figured out how to make a “perfect” government, no less have we come to agreement on what government should even be doing.  If you are reading this may, I assume that you agree?  I am not arrogant enough to think that I have all of the answers.  I do believe that, just like the framers of the original constitution, if we work together we can figure out a solution.  The Freedom Project is my idea for how we can work together to find a more perfect union.
-The only thing in The Preamble that was changed from the US Preamble was removal of “United States of America” and the changing of one word, “form” to “find.”  Many point to America for being a great example of what government should look like but if it is soo perfect then why is there so much frustration.  So much divisiveness on both sides of the isle.  We need to figure this out and The Freedom Project’s aim is to create a map of sorts.  A way to organize our ideas, beliefs, principles, rules and laws so that we may find a more perfect solution.  Only after we get this roadmap, through a new Constitutional Convention, will we be able to move forward.  If we are to hold our leaders accountable then we will need a measuring stick with which they guide the actions taken on our behalf.  I pose that to make this plan it will take inclusive discussion.  A major piece of this project is the roundtable at which we will sit to have this Constitutional Convention.
+Frustration is all around us.  Government at the moment is both the problem and the purported solution.  What I say is that we have not figured out how to make a “perfect” government, no less have we come to agreement on what government should even be doing.  If you are reading this may, I assume that you agree?  I do not have all of the answers.  I do believe that, just like the framers of the original constitution, if we work together we can figure out a solution.  The Freedom Project is my idea for how we can work together to find a more perfect union.
+The only thing in The Preamble that was changed from the US Preamble was removal of “United States of America” and the changing of one word, “form” to “find.”  Many point to America for being a great example of what government should look like but if it is soo perfect then why is there so much frustration.  So much divisiveness on both sides of the isle.  We need to figure this out and The Freedom Project’s aim is to create a map of sorts.  A way to organize our ideas, beliefs, principles, rules and laws so that we may find a more perfect solution.  Only after we get this roadmap, through a new Constitutional Convention, will we be able to move forward with formalizing it as our shared law.  Again, democracy rules.  If we are to hold our leaders accountable then we will need a measuring stick with which they guide the actions taken on our behalf.  I pose that to make this plan it will take inclusive discussion.  A major piece of this project is the roundtable at which we will sit to have this Constitutional Convention.
 Our founders did it the old fashioned way.  They got together in a room and hashed it out until they arrived at a solution and then they wrote it down.  They reviewed it, hashed it out some more and changed what they wrote.  They repeated that process until that came up with a solution that was worthy of codification.  This is the basic premise that The Freedom Project will follow, with one caveat.  Computers, and the internet have given us powerful new tools to communicate and organize.  This is merely a modern extension of what was done the first time. It is both a forum with which we can discuss our ideas and a framework to document our will. 
 The system will be 100% transparent in its creation so nothing unwanted can usurp our will and CODEified by each of us so that we may hold ourselves, each other, and our shared institutions accountable to The Will of We the People.
+A Government of One, Then Work Up From There
 
 
-Government of One, Then Work Up From There
-What I have found in talking with people is that most just want to be left alone.  To live in their own way, how they have chosen, without anyone telling them otherwise.  That is freedom if you ask me; choice.  Within the context of society we call it Liberty because no one should impinge on my right to choose, but in the same breath I should not be able to impinge on theirs.
-What does the perfect government look like. As a starting point I began with a government of one.  Me on an island, by myself.  It was this concept that made everything click.  Bottom-up authorization instead of what we have today in top-down delegation.
-On the island, government would represent me. It would be whatever I willed it to be.  My understanding of the world, my belief system and principles would be used to make up the rules and laws.  This is the basis for The Freedom Project.  Government on the island would be a direct representation of MY will. If I were to digitize my will how would I go about doing that?  This is where the abstraction of idea->law modeling came in.  I created it to represent my understanding of the world and thus how the government would execute my will.
-What happens if someone else washed up though. Keeping with this example, there would be two governments of one.  I guess we could live on opposite side of the island to eliminate conflict but what if conflict arose?  How would differences be resolved?  If i was physically bigger I could impose my will on them, if they were larger they could impose their will on me or we could agree to some common ground.  You may replace bigger with smarter or better armed (build a better mouse trap to ensnare or kill the other).  All are a forcing of one’s will on another and fly in the face of Liberty, and thus The Freedom Project.  No one that is born free wants to have someone tell them what to do or think.
-In the first two examples you have the animalistic way of doing things, dominance methodology.  If the goal is civilization, a civilized society, than the third option seems best. Now we add a third person or the 6 billionth....  The complexity of potential outcomes to each action or idea grows exponentially with each new arrival.  The big thing to take from all of this is that what I want should matter. What you want should matter.  Most importantly though what We Want needs to matter and there needs to be a way to decide how that is built from what each of us wants.  There needs to be a way to both discuss and manages differences of understanding and opinion.  Democracy as a fundamental concept will rule but in this example, instead of creating a “government” and then delegating authority down to lower jurisdictions it all starts with governments of one. Individually approved, CODEified, constitutions that delegate authority and responsibility upward through the organization.  This is how I propose We the People is formed. Not with a single document that We have no direct access top but instead through each of us creating the law by which we will CHOOSE to live our life.  I am most likely to follow the law if it is my own after all…
+What I have found in talking with people is that most just want to be left alone to live their lives in peace.  To live in their own way, how they have chosen, without anyone telling them otherwise.  That is freedom if you ask me; freedom to choose what to think and how to live.  Within the context of society we call it Liberty because no one should impinge on my right to choose, but in the same breath I should not be allowed to impinge on theirs all the same.  If ya aint hurting anyone, you should be able to do what you damn well please.
+What does the perfect government look like.  As a starting point I began with a government of one.  Me on an island, by myself.  It was this concept that made everything click.  Bottom-up authorization instead of what we have today in top-down delegation.
+On the island, government would represent me.  It would be whatever I willed it to be.  My understanding of the world, my belief system and principles, would be used to make the rules and laws.  This is the basis for CODEified.  Government on the island would be a direct representation of MY will.  If I were to digitize my will how would I go about doing that?  This is where the abstraction of idea->law modeling came in.  I created it to digitally represent my understanding of the world and thus how the government should execute my will.
+What happens if someone else washed up though?  Keeping with this example, there would be two governments of one.  I guess we could live on opposite side of the island to eliminate conflict but what if conflict arose?  How would differences be resolved?  If I was physically bigger I could impose my will on them, if they were larger they could impose their will on me or we could agree to some common ground.  You may replace bigger with smarter or better armed (build a better mouse trap to ensnare or kill the other).  All are a forcing of one’s will on another and fly in the face of Liberty, and thus The Freedom Project.  No one that is born free wants to have someone tell them what to do or think.  Making sure they cannot do the same, should they choose to not be magnanimous, is another discussion but is covered under “provide for the common defense.”  Our forefathers understood that and so should we.
+In the first two examples you have the animalistic way of doing things, dominance methodology.  If the goal is a civilized society, then the third option seems best. Now we add a third person or the 6 billionth....  The complexity of potential outcomes to each action or idea grows exponentially with each new arrival.  The big thing to take from all of this is that what I want should matter. What you want should matter.  Most importantly though what we want matters and there needs to be a way to decide how that is built from what each of us wants.  There needs to be a way to both discuss and manages differences of understanding and opinion.  Democracy as a fundamental concept will rule but in this example, instead of creating a “government” and then delegating authority down to lower jurisdictions it all starts with governments of one.  Individually approved, CODEified, constitutions that delegate authority and responsibility upward through the organization.  This is how I propose We the People is formed.  Not with a single document that We have no direct access top but instead through each of us creating the law by which we will CHOOSE to live our life.  I am most likely to follow the law if it is my own after all…
 
 
 Idea -> Law Modeling
-        We are conscious beings. Our eyes see, our ears hear, but our consciousness is locked away in our brains.  Our understanding of the brain advances daily and we now know how our visual and auditory cortices process the world.  We understand how we connect information in our memory centers but we still don’t understand the nature of consciousness. Where “the spark” comes from.  It is this lack that forces me to use a metaphor to represent how our consciousness gets access to the world around us.  How “we” use and access the physical structures in our brains and take that into our consciousness.  I call it the “lens of perception.”  To me the lens of perception is the physical wiring of our brain and how our consciousness is connected to the outside world.  There is no direct connect. It has to use the visual cortex to gain access to the impulses delivered from our eyes.  It has to use our stored memories to get access to our past experiences and it is the wiring of these experiences, and the rest of the organ that physically comprise this metaphorical lens.
-        While we don’t get to choose what inputs the environment provides us, we do get to choose what to do with it.  This choice is a critical concept. The choices that we make with each idea morph them, wrap them within the system, to become beliefs, principles, rules and laws.
 
 
-Ideas
-It all begins with an idea. I pose that ideas are the fundamental quantity on which everything else in the system is based.  Ideas are topics or concepts to be discussed for incorporation into the document.  “I will not kill another human” is an idea.  While it’s one that most people will agree upon there should still be a discussion in keeping with democratic principles.  Just because something is an idea does not mean that it used for anything. In order for an idea to be used further we must process that idea, through understanding or discussion.
-Ideas can build on other ideas.  Choices are made based on understanding of ideas.   We must choose what to do with each idea though. Should we accept it, reject it, use it, act upon it or not, etc. Again choice being critical to the process.
+        We are conscious beings. Our eyes see, our ears hear, but our consciousness is a black box, locked away in our brains.  Our understanding of the brain advances daily and we now know how our visual and auditory cortices process the world.  We understand how we connect information in our memory centers but we still don’t understand the nature of consciousness.  What is inside the black box, nor from where “the spark” originates physiologically.  It is this lack that forces me to use a metaphor to represent how I think my consciousness gets access to the world around me.  How “I” use and access the physical structures in my brain and take that into my consciousness.  I call it my “lens of perception.”  To me the lens of perception is the physical wiring of our brain and how our consciousness is connected to the outside world.  There is no direct connect per say.  It has to use the visual cortex to gain access to the impulses delivered from our eyes.  It has to use our stored memories to get access to our past experiences and it is the physical wiring of these experiences, and the physical structure of the rest of the organ that physically manifests this metaphorical lens.
+        While we don’t get to choose what inputs the environment provides us, we do get to choose what to do with it.  This choice is a critical concept.  The choices that we make with each idea that matters.  Thus within the context of CODEified we will choose what to do with ideas. How the system will wrap their representations to become beliefs, principles, rules and laws.  For purposes of CODEified the following definitions will need to be specified: Idea, Belief, Understand, Principle, Rule, Law and Will
 
 
-Beliefs
-        Beliefs are ideas at their core, but more importantly they are ideas that the individual has taken into their understanding.  It is only after an ideas is held as part of our understanding that we can build upon it to form other beliefs or to guide our actions.  We as humans use relation to understand the world around us.  Our brains are non-linear, biological, relational databases. We relate one idea to another on a physiological level when the axon of one neuron connects to another neuron.  It’s how the brain physically works. 
+Belief System
+I am not completely comfortable with this term nor definition, but it needs to be defined to allow for other definitions below.  It is similar to the lens of perception, or more accurately it is a part of it.  It is the representation of the sum total of ideas and information that we have taken in and wired up, so to speak.  In the physical world it is how our consciousness views and comprehends the world around us.  It was formed by how ideas, memories, etc. were physically connected to each other within the mind.  Within CODEified it represents the ideas we have taken in as beliefs along with their programmatic, relative associations with each other.  
 
 
-1. Being hurt is unpleasant and pain is a negative reinforcement to protect ourselves
-2. When my skin gets burned it hurts
-3. Hot things will burn me
-4. When things glow red they are hot
-5. The stove glows red
-6. If I touch the stove it will be a negatively reinforced action
+Idea
+It all begins with an idea. I pose that ideas are the fundamental quantity on which everything else in the system is based.  Ideas are topics or concepts that may be incorporated into the document.  “I will not kill another human” is an idea.  Just because something is an idea does not mean that it is understood, nor useful. In order for an idea to be used further we must process that idea, through understanding or discussion.  We must choose what to do with each idea though. Should we hold it, accept it, reject it, use it, act upon it or not, etc. Again choice being critical to the process.
+
+
+Belief
+        Beliefs are ideas at their core, but more importantly they are ideas that the individual has taken into their understanding.  It is only after an ideas is held as part of our understanding that we can build upon them or use them to help guide our actions.  We as humans use relation to understand the world around us.  Our brains are non-linear, biological, relational databases.  We relate one idea to another on a physiological level when the axon of one neuron connects to another neuron.  It’s how the brain physically works. 
+
+
+1. Pain is a physiological negative reinforcement to protect ourselves
+2. Being hurt is painful
+3. When my skin gets burned it hurts
+4. Hot things will burn me
+5. When things glow red they are hot
+6. The stove glows red
+7. If I touch the stove it will be a negatively reinforced action
 
 
         While a jouvenile example, it is one to which we can all relate. Relation is critical because of how our brain physically works and also the frame of reference from which we all understand the world.  When we see something new our brains search through our understanding and relates it to our existing understanding.  Understanding being a key step in the process.  Once something is understood when then get to choose what to do with that understanding.  Do we hold it so it can be incorporated into our overall understanding of the world or do we discard it as non-essential.  Notice that I am avoiding the word truth and true here because holding something as false is the same as being not true.  In programming terms it more similar to being defined or null.  Null, non-existent is not the same as false. If we take something as pertinent to our understanding we incorporate it into our now expanded understanding of the world.  The memory center of the brain wires the idea to the rest of our understanding on a physical level and we can then use this newly held belief for relating future ideas around us.
@@ -75,8 +81,19 @@ A belief, for purposes of this project, is the representation of this process.  
 
 
 
+Understand
+Just what is sounds like.  An idea that we “get.”  Within the context of CODEified, we must believe something in order to have understanding, but we do not need to understand an idea to believe it; to be able to use it to build our broader understanding or guide our actions.  Used in this context to “understand” something will be a programmatic way of representing “getting it” and “our understanding” refers to our metaphorical lens of perception.
 
 
+
+
+
+
+
+
+
+
+==========  Cut and Paste Working Area ============
 
 
 How it works
@@ -93,8 +110,7 @@ As each of us agrees to live by a
 
 
 
-
-
+Ideas can build on other ideas.  Choices are made based on understanding of ideas.   
 
 
 
@@ -164,7 +180,6 @@ When the original framers created the above they did so through discussion. When
 
 
 
-==========  Cut and Paste Working Area ============
 The goal is a better format of democracy, if that is what we choose to call it.
 One that works just as well “when you live under my roof, you live by my rules” as it does for solving global issues.  I beleive that if we have a more distributed system, with less power at the highest levels it will make it more difficult for corruption to take root.  One person will be one vote and each idea may be voted upon separately.
 
