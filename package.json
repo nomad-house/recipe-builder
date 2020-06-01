@@ -1,0 +1,80 @@
+{
+  "name": "CODEified",
+  "version": "1.0.0",
+  "description": "Blockchain Based Decentralized Democratic Governance Through Transparent and Automated Aggregation of Individually CODEified Constitutions",
+  "author": "Matthew Keil",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "build": "nuxt build",
+    "start-prod": "cross-env NODE_ENV=production node server/index.js",
+    "generate": "nuxt generate",
+    "kill-3000": "lsof -i tcp:3000 | grep LISTEN | awk '{print $2}' | xargs kill -15",
+    "eslint": "eslint --no-error-on-unmatched-pattern --fix --ext .js,.ts,.vue",
+    "lint-ts": "npm run eslint -- {components,layouts,middleware,pages,plugins,server,store,test}/**/*.{.js,.ts,.vue}",
+    "stylelint": "stylelint --fix",
+    "lint-style": "npm run stylelint -- {assets,components,layouts,pages,plugins,static,test}/**/*.{css,scss,vue}",
+    "markdownlint": "markdownlint --fix",
+    "lint-md": "npm run markdownlint -- **/*.md",
+    "prettier": "prettier --write --loglevel warn",
+    "lint-prettier": "npm run prettier -- **/*.{ts,js,json,css,scss,vue,html,md}",
+    "lint": "npm run lint-ts && npm run lint-style && npm run lint-md && npm run lint-prettier",
+    "test": "jest"
+  },
+  "lint-staged": {
+    "*.{jts,js,json,css,scss,vue,html,md}": "npm run lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "@nuxt/typescript-runtime": "^0.4.8",
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.0",
+    "cross-env": "^5.2.0",
+    "express": "^4.16.4",
+    "nuxt": "^2.0.0",
+    "vuetify": "^2.2.30"
+  },
+  "devDependencies": {
+    "@mdi/font": "^5.3.45",
+    "@nuxt/typescript-build": "^0.6.0",
+    "@nuxtjs/eslint-config-typescript": "^1.0.0",
+    "@nuxtjs/eslint-module": "^1.0.0",
+    "@nuxtjs/stylelint-module": "^3.1.0",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "@types/axios": "^0.14.0",
+    "@types/jest": "latest",
+    "@types/node": "latest",
+    "@vue/test-utils": "^1.0.0-beta.27",
+    "babel-core": "^7.0.0-0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "cypress": "^4.7.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-cypress": "^2.11.1",
+    "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-vue": "^7.0.0-alpha.0",
+    "fibers": "^5.0.0",
+    "husky": "^4.0.0",
+    "jest": "^24.1.0",
+    "jest-serializer-vue": "^2.0.2",
+    "lint-staged": "^10.0.0",
+    "markdownlint-cli": "^0.22.0",
+    "nodemon": "^1.18.9",
+    "prettier": "^1.19.1",
+    "sass": "^1.26.7",
+    "stylelint": "latest",
+    "stylelint-config-css-modules": "latest",
+    "stylelint-config-prettier": "latest",
+    "stylelint-config-recess-order": "latest",
+    "stylelint-config-standard": "latest",
+    "stylelint-scss": "latest",
+    "ts-jest": "^25.0.0",
+    "vue-jest": "^4.0.0-0",
+    "vuetify-loader": "^1.4.4"
+  }
+}

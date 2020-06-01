@@ -1,0 +1,9 @@
+{
+  "exclude": ["../../tsconfig.json", "node_modules"],
+  "compilerOptions": {
+    "target": "es5",
+    "noEmit": false,
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node", "cypress", "@nuxt/types"]
+  }
+}
