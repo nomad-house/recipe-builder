@@ -21,8 +21,8 @@ export default (ctx: Context) => {
       },
       themes: {
         light: {
-          secondary: colors.grey.darken1,
-          accent: colors.shades.black,
+          primary: '#CBAA5C',
+          secondary: '#083759',
           error: colors.red.accent3
         },
         dark: {
