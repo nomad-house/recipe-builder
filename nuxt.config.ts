@@ -1,6 +1,7 @@
+import { Configuration } from '@nuxt/types'
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
-module.exports = {
+export default {
   mode: 'universal',
   /*
    ** Headers of the page
@@ -63,7 +64,7 @@ module.exports = {
   build: {
     extend(config, context) {
       if (context.isDev && !process.client) {
-        config.module.rules.push({
+        config!.module!.rules.push({
           enforce: 'pre',
           test: /\.(ts|vue)$/,
           loader: 'eslint-loader',
@@ -93,8 +94,11 @@ module.exports = {
          * path        - a relative path to the current .vue file
          * component   - a parsed representation of the current component
          */
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        match(originalTag, { kebabTag, camelTag, path, component }) {
+        match(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          _: string,
+          { kebabTag, camelTag }: { kebabTag: string; camelTag: string }
+        ) {
           if (kebabTag.startsWith('core-')) {
             return [
               camelTag,
@@ -117,4 +121,4 @@ module.exports = {
       eslint: false
     }
   }
-}
+} as Configuration
