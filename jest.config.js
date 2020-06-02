@@ -26,4 +26,4 @@ module.exports = {
   // setupFilesAfterEnv: ['<rootDir>/test/unit/customMatchers.ts'],
   coverageDirectory: '<rootDir>/test/unit/coverage',
   snapshotSerializers: ['<rootDir>/node_modules/jest-serializer-vue']
-};
+}

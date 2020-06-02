@@ -27,7 +27,7 @@ export default class CoreToolbar extends Vue {
   <v-app-bar app flat>
     <v-app-bar-nav-icon class="hidden-md-and-up" @click="toggleDrawer" />
     <v-container mx-auto py-0>
-      <v-layout>
+      <v-row align="center">
         <v-img
           :src="require('@/assets/demo/img/logo.png')"
           class="mr-5"
@@ -55,7 +55,7 @@ export default class CoreToolbar extends Vue {
           solo-inverted
           style="max-width: 300px;"
         />
-      </v-layout>
+      </v-row>
     </v-container>
   </v-app-bar>
 </template>

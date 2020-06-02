@@ -99,10 +99,10 @@ export default {
           _: string,
           { kebabTag, camelTag }: { kebabTag: string; camelTag: string }
         ) {
-          if (kebabTag.startsWith('core-')) {
+          if (kebabTag.startsWith('base-')) {
             return [
               camelTag,
-              `import ${camelTag} from '@/components/core/Core${camelTag.substring(
+              `import ${camelTag} from '@/components/base/${camelTag.substring(
                 4
               )}.vue'`
             ]
@@ -118,7 +118,7 @@ export default {
   },
   typescript: {
     typeCheck: {
-      eslint: false
+      eslint: true
     }
   }
 } as Configuration

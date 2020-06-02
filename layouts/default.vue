@@ -6,11 +6,11 @@ export default class DefaultLayout extends Vue {}
 
 <template>
   <v-app>
-    <core-toolbar />
-    <core-drawer />
+    <base-toolbar />
+    <base-drawer />
     <v-content>
       <nuxt />
     </v-content>
-    <core-footer />
+    <base-footer />
   </v-app>
 </template>
