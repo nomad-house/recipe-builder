@@ -13,10 +13,6 @@ export default class BlogFeed extends Vue {
     window.scrollTo(0, 0)
   }
 
-  async created() {
-    await this.$vuex.blog.getPosts()
-  }
-
   get articles() {
     return this.$vuex.blog.posts
   }

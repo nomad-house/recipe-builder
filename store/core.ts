@@ -1,4 +1,10 @@
-import { mutationTree, actionTree, getterTree } from 'nuxt-typed-vuex'
+import {
+  mutationTree,
+  actionTree,
+  getterTree,
+  useAccessor
+} from 'nuxt-typed-vuex'
+import * as blogModule from './blog'
 
 export interface Link {
   text: string
@@ -10,11 +16,7 @@ export const namespaced = true
 
 export const state = () => ({
   drawerOpen: false,
-  links: [
-    { text: 'one', href: '', to: '' },
-    { text: 'two', href: '', to: '' },
-    { text: 'three', href: '', to: '' }
-  ] as Link[]
+  links: [] as Link[]
 })
 
 export type CoreState = ReturnType<typeof state>
@@ -22,16 +24,37 @@ export type CoreState = ReturnType<typeof state>
 export const getters = getterTree(state, {
   drawerOpen(state) {
     return state.drawerOpen
-  },
-  links(state) {
-    return state.links
   }
 })
 
 export const mutations = mutationTree(state, {
   toggleDrawer(state, open?: boolean) {
     state.drawerOpen = typeof open === 'boolean' ? open : !state.drawerOpen
+  },
+  setLinks(state, links: Link[]) {
+    state.links = links
   }
 })
 
-export const actions = actionTree({ state, getters, mutations }, {})
+// let blogAccessor: any
+export const actions = actionTree(
+  { state, getters, mutations },
+  {
+    initialize({ commit }) {
+      const blog = useAccessor(
+        this.app.store!,
+        { ...blogModule, namespaced: true },
+        'blog'
+      )
+      blog.getPosts()
+      commit(
+        'setLinks',
+        blog.categories.slice(0, 4).map((category) => ({
+          text: category,
+          href: `/${category}`,
+          to: `/${category}`
+        }))
+      )
+    }
+  }
+)

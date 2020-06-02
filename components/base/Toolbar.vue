@@ -3,6 +3,10 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component({})
 export default class CoreToolbar extends Vue {
+  async created() {
+    await this.$vuex.core.initialize()
+  }
+
   get drawerOpen() {
     return this.$vuex.core.drawerOpen
   }
@@ -29,7 +33,7 @@ export default class CoreToolbar extends Vue {
     <v-container mx-auto py-0>
       <v-row align="center">
         <v-img
-          :src="require('@/assets/demo/img/logo.png')"
+          :src="require('@/assets/logo.png')"
           class="mr-5"
           contain
           height="48"

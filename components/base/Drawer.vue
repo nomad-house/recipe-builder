@@ -36,7 +36,6 @@ export default class CoreDrawer extends Vue {
       <v-list-item
         v-for="(link, i) in links"
         :key="i"
-        :to="link.to"
         :href="link.href"
         @click="onClick($event, link)"
       >

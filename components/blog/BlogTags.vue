@@ -21,7 +21,7 @@ export default class BlogBanner extends Vue {
       tag
       text-color="white"
     >
-      {{ category.text }}
+      {{ category }}
     </v-chip>
   </v-container>
 </template>
