@@ -1,26 +1,26 @@
 <script lang="ts">
-import Vue from 'vue'
-import { mapState, mapMutations } from 'vuex'
-import { State } from '~/store/State'
+import { Component, Vue } from 'vue-property-decorator'
 
-export default Vue.extend({
-  computed: {
-    ...mapState<State>({
-      drawerOpen: (state: State) => state.core.drawerOpen,
-      links: (state: State) => state.core.links
-    })
-  },
-  methods: {
-    ...mapMutations({
-      toggleDrawer: 'core/toggleDrawer'
-    }),
-    onClick(e: MouseEvent, link: any) {
-      e.stopPropagation()
-      if (link.to || !link.href) return
-      this.$vuetify.goTo(link.href)
-    }
+@Component({})
+export default class CoreToolbar extends Vue {
+  get drawerOpen() {
+    return this.$vuex.core.drawerOpen
   }
-})
+
+  get links() {
+    return this.$vuex.core.links
+  }
+
+  toggleDrawer(state?: boolean) {
+    return this.$vuex.core.toggleDrawer(state)
+  }
+
+  onClick(e: MouseEvent, link: any) {
+    e.stopPropagation()
+    if (link.to || !link.href) return
+    this.$vuetify.goTo(link.href)
+  }
+}
 </script>
 
 <template>

@@ -1,6 +1,7 @@
 <script>
-import Vue from 'vue'
-export default Vue.extend()
+import { Component, Vue } from 'vue-property-decorator'
+@Component({})
+export default class DefaultLayout extends Vue {}
 </script>
 
 <template>

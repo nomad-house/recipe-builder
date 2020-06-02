@@ -29,11 +29,16 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['./plugins/vuetify.ts', './plugins/axios-accessor.ts'],
+  plugins: [
+    './plugins/vuetify-accessor.ts',
+    './plugins/axios-accessor.ts',
+    './plugins/store-accessor.ts'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
+    'nuxt-typed-vuex',
     '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module'
@@ -101,7 +106,7 @@ module.exports = {
         }
       })
     ],
-    transpile: ['vuetify/lib'],
+    transpile: ['vuetify/lib', /typed-vuex/],
     typescript: {
       // this is required - if set to true the HMR in dev will time out
       typeCheck: false

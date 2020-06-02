@@ -1,40 +1,39 @@
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue } from 'vue-property-decorator'
 
-export default Vue.extend({
-  data: () => ({
-    items: [
-      {
-        href: '#!',
-        icon: 'mdi-twitter'
-      },
-      {
-        href: '#!',
-        icon: 'mdi-instagram'
-      },
-      {
-        href: '#!',
-        icon: 'mdi-facebook'
-      },
-      {
-        href: '#!',
-        icon: 'mdi-google-plus'
-      },
-      {
-        href: '#!',
-        icon: 'mdi-reddit'
-      },
-      {
-        href: '#!',
-        icon: 'mdi-discord'
-      },
-      {
-        href: '#!',
-        icon: 'mdi-pinterest'
-      }
-    ]
-  })
-})
+@Component({})
+export default class CoreFooter extends Vue {
+  private items = [
+    {
+      href: '#!',
+      icon: 'mdi-twitter'
+    },
+    {
+      href: '#!',
+      icon: 'mdi-instagram'
+    },
+    {
+      href: '#!',
+      icon: 'mdi-facebook'
+    },
+    {
+      href: '#!',
+      icon: 'mdi-google-plus'
+    },
+    {
+      href: '#!',
+      icon: 'mdi-reddit'
+    },
+    {
+      href: '#!',
+      icon: 'mdi-discord'
+    },
+    {
+      href: '#!',
+      icon: 'mdi-pinterest'
+    }
+  ]
+}
 </script>
 
 <template>

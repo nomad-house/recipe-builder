@@ -26,6 +26,6 @@
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "javascript.preferences.importModuleSpecifier": "auto",
-  "vetur.experimental.templateInterpolationService": false,
+  "vetur.experimental.templateInterpolationService": true,
   "cSpell.words": ["cloudform", "nuxt"]
 }

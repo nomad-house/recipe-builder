@@ -35,7 +35,10 @@
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
     "nuxt": "^2.0.0",
-    "vuetify": "^2.2.30"
+    "nuxt-typed-vuex": "^0.1.18",
+    "typed-vuex": "^0.1.18",
+    "vuetify": "^2.2.30",
+    "vuex-class": "^0.3.2"
   },
   "devDependencies": {
     "@mdi/font": "^5.3.45",
@@ -75,6 +78,7 @@
     "stylelint-scss": "latest",
     "ts-jest": "^25.0.0",
     "vue-jest": "^4.0.0-0",
+    "vue-property-decorator": "^8.4.2",
     "vuetify-loader": "^1.4.4"
   }
 }
