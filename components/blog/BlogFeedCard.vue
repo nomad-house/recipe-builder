@@ -1,18 +1,11 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-
-interface FeedCard {
-  hero: string
-  prominent: boolean
-  category: string
-  title: string
-  author: string
-}
+import { Post } from '@/store/blog'
 
 @Component({})
 export default class BlogFeedCard extends Vue {
   @Prop({ required: true }) size!: number
-  @Prop({ default: () => ({}) }) value!: FeedCard
+  @Prop({ default: () => ({}) }) value!: Post
 }
 </script>
 
@@ -25,7 +18,7 @@ export default class BlogFeedCard extends Vue {
       href="#!"
     >
       <v-img
-        :src="require(`@/assets/articles/${value.hero}`)"
+        :src="require(`@/static/media/${value.hero}`)"
         height="100%"
         gradient="rgba(0, 0, 0, .42), rgba(0, 0, 0, .42)"
       >
@@ -39,16 +32,13 @@ export default class BlogFeedCard extends Vue {
               small
               @click.stop=""
             >
-              {{ value.category }}
+              {{ value.category.join(', ') }}
             </v-chip>
-
             <h3 class="title font-weight-bold mb-2">
               {{ value.title }}
             </h3>
-
             <div class="caption">{{ value.author }}<br />Date</div>
           </v-col>
-
           <v-col align-self="end">
             <v-chip
               class="text-uppercase ma-0"

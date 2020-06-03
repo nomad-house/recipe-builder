@@ -16,7 +16,13 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@types/node", "@nuxt/vue-app", "@nuxt/types", "vuetify"]
+    "types": [
+      "@types/node",
+      "@nuxt/vue-app",
+      "@nuxt/types",
+      "vuetify",
+      "webpack-env"
+    ]
   },
   "exclude": ["node_modules", ".nuxt", "dist", "**/*.spec.ts", "test"]
 }

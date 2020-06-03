@@ -36,7 +36,6 @@ export const mutations = mutationTree(state, {
   }
 })
 
-// let blogAccessor: any
 export const actions = actionTree(
   { state, getters, mutations },
   {
@@ -46,7 +45,6 @@ export const actions = actionTree(
         { ...blogModule, namespaced: true },
         'blog'
       )
-      blog.getPosts()
       commit(
         'setLinks',
         blog.categories.slice(0, 4).map((category) => ({

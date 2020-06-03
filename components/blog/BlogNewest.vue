@@ -19,7 +19,7 @@ export default class BlogNewest extends Vue {
     >
       <v-col class="d-flex" cols="12">
         <v-img
-          :src="require(`@/assets/articles/${article.hero}`)"
+          :src="require(`@/static/media/${article.hero}`)"
           class="mr-3"
           height="36"
           max-width="36"

@@ -1,4 +1,6 @@
+import { resolve } from 'path'
 import { Configuration } from '@nuxt/types'
+const FMMode = require('frontmatter-markdown-loader/mode')
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
 export default {
@@ -58,6 +60,10 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  /**
+   *
+   */
+  router: {},
   /*
    ** Build configuration
    */
@@ -71,6 +77,17 @@ export default {
           exclude: /(node_modules)/
         })
       }
+      config!.module!.rules.push({
+        test: /\.md$/,
+        loader: 'frontmatter-markdown-loader',
+        include: resolve(__dirname, 'assets'),
+        options: {
+          mode: [FMMode.VUE_COMPONENT],
+          vue: {
+            root: 'markdown-body'
+          }
+        }
+      })
     },
     loaders: {
       sass: {
