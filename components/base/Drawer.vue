@@ -3,7 +3,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Link } from '@/store/core'
 
 @Component({})
-export default class CoreDrawer extends Vue {
+export default class Drawer extends Vue {
   get drawerOpen() {
     return this.$vuex.core.drawerOpen
   }

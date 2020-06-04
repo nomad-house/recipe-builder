@@ -1,7 +1,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 @Component({})
-export default class BlogBanner extends Vue {
+export default class BlogCategories extends Vue {
   get categories() {
     return this.$vuex.blog.categories
   }
@@ -10,7 +10,7 @@ export default class BlogBanner extends Vue {
 
 <template>
   <v-container class="pa-0">
-    <base-subheading>Tags</base-subheading>
+    <base-subheading>Categories</base-subheading>
     <v-chip
       v-for="(category, i) in categories"
       :key="i"

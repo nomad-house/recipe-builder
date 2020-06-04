@@ -2,7 +2,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 @Component({
   components: {
-    BlogFeedCard: () => import('@/components/blog/BlogFeedCard.vue')
+    BlogFeedCard: () => import('@/components/blog/feed/BlogFeedCard.vue')
   }
 })
 export default class BlogFeed extends Vue {
@@ -30,12 +30,11 @@ export default class BlogFeed extends Vue {
 </script>
 
 <template>
-  <v-container>
+  <div>
     <v-row>
-      <v-col cols="12">
-        <slot />
-      </v-col>
-
+      <slot />
+    </v-row>
+    <v-row>
       <blog-feed-card
         v-for="(article, i) in paginatedArticles"
         :key="article.title"
@@ -43,7 +42,6 @@ export default class BlogFeed extends Vue {
         :value="article"
       />
     </v-row>
-
     <v-row align="center">
       <v-col cols="3">
         <base-button
@@ -73,5 +71,5 @@ export default class BlogFeed extends Vue {
         </base-button>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>

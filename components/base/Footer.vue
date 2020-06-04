@@ -2,7 +2,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({})
-export default class CoreFooter extends Vue {
+export default class Footer extends Vue {
   private items = [
     {
       href: '#!',

@@ -1,7 +1,13 @@
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { ScrollInfo } from '@/components/mixins/Positioning'
 @Component({})
-export default class BlogBanner extends Vue {}
+export default class HeroBanner extends Vue {
+  @Prop() scrollInfo!: ScrollInfo
+  private get heroVisible() {
+    return this.scrollInfo.position < 20
+  }
+}
 </script>
 
 <template>
@@ -9,10 +15,10 @@ export default class BlogBanner extends Vue {}
     <v-img
       :src="require('@/static/media/blurcamera.jpg')"
       class="grey lighten-2"
-      height="400"
+      height="35rem"
       width="100%"
     >
-      <v-row class="fill-height pa-3" align="center">
+      <v-row v-show="heroVisible" class="fill-height pa-3" align="center">
         <v-col cols="12" md="7" offset-md="5">
           <h1 class="display-3 font-weight-light">
             The Art Of Travel
@@ -22,9 +28,9 @@ export default class BlogBanner extends Vue {}
             Finding Beauty, One flight at a time
           </div>
 
-          <base-button color="primary" depressed>
+          <v-btn color="primary" depressed>
             Subscribe
-          </base-button>
+          </v-btn>
         </v-col>
       </v-row>
     </v-img>

@@ -1,7 +1,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 @Component({})
-export default class Button extends Vue {
+export default class Cta extends Vue {
   get styles() {
     return {
       marginTop: `${this.$vuetify.application.top}px`
