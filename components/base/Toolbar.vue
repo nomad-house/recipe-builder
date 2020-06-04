@@ -75,8 +75,8 @@ export default class Toolbar extends Mixins(Positioning) {
   private offsetHeight = `calc(${this.heroHeight} - ${this.height})`
   private fixed = false
 
-  private get color(): 'default' | 'transparent' {
-    return this.scrollInfo.position > 5 ? 'default' : 'transparent'
+  private get color(): 'default' | 'transparent' | string {
+    return this.scrollInfo.position > 5 ? 'white' : 'transparent'
   }
 
   private get drawerOpen() {

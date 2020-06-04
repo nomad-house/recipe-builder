@@ -7,7 +7,6 @@ export default class BlogAbout extends Vue {}
 <template>
   <v-container id="about" tag="section">
     <base-subheading>About Us</base-subheading>
-
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut tortor
       tellus. Donec maximus curs us pulvinar. Proin vehicula eros mauris, sit

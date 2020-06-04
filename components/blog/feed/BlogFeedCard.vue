@@ -11,12 +11,8 @@ export default class BlogFeedCard extends Vue {
 
 <template>
   <v-col cols="12" :md="size === 2 ? 6 : size === 3 ? 4 : undefined">
-    <base-card
-      :height="value.prominent ? 450 : 350"
-      color="grey lighten-1"
-      dark
-      href="#!"
-    >
+    <!-- :height="value.prominent ? 450 : 350" -->
+    <v-card height="400" color="grey lighten-1" dark href="#!">
       <v-img
         :src="require(`@/static/media/${value.hero}`)"
         height="100%"
@@ -52,7 +48,7 @@ export default class BlogFeedCard extends Vue {
           </v-col>
         </v-row>
       </v-img>
-    </base-card>
+    </v-card>
   </v-col>
 </template>
 

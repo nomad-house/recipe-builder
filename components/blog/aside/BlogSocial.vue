@@ -11,17 +11,21 @@ export default class BlogSocial extends Vue {}
 </script>
 
 <template>
-  <v-container id="social" tag="section">
-    <v-row>
-      <v-col cols="12" md="4">
+  <v-row>
+    <v-col cols="12" md="4">
+      <v-container>
         <blog-instagram />
-      </v-col>
-      <v-col cols="12" md="4">
+      </v-container>
+    </v-col>
+    <v-col cols="12" md="4">
+      <v-container>
         <blog-newest />
-      </v-col>
-      <v-col cols="12" md="4">
+      </v-container>
+    </v-col>
+    <v-col cols="12" md="4">
+      <v-container>
         <blog-categories />
-      </v-col>
-    </v-row>
-  </v-container>
+      </v-container>
+    </v-col>
+  </v-row>
 </template>

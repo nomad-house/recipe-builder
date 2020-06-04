@@ -12,15 +12,15 @@ export default class BlogPage extends Vue {}
 
 <template>
   <div class="feed-container">
-    <blog-feed />
-    <blog-aside />
+    <v-container pt-0 pb-0 pl-4 pr-4>
+      <blog-feed />
+      <blog-aside />
+    </v-container>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .feed-container {
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
   background-color: white;
 }
 </style>
