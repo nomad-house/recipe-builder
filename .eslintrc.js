@@ -16,6 +16,7 @@ module.exports = {
   ],
   plugins: ['prettier', 'nuxt', 'vue'],
   rules: {
+    'object-shorthand': 0,
     'nuxt/no-cjs-in-config': 'off',
     'import/no-mutable-exports': 0
   }

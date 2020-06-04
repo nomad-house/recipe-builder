@@ -8,6 +8,8 @@ import { ScrollInfo, Positioning } from '@/components/mixins/Positioning'
 })
 export default class DefaultLayout extends Mixins(Positioning) {
   private scrollInfo: ScrollInfo = { position: 0, direction: 'down' }
+  private height = '72px'
+  private heroHeight = '100vh'
   created() {
     this.$on('scroll', (scrollInfo: ScrollInfo) => {
       this.scrollInfo = scrollInfo
@@ -21,21 +23,28 @@ export default class DefaultLayout extends Mixins(Positioning) {
 </script>
 
 <template>
-  <v-app>
-    <base-toolbar :scroll-info="scrollInfo" />
+  <v-app :style="{ position: 'relative' }">
     <base-drawer />
     <hero-banner class="hero" :scroll-info="scrollInfo" />
-    <base-container class="offset">
+    <base-toolbar
+      :scroll-info="scrollInfo"
+      :height="height"
+      :hero-height="heroHeight"
+    />
+    <base-container>
       <nuxt />
     </base-container>
     <base-footer />
   </v-app>
 </template>
 
-<style lang="scss" scoped>
-.offset {
-  margin-top: 35rem;
+<style lang="scss">
+* {
+  box-sizing: border-box;
 }
+</style>
+
+<style lang="scss" scoped>
 .hero {
   position: fixed;
   width: 100%;

@@ -5,15 +5,16 @@ export default class Container extends Vue {}
 </script>
 
 <template>
-  <div class="container">
+  <div>
     <slot />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.container {
-  position: relative;
+div {
   width: 100%;
   max-width: 100rem;
+  margin-right: auto;
+  margin-left: auto;
 }
 </style>

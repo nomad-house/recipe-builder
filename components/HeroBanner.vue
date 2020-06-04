@@ -11,7 +11,7 @@ export default class HeroBanner extends Vue {
 </script>
 
 <template>
-  <base-card dark>
+  <base-card dark class="hero-container">
     <v-img
       :src="require('@/static/media/blurcamera.jpg')"
       class="grey lighten-2"
@@ -36,3 +36,9 @@ export default class HeroBanner extends Vue {
     </v-img>
   </base-card>
 </template>
+
+<style lang="scss" scoped>
+.hero-container {
+  height: 100vh;
+}
+</style>
