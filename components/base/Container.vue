@@ -5,7 +5,7 @@ export default class Container extends Vue {}
 </script>
 
 <template>
-  <div>
+  <div :bind="$attrs">
     <slot />
   </div>
 </template>

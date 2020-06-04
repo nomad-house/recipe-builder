@@ -25,13 +25,22 @@ export default class DefaultLayout extends Mixins(Positioning) {
 <template>
   <v-app :style="{ position: 'relative' }">
     <base-drawer />
-    <hero-banner class="hero" :scroll-info="scrollInfo" />
+    <div
+      class="hero-container"
+      :style="{
+        backgroundImage: 'url(' + require('@/static/media/blurcamera.jpg') + ')'
+      }"
+    >
+      <hero-banner :scroll-info="scrollInfo" />
+    </div>
     <base-toolbar
       :scroll-info="scrollInfo"
       :height="height"
       :hero-height="heroHeight"
+      :style="{ zIndex: 20 }"
+      class="relative"
     />
-    <base-container>
+    <base-container class="relative" :style="{ zIndex: 10 }">
       <nuxt />
     </base-container>
     <base-footer />
@@ -45,9 +54,18 @@ export default class DefaultLayout extends Mixins(Positioning) {
 </style>
 
 <style lang="scss" scoped>
-.hero {
+.hero-container {
   position: fixed;
+  z-index: 0;
   width: 100%;
-  height: 40rem;
+  height: 100vh;
+  color: white;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+.relative {
+  position: relative;
 }
 </style>

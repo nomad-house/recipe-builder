@@ -11,34 +11,23 @@ export default class HeroBanner extends Vue {
 </script>
 
 <template>
-  <base-card dark class="hero-container">
-    <v-img
-      :src="require('@/static/media/blurcamera.jpg')"
-      class="grey lighten-2"
-      height="35rem"
-      width="100%"
-    >
-      <v-row v-show="heroVisible" class="fill-height pa-3" align="center">
-        <v-col cols="12" md="7" offset-md="5">
-          <h1 class="display-3 font-weight-light">
-            The Art Of Travel
-          </h1>
+  <v-row
+    v-show="heroVisible"
+    class="fill-height pa-3 hero-content"
+    align="center"
+  >
+    <v-col cols="12" md="7" offset-md="5">
+      <h1 class="display-3 font-weight-light">
+        The Art Of Travel
+      </h1>
 
-          <div class="subheading text-uppercase pl-2 mb-4">
-            Finding Beauty, One flight at a time
-          </div>
+      <div class="subheading text-uppercase pl-2 mb-4">
+        Finding Beauty, One flight at a time
+      </div>
 
-          <v-btn color="primary" depressed>
-            Subscribe
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-img>
-  </base-card>
+      <v-btn color="primary" depressed>
+        Subscribe
+      </v-btn>
+    </v-col>
+  </v-row>
 </template>
-
-<style lang="scss" scoped>
-.hero-container {
-  height: 100vh;
-}
-</style>

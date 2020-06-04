@@ -123,7 +123,6 @@ export default class Toolbar extends Mixins(Positioning) {
         :height="height"
         :style="{ marginRight: 'auto', marginLeft: 'auto' }"
         width="100rem"
-        :class="fixed ? 'toolbar-fixed' : 'toolbar'"
       >
         <v-app-bar-nav-icon class="hidden-md-and-up" @click="toggleDrawer" />
         <v-container mx-auto py-0>
@@ -174,11 +173,5 @@ export default class Toolbar extends Mixins(Positioning) {
 .toolbar-container {
   width: 100%;
   padding: 0;
-}
-
-.toolbar {
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
 }
 </style>

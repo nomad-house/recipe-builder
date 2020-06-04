@@ -30,7 +30,7 @@ export default class BlogFeed extends Vue {
 </script>
 
 <template>
-  <div class="feed-container">
+  <div>
     <v-row>
       <slot />
     </v-row>
@@ -73,9 +73,3 @@ export default class BlogFeed extends Vue {
     </v-row>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.feed-container {
-  background-color: white;
-}
-</style>
