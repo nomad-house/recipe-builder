@@ -10,10 +10,15 @@ export default class DefaultLayout extends Mixins(Positioning) {
   private scrollInfo: ScrollInfo = { position: 0, direction: 'down' }
   private height = '72px'
   private heroHeight = '100vh'
+  private resetHeight = 0
   created() {
     this.$on('scroll', (scrollInfo: ScrollInfo) => {
       this.scrollInfo = scrollInfo
     })
+  }
+
+  mouted() {
+    this.resetHeight = (this.$refs.hero as Element).clientHeight
   }
 
   beforeDestroy() {
@@ -26,6 +31,7 @@ export default class DefaultLayout extends Mixins(Positioning) {
   <v-app :style="{ position: 'relative' }">
     <base-drawer />
     <div
+      ref="hero"
       class="hero-container"
       :style="{
         backgroundImage: 'url(' + require('@/static/media/blurcamera.jpg') + ')'
@@ -41,7 +47,7 @@ export default class DefaultLayout extends Mixins(Positioning) {
       class="relative"
     />
     <base-container class="relative" :style="{ zIndex: 10 }">
-      <nuxt />
+      <nuxt :reset-height="resetHeight" />
     </base-container>
     <base-footer />
   </v-app>

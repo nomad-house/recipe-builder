@@ -13,7 +13,7 @@ export default class BlogPage extends Vue {}
 <template>
   <div class="feed-container">
     <v-container pt-0 pb-0 pl-4 pr-4>
-      <blog-feed />
+      <blog-feed :bind="$attrs" />
       <blog-aside />
     </v-container>
   </div>

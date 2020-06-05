@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 @Component({
   components: {
     BlogFeedCard: () => import('@/components/blog/feed/BlogFeedCard.vue')
@@ -9,8 +9,9 @@ export default class BlogFeed extends Vue {
   private layout = [2, 2, 1, 2, 2, 3, 3, 3, 3, 3, 3]
   private page = 1
 
+  @Prop({ default: 0 }) resetHeight!: number
   @Watch('page') onPageChage() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, this.resetHeight) // (this.$refs.feed as Element).getBoundingClientRect().top)
   }
 
   get articles() {
@@ -30,7 +31,7 @@ export default class BlogFeed extends Vue {
 </script>
 
 <template>
-  <div>
+  <div ref="feed">
     <v-row>
       <slot />
     </v-row>

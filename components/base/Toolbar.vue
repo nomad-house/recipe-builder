@@ -1,65 +1,10 @@
 <script lang="ts">
-// import Vue from 'vue'
-// import { Positioning, ScrollInfo } from '../mixins/Positioning'
-// export default Vue.extend({
-//   mixins: [Positioning],
-//   props: {
-//     scrollInfo: {
-//       type: Object as () => ScrollInfo,
-//       required: true
-//     },
-//     height: {
-//       type: Number,
-//       required: false,
-//       default: 72
-//     }
-//   },
-//   computed: {
-//     fixed: function() {
-//       return !this.scrollInfo.position
-//     },
-//     appBarColor: function(): 'default' | 'transparent' {
-//       return this.scrollInfo.position > 5 ? 'default' : 'transparent'
-//     },
-//     drawerOpen: function() {
-//       return this.$vuex.core.drawerOpen
-//     },
-//     links: function() {
-//       return this.$vuex.core.links
-//     }
-//   },
-//   watch: {
-//     scrollInfo() {
-//       if (this.$refs.positioning) {
-//         const { bottom } = (this.$refs
-//           .positioning as Element).getBoundingClientRect()
-//         console.log(bottom - this.height)
-//       }
-//     }
-//   },
-//   async created() {
-//     await this.$vuex.core.initialize()
-//   },
-//   beforeDestroy() {
-//     this.$off('scroll')
-//   },
-//   methods: {
-//     toggleDrawer(state?: boolean) {
-//       return this.$vuex.core.toggleDrawer(state)
-//     },
-//     onClick(e: MouseEvent, link: any) {
-//       e.stopPropagation()
-//       if (link.to || !link.href) return
-//       this.$vuetify.goTo(link.href)
-//     }
-//   }
-// })
-//
 import { Watch, Prop, Component, Mixins } from 'vue-property-decorator'
 import { Positioning, ScrollInfo } from '../mixins/Positioning'
+import { Resize } from '../mixins/Resize'
 
 @Component({})
-export default class Toolbar extends Mixins(Positioning) {
+export default class Toolbar extends Mixins(Positioning, Resize) {
   @Prop({ default: '72px' }) height!: string
   @Prop({ default: '100vh' }) heroHeight!: string
   @Prop() scrollInfo!: ScrollInfo
@@ -72,6 +17,7 @@ export default class Toolbar extends Mixins(Positioning) {
     }
   }
 
+  private maxWidth: string = '100%'
   private offsetHeight = `calc(${this.heroHeight} - ${this.height})`
   private fixed = false
 
@@ -97,15 +43,34 @@ export default class Toolbar extends Mixins(Positioning) {
     this.$vuetify.goTo(link.href)
   }
 
+  private onResize() {
+    const width = this.$isServer ? 0 : window.innerWidth
+    this.maxWidth =
+      width > 1904
+        ? '1785px'
+        : width > 1264
+        ? '1185px'
+        : width > 960
+        ? '900px'
+        : '100%'
+    this.$forceUpdate()
+  }
+
   async created() {
     await this.$vuex.core.initialize()
+    this.$on('resize', this.onResize)
+  }
+
+  beforeMount() {
+    this.onResize()
   }
 
   beforeDestroy() {
-    this.$off('scroll')
+    this.$off('resize')
   }
 }
 </script>
+
 <template>
   <base-container>
     <div
@@ -114,15 +79,17 @@ export default class Toolbar extends Mixins(Positioning) {
       class="positioning"
     />
     <div class="toolbar-container" :style="{ minHeight: height }">
-      <!-- :class="fixed ? 'container-fixed' : 'container'" -->
       <v-app-bar
         :fixed="fixed"
         :flat="!fixed"
-        :hide-on-scroll="fixed"
         :color="color"
         :height="height"
-        :style="{ marginRight: 'auto', marginLeft: 'auto' }"
-        width="100rem"
+        :width="maxWidth"
+        :style="{
+          marginRight: 'auto',
+          marginLeft: 'auto',
+          transition: 'width .2s'
+        }"
       >
         <v-app-bar-nav-icon class="hidden-md-and-up" @click="toggleDrawer" />
         <v-container mx-auto py-0>
