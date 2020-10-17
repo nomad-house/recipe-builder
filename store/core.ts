@@ -16,7 +16,8 @@ export const namespaced = true
 
 export const state = () => ({
   drawerOpen: false,
-  links: [] as Link[]
+  links: [] as Link[],
+  paginationScrollY: 0
 })
 
 export type CoreState = ReturnType<typeof state>
@@ -33,6 +34,9 @@ export const mutations = mutationTree(state, {
   },
   setLinks(state, links: Link[]) {
     state.links = links
+  },
+  setPaginationY(state, scrollY: number) {
+    state.paginationScrollY = scrollY
   }
 })
 

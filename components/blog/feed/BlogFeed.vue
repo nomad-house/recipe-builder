@@ -11,7 +11,7 @@ export default class BlogFeed extends Vue {
 
   @Prop({ default: 0 }) resetHeight!: number
   @Watch('page') onPageChage() {
-    window.scrollTo(0, this.resetHeight) // (this.$refs.feed as Element).getBoundingClientRect().top)
+    window.scrollTo(0, this.$vuex.core.paginationScrollY)
   }
 
   get articles() {
@@ -31,7 +31,7 @@ export default class BlogFeed extends Vue {
 </script>
 
 <template>
-  <div ref="feed">
+  <div>
     <v-row>
       <slot />
     </v-row>

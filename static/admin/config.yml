@@ -1,14 +1,14 @@
 backend:
-  name: git-gateway
+  name: github
   repo: matthewkeil/CODEified
   branch: master
   site_domain: codeified.org
-  base_url: https://github.com
+  base_url: https://nomad-devops.nomad.house/v1
   auth_endpoint: auth
 local_backend: true
 publish_mode: editorial_workflow
-media_folder: '@/static/media
-public_folder: '@/static/media
+media_folder: '@/static/media'
+public_folder: '@/static/media'
 site_url: https://www.codeified.org
 collections:
   - name: categories

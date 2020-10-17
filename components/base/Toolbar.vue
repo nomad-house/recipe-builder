@@ -43,7 +43,7 @@ export default class Toolbar extends Mixins(Positioning, Resize) {
     this.$vuetify.goTo(link.href)
   }
 
-  private onResize() {
+  public onResize() {
     const width = this.$isServer ? 0 : window.innerWidth
     this.maxWidth =
       width > 1904
@@ -53,20 +53,15 @@ export default class Toolbar extends Mixins(Positioning, Resize) {
         : width > 960
         ? '900px'
         : '100%'
+    this.$vuex.core.setPaginationY(
+      (this.$refs.positioning as Element)?.clientHeight || 0
+    )
     this.$forceUpdate()
   }
 
   async created() {
     await this.$vuex.core.initialize()
-    this.$on('resize', this.onResize)
-  }
-
-  beforeMount() {
-    this.onResize()
-  }
-
-  beforeDestroy() {
-    this.$off('resize')
+    this.$emit('resize')
   }
 }
 </script>
