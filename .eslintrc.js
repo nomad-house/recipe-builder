@@ -1,23 +1,32 @@
 module.exports = {
   root: true,
   env: {
-    browser: true,
-    node: true
+    node: true,
   },
   extends: [
-    '@nuxtjs/eslint-config-typescript',
-    'plugin:prettier/recommended', // goes with plugin
-    'plugin:nuxt/recommended', // goes with plugin
-    'plugin:vue/base',
-    'plugin:vue/recommended', // from eslint-plugin-vue
-    'prettier', // from eslint-config-prettier
-    'prettier/standard', // from eslint-config-prettier
-    'prettier/vue' // from eslint-config-prettier
+    "plugin:vue/vue3-essential",
+    "eslint:recommended",
+    "@vue/typescript/recommended",
+    "@vue/prettier",
+    "@vue/prettier/@typescript-eslint",
   ],
-  plugins: ['prettier', 'nuxt', 'vue'],
+  parserOptions: {
+    ecmaVersion: 2020,
+  },
   rules: {
-    'object-shorthand': 0,
-    'nuxt/no-cjs-in-config': 'off',
-    'import/no-mutable-exports': 0
-  }
-}
+    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "vue/no-multiple-template-root": 0,
+  },
+  overrides: [
+    {
+      files: [
+        "**/__tests__/*.{j,t}s?(x)",
+        "**/tests/unit/**/*.spec.{j,t}s?(x)",
+      ],
+      env: {
+        jest: true,
+      },
+    },
+  ],
+};

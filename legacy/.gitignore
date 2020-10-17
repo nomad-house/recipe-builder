@@ -1,0 +1,60 @@
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Local Env Files
+.env.local
+.env.*.local
+
+# Package Managers
+node_modules/
+bower_components/
+jspm_packages/
+typings/
+
+# Unconfigured Editors
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# Dev/Build Artifacts
+build/
+dist/
+test/e2e/videos/
+test/e2e/screenshots/
+test/unit/coverage/
+.vuepress/dist/
+.yarn-integrity
+.serverless
+.lock-wscript
+.eslintcache
+.npm
+.node_repl_history
+*.tgz
+.cache
+.nuxt
+.nyc_output
+coverage
+.grunt
+lib-cov
+
+# Created by .ignore support plugin (hsz.mobi)
+### Node template
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Service worker
+sw.*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
