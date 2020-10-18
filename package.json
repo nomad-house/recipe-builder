@@ -5,6 +5,7 @@
   "author": "Matthew Keil",
   "description": "Blockchain Based Decentralized Democratic Governance Through Transparent and Automated Aggregation of Individually CODEified Constitutions",
   "scripts": {
+    "vue": "node_modules/.bin/vue",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
@@ -23,6 +24,7 @@
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli": "^4.5.7",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
@@ -44,6 +46,7 @@
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
+    "vue-cli-plugin-vuetify": "~2.0.7",
     "vue-jest": "^5.0.0-0"
   },
   "gitHooks": {
