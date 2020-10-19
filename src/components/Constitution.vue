@@ -13,7 +13,11 @@ export default defineComponent({
     );
 
     function onContextMenu(event: MouseEvent) {
-      // document.getSelection().anchorNode.textContent
+      const selection = document.getSelection();
+      if (selection) {
+        console.log(selection);
+        // preamble.value = preamble.value.replace(selection, "");
+      }
     }
 
     return {
