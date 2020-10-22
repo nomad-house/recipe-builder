@@ -1,8 +1,8 @@
 import { APIGateway } from "aws-sdk";
 
-const apiGateway = new APIGateway({ region: process.env.REGION });
+const apiGateway = new APIGateway({ region: process.env.REGION || "us-east-1" });
 
-export const apiGatewayAccountExists = async () => {
+export const getApiGatewayAccountRole = async (): Promise<string | undefined> => {
   try {
     const { cloudwatchRoleArn } = await apiGateway.getAccount().promise();
     return cloudwatchRoleArn;

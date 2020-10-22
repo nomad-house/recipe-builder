@@ -22,9 +22,9 @@ export default defineComponent({
 
     return {
       preamble,
-      onContextMenu,
+      onContextMenu
     };
-  },
+  }
 });
 </script>
 
