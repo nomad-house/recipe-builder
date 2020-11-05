@@ -3,15 +3,15 @@ import { BucketDeployment, Source } from "@aws-cdk/aws-s3-deployment";
 import { CloudFrontWebDistribution, OriginAccessIdentity } from "@aws-cdk/aws-cloudfront";
 import { S3Origin } from "@aws-cdk/aws-cloudfront-origins";
 import { BlockPublicAccess, Bucket, BucketEncryption } from "@aws-cdk/aws-s3";
-import { ICertificate, DnsValidatedCertificate } from "@aws-cdk/aws-certificatemanager";
+import { Certificate, DnsValidatedCertificate } from "@aws-cdk/aws-certificatemanager";
 import { ARecord, IHostedZone, RecordTarget } from "@aws-cdk/aws-route53";
 import { CloudFrontTarget } from "@aws-cdk/aws-route53-targets";
 
 export interface StaticAssetsStackParams extends StackProps {
   stage: string;
-  domainName: string;
+  rootDomain: string;
   sourcePath: string;
-  certificate: ICertificate;
+  certificate: Certificate;
   hostedZone: IHostedZone;
   buildWwwSubdomain?: boolean;
 }
@@ -25,32 +25,34 @@ function urlSafe(stage: string): string {
     .toLowerCase();
 }
 type BuildAliasesParams = Required<
-  Pick<StaticAssetsStackParams, "stage" | "domainName" | "buildWwwSubdomain">
+  Pick<StaticAssetsStackParams, "stage" | "rootDomain" | "buildWwwSubdomain">
 >;
-function buildAlises({ stage, domainName, buildWwwSubdomain }: BuildAliasesParams): string[] {
+function buildAlises({ stage, rootDomain, buildWwwSubdomain }: BuildAliasesParams): string[] {
   if (stage === "prod") {
-    const aliases = [domainName];
+    const aliases = [rootDomain];
     if (buildWwwSubdomain) {
-      aliases.push(`www.${domainName}`);
+      aliases.push(`www.${rootDomain}`);
     }
     return aliases;
   }
-  return [`${urlSafe(stage)}.${domainName}`];
+  return [`${urlSafe(stage)}.${rootDomain}`];
 }
 export class StaticAssetsStack extends Stack {
+  private prod: boolean;
   constructor(scope: Construct, id: string, params: StaticAssetsStackParams) {
     super(scope, id, params);
     const {
       stage,
-      domainName,
+      rootDomain,
       sourcePath,
       hostedZone,
       certificate,
       buildWwwSubdomain = false
     } = params;
+    this.prod = stage === "prod";
 
-    const aliases = buildAlises({ stage, domainName, buildWwwSubdomain });
-
+    const aliases = buildAlises({ stage, rootDomain, buildWwwSubdomain });
+    // aliases[0] should contain either example.com or some-branch.example.com
     const destinationBucket = new Bucket(this, "Bucket", {
       bucketName: aliases[0].replace(".", "-").toLowerCase(),
       versioned: true,

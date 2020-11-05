@@ -6,8 +6,8 @@
   "description": "Blockchain Based Decentralized Democratic Governance Through Transparent and Automated Aggregation of Individually CODEified Constitutions",
   "scripts": {
     "ts": "node -r ts-node/register",
-    "synth": "AWS_PROFILE=admin ts-node node_modules/.bin/cdk synth --app \"npm run ts bin/infra.ts\"",
-    "deploy": "AWS_PROFILE=admin ts-node node_modules/.bin/cdk deploy --app \"npm run ts bin/infra.ts\""
+    "synth": "AWS_PROFILE=admin ts-node node_modules/.bin/cdk synth '*'",
+    "deploy": "AWS_PROFILE=admin ts-node node_modules/.bin/cdk deploy '*'"
   },
   "devDependencies": {
     "@aws-cdk/aws-certificatemanager": "^1.68.0",

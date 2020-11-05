@@ -10,10 +10,10 @@ import {
 import { HostedZone, IHostedZone } from "@aws-cdk/aws-route53";
 import { CfnAccount } from "@aws-cdk/aws-apigateway";
 import { Certificate, CertificateValidation } from "@aws-cdk/aws-certificatemanager";
-import { Construct, Stack, StackProps } from "@aws-cdk/core";
+import { CfnOutput, Construct, Stack, StackProps } from "@aws-cdk/core";
 
 export interface CoreStackParams extends StackProps {
-  domainName: string;
+  rootDomain: string;
   hostedZoneId?: string;
   cloudWatchRoleArn?: string;
 }
@@ -23,17 +23,18 @@ export class CoreStack extends Stack {
   public certificate: Certificate;
 
   constructor(scope: Construct, id: string, params: CoreStackParams) {
-    const { domainName, cloudWatchRoleArn } = params;
+    const { rootDomain, cloudWatchRoleArn, hostedZoneId } = params;
     super(scope, id, params);
 
     const cloudWatchRole = cloudWatchRoleArn
       ? Role.fromRoleArn(this, "ApiGatgewayAccountRole", cloudWatchRoleArn)
       : new Role(this, "ApiGatgewayAccountRole", {
+          roleName: `api-gateway-account-role`,
           assumedBy: new ServicePrincipal("apigateway.amazonaws.com")
         });
     cloudWatchRole.attachInlinePolicy(
       new Policy(this, "ApiGatewayLoggingPolicy", {
-        policyName: "api-gateway-logging-policy",
+        policyName: "api-gateway-account-logging-policy",
         statements: [
           new PolicyStatement({
             effect: Effect.ALLOW,
@@ -47,14 +48,15 @@ export class CoreStack extends Stack {
       new CfnAccount(this, "ApiGatewayAccount", { cloudWatchRoleArn: cloudWatchRole.roleArn });
     }
 
-    // TODO: rewrite this to hook into an existing HostedZone
-    this.hostedZone = new HostedZone(this, "HostedZone", {
-      zoneName: domainName
-    });
+    this.hostedZone = hostedZoneId
+      ? HostedZone.fromHostedZoneId(this, "HostedZone", hostedZoneId)
+      : new HostedZone(this, "HostedZone", {
+          zoneName: rootDomain
+        });
 
     this.certificate = new Certificate(this, "Certificate", {
-      domainName,
-      subjectAlternativeNames: [`*.${domainName}`],
+      domainName: rootDomain,
+      subjectAlternativeNames: [`*.${rootDomain}`],
       validation: CertificateValidation.fromDns(this.hostedZone)
     });
   }

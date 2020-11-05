@@ -11,21 +11,21 @@ interface SynthParams {
   stage: string;
   region: string;
   account: string;
-  domainName: string;
+  rootDomain: string;
 }
 
-export async function synth({ project, stage, region, account, domainName }: SynthParams) {
+export async function synth({ project, stage, region, account, rootDomain }: SynthParams) {
   const app = new App();
   const env = {
     region,
     account
   };
   const cloudWatchRoleArn = await getApiGatewayAccountRole();
-  const hostedZoneId = await getHostedZoneId({ domainName });
+  const hostedZoneId = await getHostedZoneId({ rootDomain });
   const coreStack = new CoreStack(app, "CoreStack", {
     stackName: `${project}-core`,
     env,
-    domainName,
+    rootDomain,
     hostedZoneId,
     cloudWatchRoleArn
   });
@@ -34,7 +34,7 @@ export async function synth({ project, stage, region, account, domainName }: Syn
     stackName: `${project}-frontend-${stage}`,
     env,
     stage,
-    domainName,
+    rootDomain,
     sourcePath: resolve(__dirname, "..", "client", "dist"),
     hostedZone: coreStack.hostedZone,
     certificate: coreStack.certificate,
@@ -44,12 +44,12 @@ export async function synth({ project, stage, region, account, domainName }: Syn
   app.synth();
 }
 
-if (require.main === module) {
-  synth({
-    project: "codeified",
-    stage: "prod",
-    account: `${process.env.ACCOUNT}`,
-    region: `${process.env.REGION}`,
-    domainName: `${process.env.DOMAIN_NAME}`
-  });
-}
+// if (require.main === module) {
+synth({
+  project: "codeified",
+  stage: "prod",
+  account: `${process.env.ACCOUNT}`,
+  region: `${process.env.REGION}`,
+  rootDomain: `${process.env.ROOT_DOMAIN}`
+});
+// }
