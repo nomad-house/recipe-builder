@@ -5,6 +5,7 @@ import { getHostedZoneId } from "../lib/aws/route53";
 import { getApiGatewayAccountRole } from "../lib/aws/apiGateway";
 import { CoreStack } from "../lib/cdk/CoreStack";
 import { StaticAssetsStack } from "../lib/cdk/StaticAssetsStack";
+import { AuthStack } from "../lib/cdk/AuthStack";
 
 interface SynthParams {
   project: string;
@@ -29,6 +30,8 @@ export async function synth({ project, stage, region, account, rootDomain }: Syn
     hostedZoneId,
     cloudWatchRoleArn
   });
+
+  new AuthStack(app, "AuthStack", {});
 
   new StaticAssetsStack(app, "FrontEndStack", {
     stackName: `${project}-frontend-${stage}`,

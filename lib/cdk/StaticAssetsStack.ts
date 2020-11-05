@@ -1,9 +1,8 @@
 import { Construct, Stack, StackProps } from "@aws-cdk/core";
 import { BucketDeployment, Source } from "@aws-cdk/aws-s3-deployment";
 import { CloudFrontWebDistribution, OriginAccessIdentity } from "@aws-cdk/aws-cloudfront";
-import { S3Origin } from "@aws-cdk/aws-cloudfront-origins";
 import { BlockPublicAccess, Bucket, BucketEncryption } from "@aws-cdk/aws-s3";
-import { Certificate, DnsValidatedCertificate } from "@aws-cdk/aws-certificatemanager";
+import { Certificate } from "@aws-cdk/aws-certificatemanager";
 import { ARecord, IHostedZone, RecordTarget } from "@aws-cdk/aws-route53";
 import { CloudFrontTarget } from "@aws-cdk/aws-route53-targets";
 
