@@ -15,7 +15,8 @@ import {
   CfnIdentityPoolRoleAttachment,
   CfnUserPoolDomain,
   CfnUserPool,
-  CfnUserPoolClient
+  CfnUserPoolClient,
+  CfnUserPoolGroup
 } from "@aws-cdk/aws-cognito";
 
 export interface AuthStackParams extends StackProps {}
@@ -41,6 +42,9 @@ export class AuthStack extends Stack {
           providerName: userPool.userPoolProviderName
         }
       ]
+    });
+    new CfnUserPoolGroup(this, "", {
+      userPoolId: userPool.userPoolId
     });
     new CfnIdentityPoolRoleAttachment(this, "AuthorizedUserRoleAttachment", {
       identityPoolId: identityPool.ref,
