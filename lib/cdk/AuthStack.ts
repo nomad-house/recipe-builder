@@ -24,11 +24,12 @@ export interface AuthStackParams extends NestedStackProps {
 
 export class AuthStack<T extends Readonly<string[]> = ["authenticated"]> extends NestedStack {
   public groupRoles: { [key in T[number] | "authenticated"]: Role } = {} as any;
+  public userPool: UserPool;
   constructor(scope: Construct, id: string, public params: AuthStackParams) {
     super(scope, id, params);
     const { prefix, userPoolMfa, samlAuth, dns, groups = [] } = this.params;
 
-    const userPool = new UserPool(this, "UserPool", {
+    this.userPool = new UserPool(this, "UserPool", {
       userPoolName: `${prefix}`,
       autoVerify: {
         email: true
@@ -47,18 +48,18 @@ export class AuthStack<T extends Readonly<string[]> = ["authenticated"]> extends
       "UserPoolDomain",
       dns
         ? {
-            userPoolId: userPool.userPoolId,
+            userPoolId: this.userPool.userPoolId,
             domain: `auth.voicemail.${dns.rootDomain}`,
             customDomainConfig: { certificateArn: dns.certificateArn }
           }
         : {
-            userPoolId: userPool.userPoolId,
+            userPoolId: this.userPool.userPoolId,
             domain: prefix
           }
     );
     const userPoolClient = new UserPoolClient(this, "UserPoolClient", {
       userPoolClientName: `${prefix}`,
-      userPool,
+      userPool: this.userPool,
       generateSecret: false
     });
     const identityPool = new CfnIdentityPool(this, "IdentityPool", {
@@ -68,7 +69,7 @@ export class AuthStack<T extends Readonly<string[]> = ["authenticated"]> extends
         {
           serverSideTokenCheck: false,
           clientId: userPoolClient.userPoolClientId,
-          providerName: userPool.userPoolProviderName
+          providerName: this.userPool.userPoolProviderName
         }
       ]
     });
@@ -99,7 +100,7 @@ export class AuthStack<T extends Readonly<string[]> = ["authenticated"]> extends
       this.groupRoles[name as T[number]] = new Role(this, `${toPascal(name)}GroupRole`, roleProps);
       new CfnUserPoolGroup(this, `${toPascal(name)}Group`, {
         groupName: "admin",
-        userPoolId: userPool.userPoolId,
+        userPoolId: this.userPool.userPoolId,
         roleArn: this.groupRoles[name as T[number]].roleArn
       });
     }

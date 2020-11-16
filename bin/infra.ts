@@ -6,6 +6,7 @@ import { getApiGatewayAccountRole } from "../lib/aws/apiGateway";
 import { CoreStack } from "../lib/cdk/CoreStack";
 import { StaticAssetsStack } from "../lib/cdk/StaticAssetsStack";
 import { AuthStack } from "../lib/cdk/AuthStack";
+import { BackendStack } from "lib/cdk/BackendStack";
 
 interface SynthParams {
   project: string;
@@ -21,6 +22,7 @@ export async function synth({ project, stage, region, account, rootDomain }: Syn
     region,
     account
   };
+  const prefix = `${project}-${stage}`;
   const cloudWatchRoleArn = await getApiGatewayAccountRole();
   const hostedZoneId = await getHostedZoneId({ rootDomain });
   const coreStack = new CoreStack(app, "CoreStack", {
@@ -36,9 +38,13 @@ export async function synth({ project, stage, region, account, rootDomain }: Syn
     prefix,
     groups
   });
-  auth.groupRoles.admin;
 
-  new StaticAssetsStack(app, "FrontEndStack", {
+  new BackendStack(app, "BackendStack", {
+    prefix,
+    userPool: auth.userPool
+  });
+
+  new StaticAssetsStack(app, "FrontendStack", {
     stackName: `${project}-frontend-${stage}`,
     env,
     stage,
