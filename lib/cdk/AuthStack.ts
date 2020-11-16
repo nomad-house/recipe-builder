@@ -1,4 +1,4 @@
-import { Construct, NestedStack, NestedStackProps } from "@aws-cdk/core";
+import { App, Construct, NestedStack, NestedStackProps } from "@aws-cdk/core";
 import { Role, FederatedPrincipal, RoleProps } from "@aws-cdk/aws-iam";
 import {
   UserPool,
@@ -9,22 +9,24 @@ import {
   CfnUserPoolGroup,
   Mfa
 } from "@aws-cdk/aws-cognito";
+import { toPascal } from "lib/rename";
 
 export interface AuthStackParams extends NestedStackProps {
   prefix: string;
   userPoolMfa?: boolean;
   samlAuth?: boolean;
+  groups: Readonly<string[]>;
   dns?: {
     certificateArn: string;
     rootDomain: string;
   };
 }
 
-export class AuthStack extends NestedStack {
-  public roles: { [roleName: string]: Role } = {};
-  constructor(scope: Construct, id: string, params: AuthStackParams) {
+export class AuthStack<T extends Readonly<string[]> = ["authenticated"]> extends NestedStack {
+  public groupRoles: { [key in T[number] | "authenticated"]: Role } = {} as any;
+  constructor(scope: Construct, id: string, public params: AuthStackParams) {
     super(scope, id, params);
-    const { prefix, userPoolMfa, samlAuth, dns } = params;
+    const { prefix, userPoolMfa, samlAuth, dns, groups = [] } = this.params;
 
     const userPool = new UserPool(this, "UserPool", {
       userPoolName: `${prefix}`,
@@ -85,44 +87,21 @@ export class AuthStack extends NestedStack {
         "sts:AssumeRoleWithWebIdentity"
       )
     };
-    this.roles.authenticated = new Role(this, `AuthenticatedRole`, roleProps);
+    this.groupRoles.authenticated = new Role(this, `AuthenticatedRole`, roleProps);
     new CfnIdentityPoolRoleAttachment(this, "AuthorizedUserRoleAttachment", {
       identityPoolId: identityPool.ref,
       roles: {
-        authenticated: this.roles.authenticated.roleArn
+        authenticated: this.groupRoles.authenticated.roleArn
       }
     });
 
-    for (const { name } of groups) {
-      this.roles[name] = new Role(this, `${toPascal}GroupRole`, roleProps);
-      new CfnUserPoolGroup(this, `AdminGroup`, {
+    for (const name of groups) {
+      this.groupRoles[name as T[number]] = new Role(this, `${toPascal(name)}GroupRole`, roleProps);
+      new CfnUserPoolGroup(this, `${toPascal(name)}Group`, {
         groupName: "admin",
         userPoolId: userPool.userPoolId,
-        roleArn: this.roles.admin.roleArn
+        roleArn: this.groupRoles[name as T[number]].roleArn
       });
     }
   }
 }
-
-// type Rules = CfnIdentityPoolRoleAttachment.RulesConfigurationTypeProperty["rules"];
-// interface VoiceMailGroup {
-//   name: string;
-// }
-// groups?: VoiceMailGroup[];
-// groups = [],
-// const rules: Rules = [];
-// rules.push({
-//   claim: "cognito:groups",
-//   matchType: "Equals",
-//   value: name,
-//   roleArn: role.roleArn,
-// });
-// }
-// roleMappings: {
-//   userPool: {
-//     type: "Rules",
-//     ambiguousRoleResolution: "Deny",
-//     identityProvider: userPool.userPoolId,
-//     rulesConfiguration: { rules },
-//   },
-// },

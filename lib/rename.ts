@@ -20,20 +20,23 @@ function splitString(str: string): string[] {
   }
   return [camelsBrokenApart];
 }
-export function capitalizeFirstLetter(segment: string): string {
+function capitalizeFirstLetter(segment: string): string {
   return segment[0].toUpperCase() + segment.slice(1);
 }
-export function lowercaseFirstLetter(segment: string): string {
+function lowercaseFirstLetter(segment: string): string {
   return segment[0].toLowerCase() + segment.slice(1);
 }
-export const renameTo = {
-  kebab: (str: string): string =>
-    splitString(str)
-      .join("-")
-      .toLowerCase(),
-  pascal: (str: string): string =>
-    splitString(str)
-      .map(capitalizeFirstLetter)
-      .join(""),
-  camel: (str: string): string => lowercaseFirstLetter(renameTo.pascal(str))
-};
+function toKebab(str: string): string {
+  return splitString(str)
+    .join("-")
+    .toLowerCase();
+}
+function toPascal(str: string): string {
+  return splitString(str)
+    .map(capitalizeFirstLetter)
+    .join("");
+}
+function toCamel(str: string): string {
+  return lowercaseFirstLetter(toPascal(str));
+}
+export { toKebab, toCamel, toPascal };

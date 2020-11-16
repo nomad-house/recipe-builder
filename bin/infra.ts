@@ -31,7 +31,12 @@ export async function synth({ project, stage, region, account, rootDomain }: Syn
     cloudWatchRoleArn
   });
 
-  new AuthStack(app, "AuthStack", {});
+  const groups = ["admin"] as const;
+  const auth = new AuthStack<typeof groups>(app, "AuthStack", {
+    prefix,
+    groups
+  });
+  auth.groupRoles.admin;
 
   new StaticAssetsStack(app, "FrontEndStack", {
     stackName: `${project}-frontend-${stage}`,
