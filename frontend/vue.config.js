@@ -1,4 +1,9 @@
 module.exports = {
+  pluginOptions: {
+    apollo: {
+      lintGQL: true
+    }
+  },
   chainWebpack: config => {
     config.module
       .rule("graphql")

@@ -1,0 +1,10 @@
+type Query {
+  streamList: [Stream!]!
+}
+
+type Stream {
+  id: ID!
+  title: String!
+  coverImage: String!
+  url: String!
+}

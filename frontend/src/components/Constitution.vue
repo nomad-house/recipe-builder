@@ -15,7 +15,7 @@ export default defineComponent({
     function onContextMenu(event: MouseEvent) {
       const selection = document.getSelection();
       if (selection) {
-        console.log(selection);
+        console.log({ event, selection });
         // preamble.value = preamble.value.replace(selection, "");
       }
     }

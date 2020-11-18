@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "start": "nodemon src",
-    "build": "node_modules/.bin/tsc"
+    "build": "node_modules/.bin/tsc",
+    "node": "node",
+    "ts": "npm run node -- -r ts-node/register"
   },
   "nodemonConfig": {
     "exec": "node -r ts-node/register",

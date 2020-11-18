@@ -9,8 +9,8 @@ import Constitution from "../components/Constitution.vue";
 export default defineComponent({
   name: "Home",
   components: {
-    Constitution,
-  },
+    Constitution
+  }
 });
 </script>
 
