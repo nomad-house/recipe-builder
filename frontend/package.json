@@ -9,7 +9,7 @@
     "synth": "AWS_PROFILE=admin ts-node node_modules/.bin/cdk synth",
     "deploy": "AWS_PROFILE=admin ts-node node_modules/.bin/cdk deploy",
     "vue": "node_modules/.bin/vue",
-    "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",

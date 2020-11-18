@@ -1,7 +1,3 @@
-const CAPITAL = /[A-Z]/g;
-const hasCapital = (str: string) => CAPITAL.test(str);
-const firstIsCapital = (str: string) => CAPITAL.test(str[0]);
-
 const cases = ["camel", "pascal", "kebab", "snake"] as const;
 type StringCase = typeof cases[number];
 

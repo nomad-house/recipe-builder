@@ -1,14 +1,26 @@
 import "reflect-metadata";
 import { ApolloServer as LambdaApollo } from "apollo-server-lambda";
 import { ApolloServer } from "apollo-server";
-import { buildSchemaSync } from "type-graphql";
-import { StreamResolver } from "./StreamResolver";
+import { schema } from "./schema";
+import { Context, APIGatewayProxyWithCognitoAuthorizerEvent } from "aws-lambda";
 
-const schema = buildSchemaSync({ resolvers: [StreamResolver] });
+interface GraphqlContext {}
 
-export const lambda = new LambdaApollo({ schema }).createHandler({});
+// export const lambda = new LambdaApollo({
+//   schema,
+//   context: async ({
+//     event,
+//     context
+//   }: {
+//     event: APIGatewayProxyWithCognitoAuthorizerEvent;
+//     context: Context;
+//   }): Promise<GraphqlContext> => ({})
+// }).createHandler({});
 
 if (require.main === module) {
-  const server = new ApolloServer({ schema });
+  const server = new ApolloServer({
+    schema,
+    context: async ({ req }): Promise<GraphqlContext> => ({})
+  });
   server.listen().then(({ url }) => console.log(url));
 }
