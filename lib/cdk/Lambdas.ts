@@ -6,7 +6,7 @@ import {
   AssetCode
 } from "@aws-cdk/aws-lambda";
 import { LogGroup, LogGroupProps } from "@aws-cdk/aws-logs";
-import { Role, Policy, PolicyStatement, Effect, ServicePrincipal } from "@aws-cdk/aws-iam";
+import { IRole, Role, Policy, PolicyStatement, Effect, ServicePrincipal } from "@aws-cdk/aws-iam";
 import { Construct, RemovalPolicy } from "@aws-cdk/core";
 import { Tables } from "./Tables";
 import { toPascal, toUpperSnake } from "lib/rename";
@@ -24,6 +24,7 @@ export interface LambdaProps extends Omit<FunctionProps, "code" | "runtime">, Lo
   tables?: string | TableDetail[];
   code?: FunctionProps["code"];
   runtime?: FunctionProps["runtime"];
+  canInvoke?: IRole[];
 }
 const omittedProps = ["functionName", "logGroupName", "description", "tables"] as const;
 type OmittedProps = typeof omittedProps[number];
@@ -130,6 +131,23 @@ export class Lambdas extends BaseConstruct {
     if (props.events?.length) {
       for (const event of props.events) {
         lambda.addEventSource(event);
+      }
+    }
+
+    const canInvoke = [...(props.canInvoke || []), ...(this.props.canInvoke || [])];
+    if (canInvoke.length) {
+      for (const invokeRole of canInvoke) {
+        invokeRole.attachInlinePolicy(
+          new Policy(this, toPascal(`${invokeRole.roleName}-${props.functionName}`), {
+            statements: [
+              new PolicyStatement({
+                effect: Effect.ALLOW,
+                actions: ["lambda:InvokeFunction"],
+                resources: [lambda.functionArn]
+              })
+            ]
+          })
+        );
       }
     }
 
