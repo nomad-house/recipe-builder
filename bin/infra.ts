@@ -5,7 +5,7 @@ import { getHostedZoneId } from "../lib/aws/route53";
 import { getApiGatewayAccountRole } from "../lib/aws/apiGateway";
 import { CoreStack } from "../lib/cdk/CoreStack";
 import { StaticAssetsStack } from "../lib/cdk/StaticAssetsStack";
-import { AuthStack } from "../lib/cdk/AuthStack";
+import { AuthStack } from "../lib/cdk/Cognito";
 import { BackendStack } from "lib/cdk/BackendStack";
 
 interface SynthParams {

@@ -35,4 +35,9 @@ function toPascal(str: string): string {
 function toCamel(str: string): string {
   return lowercaseFirstLetter(toPascal(str));
 }
-export { toKebab, toCamel, toPascal };
+function toUpperSnake(str: string): string {
+  return splitString(str)
+    .map(seg => seg.toUpperCase())
+    .join("_");
+}
+export { toKebab, toCamel, toPascal, toUpperSnake };
