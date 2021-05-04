@@ -5,7 +5,7 @@ export interface BaseConstructProps {
   prefix: string;
 }
 
-export class BaseConstruct extends Construct {
+export abstract class BaseConstruct extends Construct {
   protected prefix: string;
   protected prod: boolean;
   constructor(scope: Construct, id: string, props: BaseConstructProps) {

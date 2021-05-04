@@ -1,20 +1,12 @@
-const cases = ["camel", "pascal", "kebab", "snake"] as const;
-type StringCase = typeof cases[number];
-
 function splitString(str: string): string[] {
-  let separator: undefined | string;
-  const sanitized = str.replace(/[\s!@#$%^&*]/g, "");
-  const camelsBrokenApart = sanitized.replace(/([a-z0-9])([A-Z])/g, "$1-$2");
-  if (/_/.test(camelsBrokenApart)) separator = "_";
-  if (/-/.test(camelsBrokenApart)) separator = "-";
-  if (separator) {
-    const segments: string[] = [];
-    for (const segment of camelsBrokenApart.split(separator)) {
-      segments.push(...splitString(segment));
-    }
-    return segments;
-  }
-  return [camelsBrokenApart];
+  const normalized = str
+    // sanitize characters that cannot be included
+    .replace(/[!@#$%^&*]/g, "")
+    // break apart camelCasing
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+    // normalize separators to '-'
+    .replace(/[_/\s\\]/, "-");
+  return normalized.split("-");
 }
 function capitalizeFirstLetter(segment: string): string {
   return segment[0].toUpperCase() + segment.slice(1);
