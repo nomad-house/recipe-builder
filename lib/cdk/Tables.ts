@@ -8,7 +8,7 @@ import {
   GlobalSecondaryIndexProps
 } from "@aws-cdk/aws-dynamodb";
 import { Construct, RemovalPolicy } from "@aws-cdk/core";
-import { toKebab, toPascal } from "lib/rename";
+import { toKebab, toPascal } from "../changeCase";
 import { BaseConstruct, BaseConstructProps } from "./BaseConstruct";
 
 const dynamoAttributeTypes = ["string", "number", "boolean"] as const;

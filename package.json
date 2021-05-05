@@ -5,9 +5,8 @@
   "author": "Matthew Keil",
   "description": "Blockchain Based Decentralized Democratic Governance Through Transparent and Automated Aggregation of Individually CODEified Constitutions",
   "scripts": {
-    "node": "node",
-    "ts": "node -- -r ts-node/register",
-    "synth": "AWS_PROFILE=admin ts-node node_modules/.bin/cdk synth",
+    "ts-node": "ts-node",
+    "synth": "node_modules/.bin/cdk synth",
     "deploy": "AWS_PROFILE=admin ts-node node_modules/.bin/cdk deploy '*'"
   },
   "devDependencies": {
@@ -26,6 +25,7 @@
     "@aws-cdk/aws-s3-deployment": "1.101.0",
     "@aws-cdk/core": "1.101.0",
     "@types/jest": "^24.0.19",
+    "@types/node": "^15.0.1",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "aws-cdk": "1.101.0",
