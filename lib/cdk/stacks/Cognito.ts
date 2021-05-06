@@ -19,7 +19,7 @@ import {
   UserPoolClientIdentityProvider,
   CfnUserPoolUICustomizationAttachment
 } from "@aws-cdk/aws-cognito";
-import { Mutable } from "../Mutable";
+import { Mutable } from "../../Mutable";
 
 export interface CognitoProps {
   prefix: string;

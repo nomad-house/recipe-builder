@@ -1,19 +1,19 @@
 import {
   BillingMode,
   Table,
-  TableProps as BaseTableProps,
   Attribute as BaseAttribute,
   AttributeType as BaseAttributeType,
-  LocalSecondaryIndexProps,
-  GlobalSecondaryIndexProps
+  TableProps as BaseTableProps,
+  GlobalSecondaryIndexProps,
+  LocalSecondaryIndexProps
 } from "@aws-cdk/aws-dynamodb";
 import { Construct, RemovalPolicy } from "@aws-cdk/core";
-import { toKebab, toPascal } from "../changeCase";
+import { toKebab, toPascal } from "../../changeCase";
 import { BaseConstruct, BaseConstructProps } from "./BaseConstruct";
 
 const dynamoAttributeTypes = ["string", "number", "boolean"] as const;
 type AttributeType = typeof dynamoAttributeTypes[number];
-type DynamoAttribute = {
+export type DynamoAttribute = {
   [AttributeName: string]: AttributeType;
 };
 const omittedIndexProps = ["partitionKey", "sortKey"] as const;

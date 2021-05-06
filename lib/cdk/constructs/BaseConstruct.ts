@@ -1,5 +1,5 @@
 import { Construct } from "@aws-cdk/core";
-import { toKebab } from "../changeCase";
+import { toKebab } from "../../changeCase";
 
 export interface BaseConstructProps {
   prefix: string;

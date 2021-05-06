@@ -1,6 +1,6 @@
 import { Construct, Stack, StackProps } from "@aws-cdk/core";
-import { toKebab } from "../changeCase";
-import { BaseConstruct } from "./BaseConstruct";
+import { toKebab } from "../../changeCase";
+import { BaseConstruct } from "../constructs/BaseConstruct";
 
 export interface BaseStackProps extends StackProps {
   prefix: string;

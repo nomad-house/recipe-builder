@@ -1,45 +1,12 @@
-import { FunctionProps, Function as Lambda, IEventSource } from "@aws-cdk/aws-lambda";
+import { Function as Lambda, FunctionProps, IEventSource } from "@aws-cdk/aws-lambda";
 import { LogGroup, LogGroupProps } from "@aws-cdk/aws-logs";
 import { IRole, Role, Policy, PolicyStatement, Effect, ServicePrincipal } from "@aws-cdk/aws-iam";
+import { BaseConstruct, BaseConstructProps } from "./BaseConstruct";
 import { Construct, RemovalPolicy } from "@aws-cdk/core";
 import { Tables } from "./Tables";
-import { toPascal, toUpperSnake } from "../changeCase";
-import { BaseConstruct, BaseConstructProps } from "./BaseConstruct";
+import { toPascal, toUpperSnake } from "../../changeCase";
+import { ApiConfig, ApiEvent, isApiEvent } from "./Api";
 
-const methods = ["GET", "POST", "PATCH", "PUT", "DELETE"] as const;
-type Method = typeof methods[number];
-function isMethod(value: any): value is Method {
-  return typeof value === "string" && !!methods.find(value.toUpperCase() as any);
-}
-export interface ApiEvent {
-  method: Method;
-  path: string;
-}
-interface ApiConfig extends ApiEvent {
-  lambda: Lambda;
-}
-export function isApiEvent(event: any): event is ApiEvent {
-  if (typeof event !== "object") {
-    return false;
-  }
-  for (const [key, value] of Object.entries(event)) {
-    switch (key) {
-      case "method":
-        if (!isMethod(value)) {
-          throw new Error(`${value} is not a valid METHOD`);
-        }
-        break;
-      case "path":
-        if (typeof value === "string" && value.startsWith("/")) {
-          break;
-        }
-        throw new Error('ApiEvent paths must be of type string and start with a "/"');
-      default:
-        return false;
-    }
-  }
-  return true;
-}
 interface TableDetail {
   tableName: string;
   read?: boolean;
@@ -56,17 +23,24 @@ export interface LambdaProps
   canInvoke?: IRole[];
   events?: (ApiEvent | IEventSource)[];
 }
-const omittedProps = ["functionName", "logGroupName", "description", "tables", "handler"] as const;
-type OmittedProps = typeof omittedProps[number];
-export interface LambdasProps extends BaseConstructProps, Omit<LambdaProps, OmittedProps> {
+const omittedLambdaProps = [
+  "functionName",
+  "logGroupName",
+  "description",
+  "tables",
+  "handler"
+] as const;
+type OmittedLambdaProps = typeof omittedLambdaProps[number];
+export interface LambdasProps extends BaseConstructProps, Omit<LambdaProps, OmittedLambdaProps> {
   lambdas: LambdaProps[];
   tables?: Tables;
 }
-interface ResourceGroup {
+export interface ResourceGroup {
   lambda: Lambda;
   logGroup: LogGroup;
   role: Role;
 }
+
 export class Lambdas extends BaseConstruct {
   public resources: { [functionName: string]: ResourceGroup } = {};
   public apiConfig?: { [functionName: string]: ApiConfig };

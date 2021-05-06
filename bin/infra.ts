@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import { App } from "@aws-cdk/core";
-import { ServerlessStack } from "../lib/cdk/ServerlessStack";
+import { ServerlessStack } from "../lib/cdk/stacks/ServerlessStack";
 import { getConfig } from "../config";
 import { AssetCode, Runtime } from "@aws-cdk/aws-lambda";
 // import { getHostedZoneId } from "../lib/aws/route53";
@@ -40,13 +40,13 @@ export async function buildInfra() {
       {
         functionName: "demo-function",
         handler: "demoFunction.handler",
-        tables: ["demo-table"]
-        // events: [
-        //   {
-        //     method: "GET",
-        //     path: "/"
-        //   }
-        // ]
+        tables: ["demo-table"],
+        events: [
+          {
+            method: "GET",
+            path: "/"
+          }
+        ]
       }
     ]
   });
