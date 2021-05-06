@@ -24,10 +24,21 @@ export async function buildInfra() {
 
   const app = new App();
 
-  new ServerlessStack(app, "Backend", {
+  // const cloudWatchRoleArn = await getApiGatewayAccountRole();
+  // const hostedZoneId = await getHostedZoneId({ rootDomain });
+  // const coreStack = new CoreStack(app, "CoreStack", {
+  //   stackName: `${project}-core`,
+  //   env,
+  //   rootDomain,
+  //   hostedZoneId,
+  //   cloudWatchRoleArn
+  // });
+
+  const backend = new ServerlessStack(app, "Backend", {
     prefix,
-    code: new AssetCode(resolve(__dirname, "..", "dist", "backend")),
-    runtime: Runtime.NODEJS_14_X,
+    cors: {
+      allowOrigins: ["http://localhost:4200"]
+    },
     tables: [
       {
         tableName: "demo-table",
@@ -36,6 +47,8 @@ export async function buildInfra() {
         }
       }
     ],
+    runtime: Runtime.NODEJS_14_X,
+    code: new AssetCode(resolve(__dirname, "..", "dist", "backend")),
     lambdas: [
       {
         functionName: "demo-function",
@@ -50,25 +63,11 @@ export async function buildInfra() {
       }
     ]
   });
-  // const cloudWatchRoleArn = await getApiGatewayAccountRole();
-  // const hostedZoneId = await getHostedZoneId({ rootDomain });
-  // const coreStack = new CoreStack(app, "CoreStack", {
-  //   stackName: `${project}-core`,
-  //   env,
-  //   rootDomain,
-  //   hostedZoneId,
-  //   cloudWatchRoleArn
-  // });
 
   // const groups = ["admin"] as const;
   // const auth = new AuthStack<typeof groups>(app, "AuthStack", {
   //   prefix,
   //   groups
-  // });
-
-  // new BackendStack(app, "BackendStack", {
-  //   prefix,
-  //   userPool: auth.userPool
   // });
 
   // new StaticAssetsStack(app, "FrontendStack", {

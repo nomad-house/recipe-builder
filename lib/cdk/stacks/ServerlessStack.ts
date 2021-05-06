@@ -2,15 +2,13 @@ import { Construct } from "@aws-cdk/core";
 import { BaseStack, BaseStackProps } from "./BaseStack";
 import { Lambdas, LambdasProps } from "../constructs/Lambdas";
 import { Tables, TablesProps } from "../constructs/Tables";
-import { Api } from "../constructs/Api";
-import { IAuthorizer } from "@aws-cdk/aws-apigateway";
+import { Api, ApiProps } from "../constructs/Api";
 
 export interface ServerlessStackProps
   extends BaseStackProps,
     TablesProps,
-    Omit<LambdasProps, "tables"> {
-  authorizer?: IAuthorizer;
-}
+    Omit<LambdasProps, "tables">,
+    Omit<ApiProps, "lambdas"> {}
 
 export class ServerlessStack extends BaseStack {
   public tables?: Tables;
@@ -30,7 +28,10 @@ export class ServerlessStack extends BaseStack {
       new Api(this, "Api", {
         lambdas,
         prefix: this.prefix,
-        authorizer: props.authorizer
+        authorizer: props.authorizer,
+        cors: {
+          allowOrigins: ["http://localhost:4000"]
+        }
       });
     }
   }
