@@ -9,11 +9,7 @@ export const normalizeDomain = (domain: string) =>
     .filter(zone => !!zone)
     .join(".");
 
-export const getHostedZoneId = async ({
-  rootDomain
-}: {
-  rootDomain: string;
-}): Promise<string | undefined> => {
+export const getHostedZoneId = async (rootDomain: string): Promise<string | undefined> => {
   const hostedZone = await route53.listHostedZonesByName({ DNSName: rootDomain }).promise();
   const { Id } =
     hostedZone.HostedZones.find(

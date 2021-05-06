@@ -1,52 +1,30 @@
+import { HostedZone, HostedZoneProps, IHostedZone } from "@aws-cdk/aws-route53";
 import {
-  ArnPrincipal,
-  Effect,
-  Policy,
-  PolicyStatement,
-  Role,
-  ServicePrincipal,
-  PolicyDocument
-} from "@aws-cdk/aws-iam";
-import { HostedZone, IHostedZone } from "@aws-cdk/aws-route53";
-import { CfnAccount } from "@aws-cdk/aws-apigateway";
-import { Certificate, CertificateValidation } from "@aws-cdk/aws-certificatemanager";
-import { CfnOutput, Construct, Stack, StackProps } from "@aws-cdk/core";
+  Certificate,
+  CertificateProps,
+  CertificateValidation
+} from "@aws-cdk/aws-certificatemanager";
+import { Construct } from "@aws-cdk/core";
+import { BaseStack, BaseStackProps } from "./BaseStack";
+import { getHostedZoneId } from "../../aws/route53";
 
-export interface CoreStackParams extends StackProps {
+export interface CoreStackProps
+  extends BaseStackProps,
+    Partial<HostedZoneProps>,
+    Partial<Omit<CertificateProps, "domainName">> {
   rootDomain: string;
+  includeSubdomains?: boolean;
   hostedZoneId?: string;
   cloudWatchRoleArn?: string;
 }
 
-export class CoreStack extends Stack {
+export class CoreStack extends BaseStack {
   public hostedZone: IHostedZone;
   public certificate: Certificate;
 
-  constructor(scope: Construct, id: string, params: CoreStackParams) {
-    const { rootDomain, cloudWatchRoleArn, hostedZoneId } = params;
-    super(scope, id, params);
-
-    const cloudWatchRole = cloudWatchRoleArn
-      ? Role.fromRoleArn(this, "ApiGatgewayAccountRole", cloudWatchRoleArn)
-      : new Role(this, "ApiGatgewayAccountRole", {
-          roleName: `api-gateway-account-role`,
-          assumedBy: new ServicePrincipal("apigateway.amazonaws.com")
-        });
-    cloudWatchRole.attachInlinePolicy(
-      new Policy(this, "ApiGatewayLoggingPolicy", {
-        policyName: "api-gateway-account-logging-policy",
-        statements: [
-          new PolicyStatement({
-            effect: Effect.ALLOW,
-            actions: ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
-            resources: ["*"]
-          })
-        ]
-      })
-    );
-    if (!cloudWatchRoleArn) {
-      new CfnAccount(this, "ApiGatewayAccount", { cloudWatchRoleArn: cloudWatchRole.roleArn });
-    }
+  private constructor(scope: Construct, id: string, props: CoreStackProps) {
+    const { rootDomain, hostedZoneId } = props;
+    super(scope, id, props);
 
     this.hostedZone = hostedZoneId
       ? HostedZone.fromHostedZoneId(this, "HostedZone", hostedZoneId)
@@ -54,10 +32,26 @@ export class CoreStack extends Stack {
           zoneName: rootDomain
         });
 
+    const subjectAlternativeNames = props.subjectAlternativeNames ?? [];
+    if (props.includeSubdomains) {
+      subjectAlternativeNames.push(`*.${rootDomain}`);
+    }
     this.certificate = new Certificate(this, "Certificate", {
       domainName: rootDomain,
-      subjectAlternativeNames: [`*.${rootDomain}`],
+      subjectAlternativeNames,
       validation: CertificateValidation.fromDns(this.hostedZone)
+    });
+  }
+
+  static async create(scope: Construct, id: string, props: CoreStackProps): Promise<CoreStack> {
+    let hostedZoneId = props.hostedZoneId;
+    if (!hostedZoneId) {
+      hostedZoneId = await getHostedZoneId(props.rootDomain);
+    }
+    return new CoreStack(scope, id, {
+      ...props,
+      hostedZoneId,
+      stackName: `${props.prefix}-core`
     });
   }
 }

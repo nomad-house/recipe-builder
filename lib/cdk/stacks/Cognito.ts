@@ -4,8 +4,7 @@ import {
   FederatedPrincipal,
   RoleProps,
   PolicyDocument,
-  PolicyStatement,
-  Policy
+  PolicyStatement
 } from "@aws-cdk/aws-iam";
 import {
   UserPool,
@@ -14,62 +13,69 @@ import {
   CfnIdentityPoolRoleAttachment,
   CfnUserPoolDomain,
   CfnUserPoolGroup,
-  Mfa,
-  OAuthSettings,
   UserPoolClientIdentityProvider,
-  CfnUserPoolUICustomizationAttachment
+  CfnUserPoolUICustomizationAttachment,
+  CfnIdentityPoolProps,
+  UserPoolProps,
+  UserPoolClientProps
 } from "@aws-cdk/aws-cognito";
 import { Mutable } from "../../Mutable";
+import { BaseStack, BaseStackProps } from "./BaseStack";
+import { toKebab, toPascal } from "../../changeCase";
 
-export interface CognitoProps {
-  prefix: string;
-  userPoolMfa?: boolean;
-  samlAuth?: boolean;
-  callbackUrls?: string[];
+interface CognitoGroupConfig {
+  groupName: string;
+  policyStatements?: PolicyStatement[];
+}
+export interface CognitoProps extends BaseStackProps {
+  userPool: UserPoolProps;
+  userPoolClient: Omit<UserPoolClientProps, "userPool">;
+  identityPool: CfnIdentityPoolProps & { removalPolicy?: RemovalPolicy };
   dns?: {
-    certificateArn: string;
-    rootDomain: string;
+    certificateArn?: string;
+    domain: string;
   };
-  oAuthSettings?: OAuthSettings;
-  sharedPolicyStatements?: PolicyStatement[];
+  policyStatements?: PolicyStatement[];
+  groups?: CognitoGroupConfig[];
+  css?: string;
+  samlAuth?: boolean;
   adminRoleStatements?: PolicyStatement[];
   authRoleStatements?: PolicyStatement[];
-  css?: string;
 }
 
-export class Cognito extends Stack {
-  public userPool: UserPool;
-  public userPoolClient: UserPoolClient;
-  public identityPool: CfnIdentityPool;
-  public adminRole: Role;
-  public authenticatedRole: Role;
-  public userPoolDomain: CfnUserPoolDomain;
-  constructor(
-    scope: Construct,
-    id: string,
-    {
-      prefix,
-      userPoolMfa,
-      samlAuth,
-      dns,
-      oAuthSettings,
-      sharedPolicyStatements,
-      adminRoleStatements,
-      authRoleStatements,
-      css
-    }: CognitoProps
-  ) {
-    super(scope, id);
-    const prod = prefix.split("-").pop() === "prod";
+export class Cognito extends BaseStack {
+  private static DEFAULT_GROUP_NAME = "authenticated";
+  public userPool!: UserPool;
+  public userPoolClient!: UserPoolClient;
+  public userPoolDomain!: CfnUserPoolDomain;
+  public identityPool!: CfnIdentityPool;
+  public roles: { [groupName: string]: Role } = {};
+
+  constructor(scope: Construct, id: string, props: CognitoProps) {
+    super(scope, id, { ...props, stackName: `${props.prefix}-cognito` });
+    this.buildUserPool(props);
+    this.buildGroups(props);
+    this.buildIdentityPool(props);
+
+    if (props.css) {
+      new CfnUserPoolUICustomizationAttachment(this, "CognitoUICustomization", {
+        userPoolId: this.userPool.userPoolId,
+        clientId: this.userPoolClient.userPoolClientId,
+        css: props.css
+      });
+    }
+  }
+
+  buildUserPool({ prefix, userPool, userPoolClient, samlAuth, dns }: CognitoProps) {
     this.userPool = new UserPool(this, "UserPool", {
-      userPoolName: `${prefix}`,
-      removalPolicy: prod ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
-      autoVerify: {
+      ...userPool,
+      userPoolName: prefix,
+      removalPolicy: this.prod ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
+      selfSignUpEnabled: userPool.selfSignUpEnabled ?? false,
+      autoVerify: userPool.autoVerify ?? {
         email: true
       },
-      mfa: userPoolMfa ? Mfa.REQUIRED : Mfa.OFF,
-      selfSignUpEnabled: false,
-      standardAttributes: {
+      standardAttributes: userPool.standardAttributes ?? {
         email: {
           required: true,
           mutable: samlAuth
@@ -77,74 +83,113 @@ export class Cognito extends Stack {
       }
     });
     this.userPoolClient = new UserPoolClient(this, "UserPoolClient", {
-      userPoolClientName: `${prefix}`,
+      ...userPoolClient,
+      userPoolClientName: prefix,
       userPool: this.userPool,
-      supportedIdentityProviders: [UserPoolClientIdentityProvider.COGNITO],
-      generateSecret: false,
-      oAuth: oAuthSettings
+      supportedIdentityProviders: userPoolClient.supportedIdentityProviders ?? [
+        UserPoolClientIdentityProvider.COGNITO
+      ],
+      generateSecret: userPoolClient.generateSecret ?? false,
+      oAuth: userPoolClient.oAuth
     });
-    this.identityPool = new CfnIdentityPool(this, "IdentityPool", {
-      identityPoolName: `${prefix}`,
-      allowUnauthenticatedIdentities: false,
-      cognitoIdentityProviders: [
-        {
-          serverSideTokenCheck: false,
-          clientId: this.userPoolClient.userPoolClientId,
-          providerName: this.userPool.userPoolProviderName
-        }
-      ]
-    });
-    this.identityPool.applyRemovalPolicy(RemovalPolicy.DESTROY);
-    const roleProps: Mutable<RoleProps> = {
-      assumedBy: new FederatedPrincipal(
-        "cognito-identity.amazonaws.com",
-        {
-          StringEquals: {
-            "cognito-identity.amazonaws.com:aud": this.identityPool.ref
-          },
-          "ForAnyValue:StringLike": {
-            "cognito-identity.amazonaws.com:amr": "authenticated"
+    this.userPoolDomain = new CfnUserPoolDomain(
+      this,
+      "UserPoolDomain",
+      dns
+        ? {
+            userPoolId: this.userPool.userPoolId,
+            domain: dns.domain,
+            customDomainConfig: dns.certificateArn
+              ? { certificateArn: dns.certificateArn }
+              : undefined
           }
-        },
-        "sts:AssumeRoleWithWebIdentity"
-      )
-    };
-    if (sharedPolicyStatements?.length) {
-      roleProps.inlinePolicies = {
-        [`${prefix}-base-permissions`]: new PolicyDocument({
-          statements: sharedPolicyStatements
-        })
+        : {
+            userPoolId: this.userPool.userPoolId,
+            domain: prefix
+          }
+    );
+  }
+
+  buildGroups(props: CognitoProps) {
+    const defaultGroups: CognitoGroupConfig[] = [
+      {
+        groupName: Cognito.DEFAULT_GROUP_NAME,
+        policyStatements: props.policyStatements
+      }
+    ];
+    const groups = props.groups?.find(({ groupName }) => groupName === Cognito.DEFAULT_GROUP_NAME)
+      ? props.groups
+      : props.groups?.length
+      ? defaultGroups.concat(...props.groups)
+      : defaultGroups;
+
+    for (const group of groups) {
+      const roleProps: Mutable<RoleProps> = {
+        roleName: `${this.prefix}-group-role`,
+        assumedBy: new FederatedPrincipal(
+          "cognito-identity.amazonaws.com",
+          {
+            StringEquals: {
+              "cognito-identity.amazonaws.com:aud": this.identityPool.ref
+            },
+            "ForAnyValue:StringLike": {
+              "cognito-identity.amazonaws.com:amr": "authenticated"
+            }
+          },
+          "sts:AssumeRoleWithWebIdentity"
+        )
       };
+      const policyStatements = [
+        ...(group.policyStatements ?? []),
+        ...(props.policyStatements ?? [])
+      ];
+      if (policyStatements?.length) {
+        roleProps.inlinePolicies = {
+          [`${this.prefix}-${group.groupName}`]: new PolicyDocument({
+            statements: policyStatements
+          })
+        };
+      }
+      const role = new Role(this, `${toPascal(group.groupName)}GroupRole`, roleProps);
+      if (group.groupName !== Cognito.DEFAULT_GROUP_NAME) {
+        new CfnUserPoolGroup(this, `${toPascal(group.groupName)}Group`, {
+          groupName: toKebab(group.groupName),
+          roleArn: role.roleArn,
+          userPoolId: this.userPool.userPoolId
+        });
+      }
+      this.roles[group.groupName] = role;
     }
-    this.adminRole = new Role(this, "AdminGroupRole", roleProps);
-    if (adminRoleStatements?.length) {
-      const name = `${prefix}-authenticated-policy`;
-      this.adminRole.attachInlinePolicy(
-        new Policy(this, name, {
-          policyName: name,
-          statements: adminRoleStatements
-        })
-      );
-    }
-    this.authenticatedRole = new Role(this, "AuthenticatedRole", roleProps);
-    if (authRoleStatements?.length) {
-      const name = `${prefix}-authenticated-policy`;
-      this.authenticatedRole.attachInlinePolicy(
-        new Policy(this, name, {
-          policyName: name,
-          statements: authRoleStatements
-        })
-      );
-    }
-    new CfnUserPoolGroup(this, "AdminGroup", {
-      groupName: "admin",
-      userPoolId: this.userPool.userPoolId,
-      roleArn: this.adminRole.roleArn
+  }
+
+  buildIdentityPool({ prefix, identityPool }: CognitoProps) {
+    const defaultProvider: CfnIdentityPoolProps["cognitoIdentityProviders"] = [
+      {
+        serverSideTokenCheck: false,
+        clientId: this.userPoolClient.userPoolClientId,
+        providerName: this.userPool.userPoolProviderName
+      }
+    ];
+    const cognitoIdentityProviders = Array.isArray(identityPool.cognitoIdentityProviders)
+      ? [...identityPool.cognitoIdentityProviders, ...defaultProvider]
+      : identityPool.cognitoIdentityProviders
+      ? [identityPool.cognitoIdentityProviders, ...defaultProvider]
+      : defaultProvider;
+
+    this.identityPool = new CfnIdentityPool(this, "IdentityPool", {
+      ...identityPool,
+      identityPoolName: prefix,
+      cognitoIdentityProviders
     });
+
+    if (identityPool.removalPolicy) {
+      this.identityPool.applyRemovalPolicy(identityPool.removalPolicy);
+    }
+
     new CfnIdentityPoolRoleAttachment(this, "AuthorizedUserRoleAttachment", {
       identityPoolId: this.identityPool.ref,
       roles: {
-        authenticated: this.authenticatedRole.roleArn
+        authenticated: this.roles[Cognito.DEFAULT_GROUP_NAME].roleArn
       },
       roleMappings: {
         cognitoProvider: {
@@ -161,28 +206,5 @@ export class Cognito extends Stack {
         }
       }
     });
-    /* eslint-disable indent */
-    this.userPoolDomain = new CfnUserPoolDomain(
-      this,
-      "UserPoolDomain",
-      dns
-        ? {
-            userPoolId: this.userPool.userPoolId,
-            domain: `auth.voicemail.${dns.rootDomain}`,
-            customDomainConfig: { certificateArn: dns.certificateArn }
-          }
-        : {
-            userPoolId: this.userPool.userPoolId,
-            domain: prefix
-          }
-    );
-    /* eslint-enable indent */
-    if (css) {
-      new CfnUserPoolUICustomizationAttachment(this, "CognitoUICustomization", {
-        userPoolId: this.userPool.userPoolId,
-        clientId: this.userPoolClient.userPoolClientId,
-        css
-      });
-    }
   }
 }

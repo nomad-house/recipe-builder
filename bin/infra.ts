@@ -3,20 +3,7 @@ import { App } from "@aws-cdk/core";
 import { ServerlessStack } from "../lib/cdk/stacks/ServerlessStack";
 import { getConfig } from "../config";
 import { AssetCode, Runtime } from "@aws-cdk/aws-lambda";
-// import { getHostedZoneId } from "../lib/aws/route53";
-// import { getApiGatewayAccountRole } from "../lib/aws/apiGateway";
-// import { CoreStack } from "../lib/cdk/CoreStack";
-// import { StaticAssetsStack } from "../lib/cdk/StaticAssetsStack";
-// import { AuthStack } from "../lib/cdk/Cognito";
-// import { BackendStack } from "lib/cdk/BaseStack";
-
-// interface SynthParams {
-//   project: string;
-//   stage: string;
-//   region: string;
-//   account: string;
-//   rootDomain: string;
-// }
+import { CoreStack } from "../lib/cdk/stacks/coreStack";
 
 export async function buildInfra() {
   const config = await getConfig();
@@ -24,15 +11,11 @@ export async function buildInfra() {
 
   const app = new App();
 
-  // const cloudWatchRoleArn = await getApiGatewayAccountRole();
-  // const hostedZoneId = await getHostedZoneId({ rootDomain });
-  // const coreStack = new CoreStack(app, "CoreStack", {
-  //   stackName: `${project}-core`,
-  //   env,
-  //   rootDomain,
-  //   hostedZoneId,
-  //   cloudWatchRoleArn
-  // });
+  const coreStack = await CoreStack.create(app, "CoreStack", {
+    prefix,
+    env: config.env,
+    rootDomain: "CODEified.org"
+  });
 
   const backend = new ServerlessStack(app, "Backend", {
     prefix,
