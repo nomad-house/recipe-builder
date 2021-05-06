@@ -1,4 +1,5 @@
 import {
+  CognitoUserPoolsAuthorizer,
   Cors,
   CorsOptions as BaseCorsOptions,
   Deployment,
@@ -15,6 +16,7 @@ import { Role, ServicePrincipal } from "@aws-cdk/aws-iam";
 import { Construct } from "@aws-cdk/core";
 import { BaseConstruct, BaseConstructProps } from "./BaseConstruct";
 import { Lambdas } from "./Lambdas";
+import { UserPool } from "@aws-cdk/aws-cognito";
 
 const methods = ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"] as const;
 type Method = typeof methods[number];
@@ -59,7 +61,7 @@ interface CorsOptions extends BaseCorsOptions {
 
 export interface ApiProps extends BaseConstructProps {
   lambdas: Lambdas;
-  authorizer?: IAuthorizer;
+  userPool?: UserPool;
   gatewayResponses?: GatewayResponseOptions[];
   cors: CorsOptions;
 }
@@ -67,7 +69,7 @@ export interface ApiProps extends BaseConstructProps {
 export class Api extends BaseConstruct {
   public restApi: RestApi;
   private serviceRole: Role;
-  private authorizer?: IAuthorizer;
+  private userPool?: UserPool;
 
   constructor(scope: Construct, id: string, props: ApiProps) {
     super(scope, id, props);
@@ -111,8 +113,12 @@ export class Api extends BaseConstruct {
   addResource({ lambda, method, path }: ApiConfig) {
     const resource = this.restApi.root.resourceForPath(path);
     let options: MethodOptions | undefined;
-    if (this.authorizer && method !== "OPTIONS") {
-      options = { authorizer: this.authorizer };
+    if (this.userPool && method !== "OPTIONS") {
+      options = {
+        authorizer: new CognitoUserPoolsAuthorizer(this, "UserPoolAuthorizer", {
+          cognitoUserPools: [this.userPool]
+        })
+      };
     }
     resource.addMethod(method, new LambdaIntegration(lambda), options);
     lambda.grantInvoke(this.serviceRole);

@@ -4,6 +4,8 @@ import { ServerlessStack } from "../lib/cdk/stacks/ServerlessStack";
 import { getConfig } from "../config";
 import { AssetCode, Runtime } from "@aws-cdk/aws-lambda";
 import { CoreStack } from "../lib/cdk/stacks/coreStack";
+import { Cognito } from "../lib/cdk/stacks/Cognito";
+import { CognitoUserPoolsAuthorizer } from "@aws-cdk/aws-apigateway";
 
 export async function buildInfra() {
   const config = await getConfig();
@@ -17,8 +19,18 @@ export async function buildInfra() {
     rootDomain: "CODEified.org"
   });
 
+  const auth = new Cognito(app, "Cognito", {
+    prefix,
+    groups: [
+      {
+        groupName: "admin"
+      }
+    ]
+  });
+
   const backend = new ServerlessStack(app, "Backend", {
     prefix,
+    userPool: auth.userPool,
     cors: {
       allowOrigins: ["http://localhost:4200"]
     },

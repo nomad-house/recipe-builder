@@ -27,10 +27,11 @@ interface CognitoGroupConfig {
   groupName: string;
   policyStatements?: PolicyStatement[];
 }
+type IdentityPoolConfig = CfnIdentityPoolProps & { removalPolicy?: RemovalPolicy };
 export interface CognitoProps extends BaseStackProps {
-  userPool: UserPoolProps;
-  userPoolClient: Omit<UserPoolClientProps, "userPool">;
-  identityPool: CfnIdentityPoolProps & { removalPolicy?: RemovalPolicy };
+  userPool?: UserPoolProps;
+  userPoolClient?: Omit<UserPoolClientProps, "userPool">;
+  identityPool?: IdentityPoolConfig;
   dns?: {
     certificateArn?: string;
     domain: string;
@@ -39,8 +40,6 @@ export interface CognitoProps extends BaseStackProps {
   groups?: CognitoGroupConfig[];
   css?: string;
   samlAuth?: boolean;
-  adminRoleStatements?: PolicyStatement[];
-  authRoleStatements?: PolicyStatement[];
 }
 
 export class Cognito extends BaseStack {
@@ -71,11 +70,11 @@ export class Cognito extends BaseStack {
       ...userPool,
       userPoolName: prefix,
       removalPolicy: this.prod ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
-      selfSignUpEnabled: userPool.selfSignUpEnabled ?? false,
-      autoVerify: userPool.autoVerify ?? {
+      selfSignUpEnabled: userPool?.selfSignUpEnabled ?? false,
+      autoVerify: userPool?.autoVerify ?? {
         email: true
       },
-      standardAttributes: userPool.standardAttributes ?? {
+      standardAttributes: userPool?.standardAttributes ?? {
         email: {
           required: true,
           mutable: samlAuth
@@ -86,11 +85,10 @@ export class Cognito extends BaseStack {
       ...userPoolClient,
       userPoolClientName: prefix,
       userPool: this.userPool,
-      supportedIdentityProviders: userPoolClient.supportedIdentityProviders ?? [
+      supportedIdentityProviders: userPoolClient?.supportedIdentityProviders ?? [
         UserPoolClientIdentityProvider.COGNITO
       ],
-      generateSecret: userPoolClient.generateSecret ?? false,
-      oAuth: userPoolClient.oAuth
+      generateSecret: userPoolClient?.generateSecret ?? false
     });
     this.userPoolDomain = new CfnUserPoolDomain(
       this,
@@ -170,19 +168,20 @@ export class Cognito extends BaseStack {
         providerName: this.userPool.userPoolProviderName
       }
     ];
-    const cognitoIdentityProviders = Array.isArray(identityPool.cognitoIdentityProviders)
-      ? [...identityPool.cognitoIdentityProviders, ...defaultProvider]
-      : identityPool.cognitoIdentityProviders
-      ? [identityPool.cognitoIdentityProviders, ...defaultProvider]
+    const cognitoIdentityProviders = Array.isArray(identityPool?.cognitoIdentityProviders)
+      ? [...(identityPool as any).cognitoIdentityProviders, ...defaultProvider]
+      : identityPool?.cognitoIdentityProviders
+      ? [identityPool?.cognitoIdentityProviders, ...defaultProvider]
       : defaultProvider;
 
     this.identityPool = new CfnIdentityPool(this, "IdentityPool", {
-      ...identityPool,
+      ...(identityPool || []),
       identityPoolName: prefix,
-      cognitoIdentityProviders
+      cognitoIdentityProviders,
+      allowUnauthenticatedIdentities: identityPool?.allowUnauthenticatedIdentities ?? false
     });
 
-    if (identityPool.removalPolicy) {
+    if (identityPool?.removalPolicy) {
       this.identityPool.applyRemovalPolicy(identityPool.removalPolicy);
     }
 
