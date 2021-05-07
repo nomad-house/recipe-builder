@@ -5,11 +5,10 @@ import {
   CertificateValidation
 } from "@aws-cdk/aws-certificatemanager";
 import { Construct } from "@aws-cdk/core";
-import { BaseStack, BaseStackProps } from "./BaseStack";
-import { getHostedZoneId } from "../../aws/route53";
+import { BaseConstruct, BaseConstructProps } from "../../constructs/BaseConstruct";
 
-export interface CoreStackProps
-  extends BaseStackProps,
+export interface CoreConstructProps
+  extends BaseConstructProps,
     Partial<HostedZoneProps>,
     Partial<Omit<CertificateProps, "domainName">> {
   rootDomain: string;
@@ -18,13 +17,13 @@ export interface CoreStackProps
   cloudWatchRoleArn?: string;
 }
 
-export class CoreStack extends BaseStack {
+export class CoreConstruct extends BaseConstruct {
   public hostedZone: IHostedZone;
   public certificate: Certificate;
 
-  private constructor(scope: Construct, id: string, props: CoreStackProps) {
-    const { rootDomain, hostedZoneId } = props;
+  constructor(scope: Construct, id: string, props: CoreConstructProps) {
     super(scope, id, props);
+    const { rootDomain, hostedZoneId } = props;
 
     this.hostedZone = hostedZoneId
       ? HostedZone.fromHostedZoneId(this, "HostedZone", hostedZoneId)
@@ -40,18 +39,6 @@ export class CoreStack extends BaseStack {
       domainName: rootDomain,
       subjectAlternativeNames,
       validation: CertificateValidation.fromDns(this.hostedZone)
-    });
-  }
-
-  static async create(scope: Construct, id: string, props: CoreStackProps): Promise<CoreStack> {
-    let hostedZoneId = props.hostedZoneId;
-    if (!hostedZoneId) {
-      hostedZoneId = await getHostedZoneId(props.rootDomain);
-    }
-    return new CoreStack(scope, id, {
-      ...props,
-      hostedZoneId,
-      stackName: `${props.prefix}-core`
     });
   }
 }

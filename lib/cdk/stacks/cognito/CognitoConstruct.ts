@@ -19,16 +19,17 @@ import {
   UserPoolProps,
   UserPoolClientProps
 } from "@aws-cdk/aws-cognito";
-import { Mutable } from "../../Mutable";
-import { BaseStack, BaseStackProps } from "./BaseStack";
-import { toKebab, toPascal } from "../../changeCase";
+import { Mutable } from "../../../Mutable";
+import { toKebab, toPascal } from "../../../changeCase";
+import { BaseConstruct, BaseConstructProps } from "../../constructs/BaseConstruct";
 
 interface CognitoGroupConfig {
   groupName: string;
   policyStatements?: PolicyStatement[];
 }
 type IdentityPoolConfig = CfnIdentityPoolProps & { removalPolicy?: RemovalPolicy };
-export interface CognitoProps extends BaseStackProps {
+
+export interface CognitoConstructProps extends BaseConstructProps {
   userPool?: UserPoolProps;
   userPoolClient?: Omit<UserPoolClientProps, "userPool">;
   identityPool?: IdentityPoolConfig;
@@ -42,7 +43,7 @@ export interface CognitoProps extends BaseStackProps {
   samlAuth?: boolean;
 }
 
-export class Cognito extends BaseStack {
+export class CognitoConstruct extends BaseConstruct {
   private static DEFAULT_GROUP_NAME = "authenticated";
   public userPool!: UserPool;
   public userPoolClient!: UserPoolClient;
@@ -50,8 +51,8 @@ export class Cognito extends BaseStack {
   public identityPool!: CfnIdentityPool;
   public roles: { [groupName: string]: Role } = {};
 
-  constructor(scope: Construct, id: string, props: CognitoProps) {
-    super(scope, id, { ...props, stackName: `${props.prefix}-cognito` });
+  constructor(scope: Construct, id: string, props: CognitoConstructProps) {
+    super(scope, id, props);
     this.buildUserPool(props);
     this.buildGroups(props);
     this.buildIdentityPool(props);
@@ -65,7 +66,7 @@ export class Cognito extends BaseStack {
     }
   }
 
-  buildUserPool({ prefix, userPool, userPoolClient, samlAuth, dns }: CognitoProps) {
+  buildUserPool({ prefix, userPool, userPoolClient, samlAuth, dns }: CognitoConstructProps) {
     this.userPool = new UserPool(this, "UserPool", {
       ...userPool,
       userPoolName: prefix,
@@ -108,14 +109,16 @@ export class Cognito extends BaseStack {
     );
   }
 
-  buildGroups(props: CognitoProps) {
+  buildGroups(props: CognitoConstructProps) {
     const defaultGroups: CognitoGroupConfig[] = [
       {
-        groupName: Cognito.DEFAULT_GROUP_NAME,
+        groupName: CognitoConstruct.DEFAULT_GROUP_NAME,
         policyStatements: props.policyStatements
       }
     ];
-    const groups = props.groups?.find(({ groupName }) => groupName === Cognito.DEFAULT_GROUP_NAME)
+    const groups = props.groups?.find(
+      ({ groupName }) => groupName === CognitoConstruct.DEFAULT_GROUP_NAME
+    )
       ? props.groups
       : props.groups?.length
       ? defaultGroups.concat(...props.groups)
@@ -149,7 +152,7 @@ export class Cognito extends BaseStack {
         };
       }
       const role = new Role(this, `${toPascal(group.groupName)}GroupRole`, roleProps);
-      if (group.groupName !== Cognito.DEFAULT_GROUP_NAME) {
+      if (group.groupName !== CognitoConstruct.DEFAULT_GROUP_NAME) {
         new CfnUserPoolGroup(this, `${toPascal(group.groupName)}Group`, {
           groupName: toKebab(group.groupName),
           roleArn: role.roleArn,
@@ -160,7 +163,7 @@ export class Cognito extends BaseStack {
     }
   }
 
-  buildIdentityPool({ prefix, identityPool }: CognitoProps) {
+  buildIdentityPool({ prefix, identityPool }: CognitoConstructProps) {
     const defaultProvider: CfnIdentityPoolProps["cognitoIdentityProviders"] = [
       {
         serverSideTokenCheck: false,
@@ -188,7 +191,7 @@ export class Cognito extends BaseStack {
     new CfnIdentityPoolRoleAttachment(this, "AuthorizedUserRoleAttachment", {
       identityPoolId: this.identityPool.ref,
       roles: {
-        authenticated: this.roles[Cognito.DEFAULT_GROUP_NAME].roleArn
+        authenticated: this.roles[CognitoConstruct.DEFAULT_GROUP_NAME].roleArn
       },
       roleMappings: {
         cognitoProvider: {

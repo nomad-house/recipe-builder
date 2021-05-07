@@ -3,14 +3,23 @@ import { toKebab } from "./lib/changeCase";
 
 const owner = "matthewkeil";
 const repo = "CODEified";
+const rootDomain = "codeified.org";
 const project = repo.toLowerCase();
 const client = owner;
 const stages: StageConfig[] = [
   {
     alias: "admin",
+    branch: "dev",
+    env: {
+      account: "141394433500",
+      region: "us-east-1"
+    }
+  },
+  {
+    alias: "admin",
     branch: "master",
     env: {
-      account: "",
+      account: "141394433500",
       region: "us-east-1"
     }
   }
@@ -35,6 +44,7 @@ export async function getConfig(): Promise<ApplicationConfig> {
     repo,
     project,
     client,
+    rootDomain,
     stage: toKebab(branch === "master" ? "prod" : branch)
   };
 }
@@ -53,5 +63,6 @@ interface ApplicationConfig extends StageConfig {
   repo: string;
   owner: string;
   client: string;
+  rootDomain: string;
   stage: string;
 }
