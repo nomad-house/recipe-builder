@@ -2,7 +2,7 @@ import { Construct, RemovalPolicy } from "@aws-cdk/core";
 import { BucketDeployment, Source } from "@aws-cdk/aws-s3-deployment";
 import { CloudFrontWebDistribution, OriginAccessIdentity } from "@aws-cdk/aws-cloudfront";
 import { BlockPublicAccess, Bucket, BucketEncryption } from "@aws-cdk/aws-s3";
-import { Certificate } from "@aws-cdk/aws-certificatemanager";
+import { ICertificate } from "@aws-cdk/aws-certificatemanager";
 import { ARecord, IHostedZone, RecordTarget } from "@aws-cdk/aws-route53";
 import { CloudFrontTarget } from "@aws-cdk/aws-route53-targets";
 import { toKebab, toPascal } from "../../../changeCase";
@@ -11,7 +11,7 @@ import { BaseConstruct, BaseConstructProps } from "../../constructs/BaseConstruc
 export interface CDNConstructProps extends BaseConstructProps {
   codePaths: string[];
   hostedZone: IHostedZone;
-  certificate?: Certificate;
+  certificate?: ICertificate;
   rootDomain?: string;
   stage?: string;
   buildWwwSubdomain?: boolean;
@@ -103,7 +103,7 @@ export class CDNConstruct extends BaseConstruct {
     rootDomain: string;
     buildWwwSubdomain?: boolean;
   }): string[] {
-    if (stage === "prod") {
+    if (this.prod) {
       if (buildWwwSubdomain) {
         return [rootDomain, `www.${rootDomain}`];
       }

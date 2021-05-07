@@ -1,4 +1,4 @@
-import { Certificate } from "@aws-cdk/aws-certificatemanager";
+import { ICertificate } from "@aws-cdk/aws-certificatemanager";
 import { IHostedZone } from "@aws-cdk/aws-route53";
 import { Construct } from "@aws-cdk/core";
 import { getHostedZoneId } from "../../../aws/route53";
@@ -8,7 +8,7 @@ import { CoreConstruct, CoreConstructProps } from "./CoreConstruct";
 export interface CoreStackProps extends BaseStackProps, CoreConstructProps {}
 
 export class CoreStack extends BaseStack {
-  public certificate!: Certificate;
+  public certificate!: ICertificate;
   public hostedZone!: IHostedZone;
   private constructor(scope: Construct, id: string, props: CoreStackProps) {
     super(scope, id, { ...props, stackName: props.stackName ?? `${props.prefix}-core` });

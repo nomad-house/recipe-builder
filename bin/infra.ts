@@ -7,6 +7,9 @@ import { CoreStack, CognitoStack, ServerlessStack, CDNStack } from "../lib/cdk";
 export async function buildInfra() {
   const { client, project, stage, env, rootDomain } = await getConfig();
   const prefix = `${client}-${project}-${stage}`;
+  const devPort = 4200;
+  const callBackPath = "/authorize";
+  const logoutPath = "/";
 
   const app = new App();
 
@@ -16,20 +19,39 @@ export async function buildInfra() {
     rootDomain
   });
 
+  const frontend = new CDNStack(app, "Frontend", {
+    env,
+    prefix,
+    certificate: coreStack.certificate,
+    codePaths: [resolve(__dirname, "..", "dist", "frontend")],
+    hostedZone: coreStack.hostedZone,
+    stage: stage,
+    rootDomain: rootDomain
+  });
+
+  const devAddress = `http://localhost:${devPort}`;
+  const urls = (frontend.urls ?? []).concat(devAddress);
   const auth = new CognitoStack(app, "Cognito", {
     prefix,
     groups: [
       {
         groupName: "admin"
       }
-    ]
+    ],
+    userPoolClient: {
+      oAuth: {
+        callbackUrls: urls.map(url => url + callBackPath ?? ""),
+        logoutUrls: urls.map(url => url + logoutPath ?? "")
+      }
+    }
   });
 
-  const backend = new ServerlessStack(app, "Backend", {
+  new ServerlessStack(app, "Backend", {
     prefix,
-    userPool: auth.userPool,
+    auth,
+    frontend,
     cors: {
-      allowOrigins: ["http://localhost:4200"]
+      allowOrigins: urls
     },
     tables: [
       {
@@ -54,15 +76,6 @@ export async function buildInfra() {
         ]
       }
     ]
-  });
-
-  const frontend = new CDNStack(app, "Frontend", {
-    env,
-    prefix,
-    codePaths: [resolve(__dirname, "..", "dist", "frontend")],
-    hostedZone: coreStack.hostedZone,
-    stage: stage,
-    rootDomain: rootDomain
   });
 
   app.synth();

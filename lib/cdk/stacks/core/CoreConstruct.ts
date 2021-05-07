@@ -2,7 +2,8 @@ import { HostedZone, HostedZoneProps, IHostedZone } from "@aws-cdk/aws-route53";
 import {
   Certificate,
   CertificateProps,
-  CertificateValidation
+  CertificateValidation,
+  ICertificate
 } from "@aws-cdk/aws-certificatemanager";
 import { Construct } from "@aws-cdk/core";
 import { BaseConstruct, BaseConstructProps } from "../../constructs/BaseConstruct";
@@ -14,16 +15,16 @@ export interface CoreConstructProps
   rootDomain: string;
   includeSubdomains?: boolean;
   hostedZoneId?: string;
-  cloudWatchRoleArn?: string;
+  certificateArn?: string;
 }
 
 export class CoreConstruct extends BaseConstruct {
   public hostedZone: IHostedZone;
-  public certificate: Certificate;
+  public certificate: ICertificate;
 
   constructor(scope: Construct, id: string, props: CoreConstructProps) {
     super(scope, id, props);
-    const { rootDomain, hostedZoneId } = props;
+    const { rootDomain, hostedZoneId, certificateArn } = props;
 
     this.hostedZone = hostedZoneId
       ? HostedZone.fromHostedZoneId(this, "HostedZone", hostedZoneId)
@@ -35,10 +36,13 @@ export class CoreConstruct extends BaseConstruct {
     if (props.includeSubdomains) {
       subjectAlternativeNames.push(`*.${rootDomain}`);
     }
-    this.certificate = new Certificate(this, "Certificate", {
-      domainName: rootDomain,
-      subjectAlternativeNames,
-      validation: CertificateValidation.fromDns(this.hostedZone)
-    });
+
+    this.certificate = certificateArn
+      ? Certificate.fromCertificateArn(this, "Certificate", certificateArn)
+      : new Certificate(this, "Certificate", {
+          domainName: rootDomain,
+          subjectAlternativeNames,
+          validation: CertificateValidation.fromDns(this.hostedZone)
+        });
   }
 }
