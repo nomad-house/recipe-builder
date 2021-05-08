@@ -110,23 +110,18 @@ export class CognitoConstruct extends BaseConstruct {
   }
 
   buildGroups(props: CognitoConstructProps) {
-    const defaultGroups: CognitoGroupConfig[] = [
-      {
-        groupName: CognitoConstruct.DEFAULT_GROUP_NAME,
-        policyStatements: props.policyStatements
-      }
-    ];
-    const groups = props.groups?.find(
+    const defaultGroup: CognitoGroupConfig = {
+      groupName: CognitoConstruct.DEFAULT_GROUP_NAME,
+      policyStatements: props.policyStatements
+    };
+    const hasDefault = !!props.groups?.find(
       ({ groupName }) => groupName === CognitoConstruct.DEFAULT_GROUP_NAME
-    )
-      ? props.groups
-      : props.groups?.length
-      ? defaultGroups.concat(...props.groups)
-      : defaultGroups;
+    );
+    const groups = hasDefault ? props.groups! : [defaultGroup, ...(props.groups ?? [])];
 
     for (const group of groups) {
       const roleProps: Mutable<RoleProps> = {
-        roleName: `${this.prefix}-group-role`,
+        roleName: `${this.prefix}-${group.groupName}-group`,
         assumedBy: new FederatedPrincipal(
           "cognito-identity.amazonaws.com",
           {

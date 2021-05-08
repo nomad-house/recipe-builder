@@ -17,7 +17,9 @@ export async function buildInfra() {
     env,
     prefix,
     profile,
-    rootDomain
+    rootDomain,
+    certificateArn:
+      "arn:aws:acm:us-east-1:141394433500:certificate/a27fc92f-1afc-4ea0-8ac2-3fd528c771cf"
   });
 
   const frontend = new CDNStack(app, "Frontend", {
@@ -31,7 +33,7 @@ export async function buildInfra() {
   });
 
   const devAddress = `http://localhost:${devPort}`;
-  const urls = (frontend.urls ?? []).concat(devAddress);
+  const urls = (frontend.urls ?? []).map(url => `https://${url}`).concat(devAddress);
   const auth = new CognitoStack(app, "Auth", {
     env,
     prefix,

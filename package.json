@@ -5,16 +5,17 @@
   "author": "Matthew Keil",
   "description": "Blockchain Based Decentralized Democratic Governance Through Transparent and Automated Aggregation of Individually CODEified Constitutions",
   "scripts": {
+    "cdk": "cdk",
     "ts-node": "ts-node",
-    "build:ts": "tsc --project tsconfig.build.json",
-    "build:providers": "webpack",
-    "build:layer": "ts-node bin/buildLayer",
-    "build:frontend": "npm run generate:frontend && npm run move:frontend",
+    "build:ts": "tsc --project tsconfig.build.json && npm run build:providers",
+    "build:providers": "cross-env-shell \"rm -rf dist/lib/providers && webpack\"",
+    "build:layer": "cd bin && ts-node buildLayer",
+    "build:frontend": "npm run frontend:generate && npm run frontend:move",
     "frontend:generate": "cd frontend && npm run generate",
-    "frontend:move": "cross-env-shell \"mv frontend/dist dist/frontend\n",
-    "build": "npm run build:ts && npm run build:providers && npm run build:layer",
-    "synth": "cross-env-shell \"node_modules/.bin/cdk synth\"",
-    "deploy": "cross-env-shell \"ts-node node_modules/.bin/cdk deploy '*'\""
+    "frontend:move": "cross-env-shell \"mv frontend/dist dist/frontend\"",
+    "build": "cross-env-shell \"rm -rf dist && npm run build:ts && npm run build:layer\"",
+    "synth": "npm run build:ts && cross-env-shell \"node_modules/.bin/cdk synth\"",
+    "deploy": "cross-env-shell \"node_modules/.bin/cdk deploy --all --require-approval never\""
   },
   "devDependencies": {
     "@aws-cdk/aws-apigateway": "1.101.0",

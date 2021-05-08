@@ -38,7 +38,7 @@ export interface LambdasProps extends BaseConstructProps, Omit<LambdaProps, Omit
 export interface ResourceGroup {
   lambda: Lambda;
   logGroup: LogGroup;
-  role: Role;
+  role: IRole;
 }
 
 export class Lambdas extends BaseConstruct {
@@ -76,7 +76,12 @@ export class Lambdas extends BaseConstruct {
       }
     );
 
-    const role = this.buildIam({ props, logGroup, functionName });
+    const role = this.buildIam({
+      role: props.role ?? this.props.role,
+      props,
+      logGroup,
+      functionName
+    });
 
     const code = props.codePath ? new AssetCode(props.codePath) : this.code;
     if (!code) {
@@ -182,26 +187,30 @@ export class Lambdas extends BaseConstruct {
   buildIam({
     functionName,
     logGroup,
-    props
+    props,
+    role
   }: {
+    role?: IRole;
     functionName: string;
     logGroup: LogGroup;
     props: LambdaProps;
-  }): Role {
+  }): IRole {
     const truncatedName = functionName.substr(0, 64);
-    const role = new Role(this, `${toPascal(props.functionName)}Role`, {
-      roleName: truncatedName,
-      assumedBy: new ServicePrincipal("lambda.amazonaws.com")
-    });
+    const _role =
+      role ??
+      new Role(this, `${toPascal(props.functionName)}Role`, {
+        roleName: truncatedName,
+        assumedBy: new ServicePrincipal("lambda.amazonaws.com")
+      });
 
-    logGroup.grantWrite(role);
+    logGroup.grantWrite(_role);
 
     if (props.policyStatements?.length) {
-      props.policyStatements.forEach(statement => role.addToPolicy(statement));
+      props.policyStatements.forEach(statement => _role.addToPrincipalPolicy(statement));
     }
 
     if (props.vpc) {
-      role.addToPolicy(
+      _role.addToPrincipalPolicy(
         new PolicyStatement({
           effect: Effect.ALLOW,
           actions: [
@@ -216,6 +225,6 @@ export class Lambdas extends BaseConstruct {
       );
     }
 
-    return role;
+    return _role;
   }
 }

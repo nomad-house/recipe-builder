@@ -1,18 +1,17 @@
 import { Construct, CustomResource, Environment } from "@aws-cdk/core";
 import { Function as Lambda } from "@aws-cdk/aws-lambda";
-import { Role, ServicePrincipal, PolicyDocument, Effect, PolicyStatement } from "@aws-cdk/aws-iam";
+import { Role, ServicePrincipal } from "@aws-cdk/aws-iam";
 import { Lambdas, LambdasProps, LambdaProps } from "../../constructs/Lambdas";
 import { Tables, TablesProps } from "../../constructs/Tables";
 import { Api, ApiProps } from "../../constructs/Api";
 import { BaseConstruct, BaseConstructProps } from "../../constructs/BaseConstruct";
-import { AssetCode } from "@aws-cdk/aws-lambda";
 import { CDNStack } from "../cdn/CDNStack";
 import { CDNNestedStack } from "../cdn/CDNNestedStack";
 import { CognitoStack } from "../cognito/CognitoStack";
 import { CognitoNestedStack } from "../cognito/CognitoNestedStack";
 import { resolve } from "path";
 
-const serviceTokenName = "CUSTOM__RESOURCE";
+const SERVICE_TOKEN_NAME = "custom-resource";
 export interface ServerlessConstructProps
   extends BaseConstructProps,
     TablesProps,
@@ -33,28 +32,16 @@ export class ServerlessConstruct extends BaseConstruct {
   constructor(scope: Construct, id: string, props: ServerlessConstructProps) {
     super(scope, id, props);
 
+    const serviceTokenRole = new Role(this, "ServiceTokenRole", {
+      roleName: `${props.prefix}-${SERVICE_TOKEN_NAME}`,
+      assumedBy: new ServicePrincipal("lambda.amazonaws.com")
+    });
+    props.frontend.bucket.grantReadWrite(serviceTokenRole);
     const serviceToken: LambdaProps = {
-      functionName: serviceTokenName,
+      functionName: SERVICE_TOKEN_NAME,
       handler: "index.handler",
       codePath: resolve(__dirname, "..", "..", "..", "providers", "configFileProvider"),
-      role: new Role(this, "ServiceTokenRole", {
-        roleName: `${props.prefix}-service-token`,
-        assumedBy: new ServicePrincipal("lambda.amazonaws.com"),
-        inlinePolicies: {
-          [`${props.prefix}-service-token`]: new PolicyDocument({
-            statements: [
-              new PolicyStatement({
-                effect: Effect.ALLOW,
-                actions: ["s3:PutObject", "s3:DeleteObject"],
-                resources: [
-                  props.frontend.bucket.bucketArn,
-                  props.frontend.bucket.arnForObjects("*")
-                ]
-              })
-            ]
-          })
-        }
-      })
+      role: serviceTokenRole
     };
 
     if (props.tables) {
@@ -65,7 +52,7 @@ export class ServerlessConstruct extends BaseConstruct {
       lambdas: [...props.lambdas, serviceToken],
       tables: this.tables
     });
-    this.serviceToken = this.lambdas.resources[serviceTokenName]?.lambda;
+    this.serviceToken = this.lambdas.resources[SERVICE_TOKEN_NAME]?.lambda;
     if (this.lambdas.apiConfig) {
       this.api = new Api(this, "Api", {
         lambdas: this.lambdas,

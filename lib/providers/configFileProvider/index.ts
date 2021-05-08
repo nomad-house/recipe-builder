@@ -24,7 +24,7 @@ function buildFile({ config, fileType }: ConfigFileProps) {
     case "json":
       return { Body: stringified, ContentType: "application/json" };
     case "js":
-      return { Body: `var ENVIRONMENT = '${stringified}';`, ContentType: "application/json" };
+      return { Body: `var CONFIG = JSON.parse('${stringified}');`, ContentType: "text/javascript" };
     default:
       throw new Error(fileType + " is an invalid filetype");
   }
