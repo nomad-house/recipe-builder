@@ -27,7 +27,10 @@ export class CoreConstruct extends BaseConstruct {
     const { rootDomain, hostedZoneId, certificateArn } = props;
 
     this.hostedZone = hostedZoneId
-      ? HostedZone.fromHostedZoneId(this, "HostedZone", hostedZoneId)
+      ? HostedZone.fromHostedZoneAttributes(this, "HostedZone", {
+          hostedZoneId,
+          zoneName: rootDomain
+        })
       : new HostedZone(this, "HostedZone", {
           zoneName: rootDomain
         });

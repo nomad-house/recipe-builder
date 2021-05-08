@@ -11,7 +11,7 @@ export class CDNStack extends Stack {
   public distribution: CloudFrontWebDistribution;
   constructor(scope: Construct, id: string, props: CDNStackProps) {
     super(scope, id, { ...props, stackName: props.stackName ?? `${props.prefix}-frontend` });
-    const { bucket, distribution, urls } = new CDNConstruct(scope, id, props);
+    const { bucket, distribution, urls } = new CDNConstruct(this, `CDNConstruct`, props);
     this.urls = urls;
     this.bucket = bucket;
     this.distribution = distribution;

@@ -1,11 +1,11 @@
 import { resolve } from "path";
 import { App } from "@aws-cdk/core";
-import { AssetCode, Runtime } from "@aws-cdk/aws-lambda";
+import { Runtime } from "@aws-cdk/aws-lambda";
 import { getConfig } from "../config";
-import { CoreStack, CognitoStack, ServerlessStack, CDNStack } from "../lib/cdk";
+import { CoreStack, CognitoStack, ServerlessStack, CDNStack } from "../dist/lib/cdk";
 
 export async function buildInfra() {
-  const { client, project, stage, env, rootDomain } = await getConfig();
+  const { client, project, stage, env, rootDomain, profile } = await getConfig();
   const prefix = `${client}-${project}-${stage}`;
   const devPort = 4200;
   const callBackPath = "/authorize";
@@ -13,9 +13,10 @@ export async function buildInfra() {
 
   const app = new App();
 
-  const coreStack = await CoreStack.create(app, "CoreStack", {
-    prefix,
+  const coreStack = await CoreStack.create(app, "Core", {
     env,
+    prefix,
+    profile,
     rootDomain
   });
 
@@ -31,7 +32,8 @@ export async function buildInfra() {
 
   const devAddress = `http://localhost:${devPort}`;
   const urls = (frontend.urls ?? []).concat(devAddress);
-  const auth = new CognitoStack(app, "Cognito", {
+  const auth = new CognitoStack(app, "Auth", {
+    env,
     prefix,
     groups: [
       {
@@ -47,6 +49,7 @@ export async function buildInfra() {
   });
 
   new ServerlessStack(app, "Backend", {
+    env,
     prefix,
     auth,
     frontend,
@@ -62,7 +65,7 @@ export async function buildInfra() {
       }
     ],
     runtime: Runtime.NODEJS_14_X,
-    code: new AssetCode(resolve(__dirname, "..", "dist", "backend")),
+    codePath: resolve(__dirname, "..", "dist", "backend"),
     lambdas: [
       {
         functionName: "demo-function",

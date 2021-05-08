@@ -11,7 +11,7 @@ export class CDNNestedStack extends NestedStack {
   public distribution: CloudFrontWebDistribution;
   constructor(scope: Construct, id: string, props: CDNNestedStackProps) {
     super(scope, id, props);
-    const { bucket, distribution, urls } = new CDNConstruct(scope, id, props);
+    const { bucket, distribution, urls } = new CDNConstruct(this, `CDNConstruct`, props);
     this.urls = urls;
     this.bucket = bucket;
     this.distribution = distribution;

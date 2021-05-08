@@ -1,4 +1,4 @@
-import { Function as Lambda, FunctionProps, IEventSource } from "@aws-cdk/aws-lambda";
+import { AssetCode, Function as Lambda, FunctionProps, IEventSource } from "@aws-cdk/aws-lambda";
 import { LogGroup, LogGroupProps } from "@aws-cdk/aws-logs";
 import { IRole, Role, Policy, PolicyStatement, Effect, ServicePrincipal } from "@aws-cdk/aws-iam";
 import { BaseConstruct, BaseConstructProps } from "./BaseConstruct";
@@ -18,7 +18,7 @@ export interface LambdaProps
   functionName: string;
   policyStatements?: PolicyStatement[];
   tables?: (string | TableDetail)[];
-  code?: FunctionProps["code"];
+  codePath?: string;
   runtime?: FunctionProps["runtime"];
   canInvoke?: IRole[];
   events?: (ApiEvent | IEventSource)[];
@@ -45,10 +45,14 @@ export class Lambdas extends BaseConstruct {
   public resources: { [functionName: string]: ResourceGroup } = {};
   public apiConfig?: { [functionName: string]: ApiConfig };
   private tables?: Tables["tables"];
+  private code?: AssetCode;
 
   constructor(scope: Construct, id: string, private props: LambdasProps) {
     super(scope, id, props);
     this.tables = props.tables?.tables;
+    if (props.codePath) {
+      this.code = new AssetCode(props.codePath);
+    }
     for (const lambda of props.lambdas) {
       this.buildResources(lambda);
     }
@@ -74,7 +78,7 @@ export class Lambdas extends BaseConstruct {
 
     const role = this.buildIam({ props, logGroup, functionName });
 
-    const code = props.code ?? this.props.code;
+    const code = props.codePath ? new AssetCode(props.codePath) : this.code;
     if (!code) {
       throw new Error(`no code provided for ${props.functionName}`);
     }

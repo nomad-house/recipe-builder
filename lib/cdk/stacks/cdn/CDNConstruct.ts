@@ -30,7 +30,7 @@ export class CDNConstruct extends BaseConstruct {
       versioned: true,
       encryption: BucketEncryption.S3_MANAGED,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-      autoDeleteObjects: true,
+      autoDeleteObjects: !this.prod,
       removalPolicy: this.prod ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY
     });
 

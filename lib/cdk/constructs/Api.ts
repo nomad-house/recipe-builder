@@ -4,7 +4,6 @@ import {
   CorsOptions as BaseCorsOptions,
   Deployment,
   GatewayResponseOptions,
-  IAuthorizer,
   LambdaIntegration,
   MethodOptions,
   ResponseType,

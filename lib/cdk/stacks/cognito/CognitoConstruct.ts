@@ -54,8 +54,8 @@ export class CognitoConstruct extends BaseConstruct {
   constructor(scope: Construct, id: string, props: CognitoConstructProps) {
     super(scope, id, props);
     this.buildUserPool(props);
-    this.buildGroups(props);
     this.buildIdentityPool(props);
+    this.buildGroups(props);
 
     if (props.css) {
       new CfnUserPoolUICustomizationAttachment(this, "CognitoUICustomization", {
@@ -161,6 +161,27 @@ export class CognitoConstruct extends BaseConstruct {
       }
       this.roles[group.groupName] = role;
     }
+
+    new CfnIdentityPoolRoleAttachment(this, "AuthorizedUserRoleAttachment", {
+      identityPoolId: this.identityPool.ref,
+      roles: {
+        authenticated: this.roles[CognitoConstruct.DEFAULT_GROUP_NAME].roleArn
+      },
+      roleMappings: {
+        cognitoProvider: {
+          identityProvider: Fn.join("", [
+            "cognito-idp.",
+            Stack.of(this).region,
+            ".amazonaws.com/",
+            this.userPool.userPoolId,
+            ":",
+            this.userPoolClient.userPoolClientId
+          ]),
+          type: "Token",
+          ambiguousRoleResolution: "AuthenticatedRole"
+        }
+      }
+    });
   }
 
   buildIdentityPool({ prefix, identityPool }: CognitoConstructProps) {
@@ -187,26 +208,5 @@ export class CognitoConstruct extends BaseConstruct {
     if (identityPool?.removalPolicy) {
       this.identityPool.applyRemovalPolicy(identityPool.removalPolicy);
     }
-
-    new CfnIdentityPoolRoleAttachment(this, "AuthorizedUserRoleAttachment", {
-      identityPoolId: this.identityPool.ref,
-      roles: {
-        authenticated: this.roles[CognitoConstruct.DEFAULT_GROUP_NAME].roleArn
-      },
-      roleMappings: {
-        cognitoProvider: {
-          identityProvider: Fn.join("", [
-            "cognito-idp.",
-            Stack.of(this).region,
-            ".amazonaws.com/",
-            this.userPool.userPoolId,
-            ":",
-            this.userPoolClient.userPoolClientId
-          ]),
-          type: "Token",
-          ambiguousRoleResolution: "AuthenticatedRole"
-        }
-      }
-    });
   }
 }

@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["./lib/**/*", "./backend/src/**/*"],
+  "exclude": ["./no_compile/**/*", "./cdk.out/**/*", "./dist/**/*", "./bin/**/*", "./*.ts"],
+  "compilerOptions": {
+    "outDir": "dist"
+  }
+}

@@ -2,8 +2,12 @@ import { Construct, NestedStack, NestedStackProps, Stack, StackProps } from "@aw
 import { toKebab } from "../../changeCase";
 import { BaseConstruct } from "../constructs/BaseConstruct";
 
-export interface BaseStackProps extends StackProps {
+export interface BaseStackProps extends Omit<StackProps, "env"> {
   prefix: string;
+  env: {
+    account: string;
+    region: string;
+  };
 }
 export class BaseStack extends Stack implements BaseConstruct {
   public prefix: string;

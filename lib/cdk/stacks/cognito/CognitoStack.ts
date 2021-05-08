@@ -16,8 +16,8 @@ export class CognitoStack extends BaseStack {
   constructor(scope: Construct, id: string, props: CognitoStackProps) {
     super(scope, id, { ...props, stackName: props.stackName ?? `${props.prefix}-cognito` });
     const { userPool, userPoolClient, userPoolDomain, identityPool, roles } = new CognitoConstruct(
-      scope,
-      id,
+      this,
+      "CognitoConstruct",
       props
     );
     this.userPool = userPool;

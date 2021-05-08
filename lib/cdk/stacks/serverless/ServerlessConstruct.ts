@@ -1,6 +1,5 @@
-import { Construct, CustomResource } from "@aws-cdk/core";
+import { Construct, CustomResource, Environment } from "@aws-cdk/core";
 import { Function as Lambda } from "@aws-cdk/aws-lambda";
-import { BucketDeployment, Source } from "@aws-cdk/aws-s3-deployment";
 import { Role, ServicePrincipal, PolicyDocument, Effect, PolicyStatement } from "@aws-cdk/aws-iam";
 import { Lambdas, LambdasProps, LambdaProps } from "../../constructs/Lambdas";
 import { Tables, TablesProps } from "../../constructs/Tables";
@@ -11,6 +10,7 @@ import { CDNStack } from "../cdn/CDNStack";
 import { CDNNestedStack } from "../cdn/CDNNestedStack";
 import { CognitoStack } from "../cognito/CognitoStack";
 import { CognitoNestedStack } from "../cognito/CognitoNestedStack";
+import { resolve } from "path";
 
 const serviceTokenName = "CUSTOM__RESOURCE";
 export interface ServerlessConstructProps
@@ -21,9 +21,7 @@ export interface ServerlessConstructProps
   frontend: CDNStack | CDNNestedStack;
   auth?: CognitoStack | CognitoNestedStack;
   configFile?: object;
-  env: {
-    region: string;
-  };
+  env: Required<Environment>;
 }
 
 export class ServerlessConstruct extends BaseConstruct {
@@ -38,7 +36,7 @@ export class ServerlessConstruct extends BaseConstruct {
     const serviceToken: LambdaProps = {
       functionName: serviceTokenName,
       handler: "index.handler",
-      code: new AssetCode(""),
+      codePath: resolve(__dirname, "..", "..", "..", "providers", "configFileProvider"),
       role: new Role(this, "ServiceTokenRole", {
         roleName: `${props.prefix}-service-token`,
         assumedBy: new ServicePrincipal("lambda.amazonaws.com"),

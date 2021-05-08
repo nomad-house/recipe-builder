@@ -16,8 +16,8 @@ export class CognitoNestedStack extends BaseNestedStack {
   constructor(scope: Construct, id: string, props: CognitoNestedStackProps) {
     super(scope, id, props);
     const { userPool, userPoolClient, userPoolDomain, identityPool, roles } = new CognitoConstruct(
-      scope,
-      id,
+      this,
+      "CognitoConstruct",
       props
     );
     this.userPool = userPool;

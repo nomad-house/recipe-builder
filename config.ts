@@ -8,7 +8,7 @@ const project = repo.toLowerCase();
 const client = owner;
 const stages: StageConfig[] = [
   {
-    alias: "admin",
+    profile: "admin",
     branch: "dev",
     env: {
       account: "141394433500",
@@ -16,7 +16,7 @@ const stages: StageConfig[] = [
     }
   },
   {
-    alias: "admin",
+    profile: "admin",
     branch: "master",
     env: {
       account: "141394433500",
@@ -54,7 +54,7 @@ interface StageConfig {
     account: string;
     region: string;
   };
-  alias: string;
+  profile: string;
   branch: string;
 }
 

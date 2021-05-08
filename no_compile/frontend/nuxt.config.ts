@@ -1,5 +1,5 @@
 import { resolve } from 'path'
-import { Configuration } from '@nuxt/types'
+import { NuxtConfig } from '@nuxt/types'
 const FMMode = require('frontmatter-markdown-loader/mode')
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
@@ -138,4 +138,4 @@ export default {
       eslint: true
     }
   }
-} as Configuration
+} as NuxtConfig
