@@ -1,6 +1,6 @@
-import { exec as EXEC } from "child_process";
+import { exec as EXEC } from 'child_process';
 
-export function exec(command: string, logToConsole: boolean = true): Promise<string> {
+export function exec(command: string, logToConsole = true): Promise<string> {
   return new Promise<string>((resolve, reject) => {
     function stdoutHandler(data: string) {
       if (logToConsole) {
@@ -21,12 +21,12 @@ export function exec(command: string, logToConsole: boolean = true): Promise<str
       resolve(results);
     });
 
-    child.stdout?.on("data", stdoutHandler);
-    child.stderr?.on("data", stderrHandler);
+    child.stdout?.on('data', stdoutHandler);
+    child.stderr?.on('data', stderrHandler);
 
-    child.once("exit", () => {
-      child.stdout?.removeListener("data", stdoutHandler);
-      child.stderr?.removeListener("data", stderrHandler);
+    child.once('exit', () => {
+      child.stdout?.removeListener('data', stdoutHandler);
+      child.stderr?.removeListener('data', stderrHandler);
     });
   });
 }

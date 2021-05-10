@@ -1,5 +1,5 @@
+import { toKebab } from "nomad-cdk";
 import { getLocalGitBranch } from "./lib/getLocalGitBranch";
-import { toKebab } from "./lib/changeCase";
 
 const owner = "matthewkeil";
 const repo = "CODEified";

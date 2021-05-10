@@ -1,16 +1,8 @@
 import { resolve } from "path";
 import { promises } from "fs";
-import pkg from "../backend/package.json";
 import { exec } from "../lib/exec";
 
-const folders = [
-  resolve(__dirname, "..", "dist"),
-  resolve(__dirname, "..", "dist", "backend"),
-  resolve(__dirname, "..", "dist", "backend", "lambdaLayer"),
-  resolve(__dirname, "..", "dist", "backend", "lambdaLayer", "nodejs")
-];
-
-async function buildFolders(): Promise<void> {
+async function buildFolders(folders: string[]): Promise<void> {
   for (const folder of folders) {
     try {
       await promises.stat(folder);
@@ -20,9 +12,9 @@ async function buildFolders(): Promise<void> {
   }
 }
 
-async function buildPackage(): Promise<void> {
+async function buildPackage(pkg: any, outDir: string): Promise<void> {
   await promises.writeFile(
-    resolve(folders[3], "package.json"),
+    resolve(outDir, "package.json"),
     JSON.stringify({
       ...pkg,
       name: pkg.name + "-layer",
@@ -33,10 +25,26 @@ async function buildPackage(): Promise<void> {
   );
 }
 
-async function buildLayer(): Promise<void> {
-  await buildFolders();
-  await buildPackage();
-  await exec(`cd ${folders[3]} && npm i --only=prod --no-package-lock`);
+export async function buildLayer({
+  pkgJsonPath,
+  pathToDist = resolve(__dirname, "..", "dist")
+}: {
+  pkgJsonPath: string;
+  pathToDist?: string;
+}): Promise<void> {
+  const pkgPath = pkgJsonPath.endsWith("package.json")
+    ? pkgJsonPath
+    : resolve(pkgJsonPath, "package.json");
+  const pkg = require(pkgPath);
+  const folders = [
+    pathToDist,
+    resolve(pathToDist, "layer"),
+    resolve(pathToDist, "layer", "nodejs")
+  ];
+  const outputDir = folders[folders.length - 1];
+  await buildFolders(folders);
+  await buildPackage(pkg, outputDir);
+  await exec(`cd ${outputDir} && npm i --only=prod --no-package-lock`);
 }
 
-buildLayer();
+buildLayer({ pkgJsonPath: resolve(__dirname, "..", "backend") });

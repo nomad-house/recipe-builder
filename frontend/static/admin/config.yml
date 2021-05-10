@@ -3,11 +3,10 @@ backend:
   repo: matthewkeil/CODEified
   branch: master
   site_domain: codeified.org
-  base_url: https://nomad-devops.nomad.house/v1
-  auth_endpoint: auth
+  base_url: https://im9mcq9jog.execute-api.us-east-1.amazonaws.com/prod/netlify
 local_backend: true
-publish_mode: editorial_workflow
-media_folder: '@/assets/content/media'
+media_folder: '@/static/media'
+public_folder: '@/static/media'
 site_url: https://www.codeified.org
 collections:
   - name: categories

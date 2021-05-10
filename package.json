@@ -7,14 +7,13 @@
   "scripts": {
     "cdk": "cdk",
     "ts-node": "ts-node",
-    "build:ts": "tsc --project tsconfig.build.json && npm run build:providers",
-    "build:providers": "cross-env-shell \"rm -rf dist/lib/providers && webpack\"",
+    "build:ts": "tsc --project tsconfig.build.json",
     "build:layer": "cd bin && ts-node buildLayer",
     "build:frontend": "npm run frontend:generate && npm run frontend:move",
     "frontend:generate": "cd frontend && npm run generate",
     "frontend:move": "cross-env-shell \"mv frontend/dist dist/frontend\"",
-    "build": "cross-env-shell \"rm -rf dist && npm run build:ts && npm run build:layer\"",
-    "synth": "npm run build:ts && cross-env-shell \"node_modules/.bin/cdk synth\"",
+    "build": "cross-env-shell \"rm -rf dist && npm run build:ts && npm run build:layer && npm run build:frontend\"",
+    "synth": "cross-env-shell \"node_modules/.bin/cdk synth\"",
     "deploy": "cross-env-shell \"node_modules/.bin/cdk deploy --all --require-approval never\""
   },
   "devDependencies": {
@@ -44,6 +43,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.3",
     "lint-staged": "^9.5.0",
+    "nomad-cdk": "^1.0.18",
     "prettier": "^1.19.1",
     "terser-webpack-plugin": "^5.1.1",
     "ts-loader": "^9.1.2",
