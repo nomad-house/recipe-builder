@@ -3,11 +3,11 @@ backend:
   repo: matthewkeil/CODEified
   branch: master
   site_domain: codeified.org
-  base_url: https://im9mcq9jog.execute-api.us-east-1.amazonaws.com/prod/netlify
+  base_url: http://localhost:3001/netlify
 local_backend: true
 media_folder: '@/static/media'
 public_folder: '@/static/media'
-site_url: https://www.codeified.org
+site_url: https://localhost:3000
 collections:
   - name: categories
     label: Categories

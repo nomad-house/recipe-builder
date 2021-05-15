@@ -4,7 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "ES2018",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "allowJs": false,
     "checkJs": false,
     "strict": true,

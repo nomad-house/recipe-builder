@@ -1,1 +1,3 @@
-export { authCallback, authSuccess, authUri } from "nomad-netlify-cms-auth";
+export { handler as authCallback } from "./authCallback";
+export { handler as authSuccess } from "./authSuccess";
+export { handler as authUri } from "./authUri";

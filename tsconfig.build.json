@@ -1,8 +1,16 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["./lib/**/*", "./backend/src/**/*"],
-  "exclude": ["./no_compile/**/*", "./cdk.out/**/*", "./dist/**/*", "./bin/**/*", "./*.ts"],
+  "include": ["./lib/**/*"],
+  "exclude": [
+    "./no_compile/**/*",
+    "./cdk.out/**/*",
+    "./dist/**/*",
+    "./bin/**/*",
+    "./*.ts",
+    "./backend/**/*"
+  ],
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "."
   }
 }

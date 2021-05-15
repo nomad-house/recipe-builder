@@ -1,18 +1,23 @@
+require("dotenv").config();
 import { resolve } from "path";
 import { App } from "@aws-cdk/core";
 import { getConfig } from "../config";
-import { FullStack } from "nomad-cdk";
+import { FullStack, FullStackProps } from "nomad-cdk";
 
-export async function buildInfra() {
+export async function buildInfra(synth: boolean) {
   const { client, project, stage, env, rootDomain, profile } = await getConfig();
   const prefix = `${client}-${project}-${stage}`;
   const devPort = 4200;
   const logoutCallbackPath = "/";
   const loginCallbackPath = "/authorize";
 
-  const app = new App();
+  const JWT_SECRET = `${process.env.JWT_SECRET}`;
+  const GITHUB_CLIENT_ID = `${process.env.GITHUB_CLIENT_ID}`;
+  const GITHUB_CLIENT_SECRET = `${process.env.GITHUB_CLIENT_SECRET}`;
+  const ORIGIN = process.env.ORIGIN ?? "http://localhost:3001";
 
-  await FullStack.create(app, "FullStack", {
+  const app = new App();
+  const config: FullStackProps = {
     env,
     stackName: `${project}-${stage}`,
     stage,
@@ -25,7 +30,7 @@ export async function buildInfra() {
       loginCallbackPath
     },
     frontend: {
-      codePaths: [resolve(__dirname, "..", "dist", "frontend")]
+      codePaths: [resolve(__dirname, "..", "frontend", "dist")]
     },
     backend: {
       stage,
@@ -37,8 +42,8 @@ export async function buildInfra() {
           }
         }
       ],
-      code: resolve(__dirname, "..", "dist", "backend", "src"),
-      layers: [resolve(__dirname, "..", "dist", "layer")],
+      code: resolve(__dirname, "..", "backend", "dist", "src"),
+      layers: [resolve(__dirname, "..", "backend", "layer")],
       lambdas: [
         {
           functionName: "demo-function",
@@ -46,49 +51,64 @@ export async function buildInfra() {
           tables: ["demo-table"],
           events: [
             {
-              method: "GET",
+              method: "get",
               path: "/"
             }
           ]
         },
         {
-          functionName: "netlify-auth-callback",
-          code: resolve(__dirname, "..", "dist", "backend", "src", "netlify"),
-          handler: "index.authCallback",
+          functionName: "netlify-auth-uri",
+          handler: "netlify/index.authUri",
           events: [
             {
-              method: "GET",
+              method: "get",
+              path: "/netlify/auth"
+            }
+          ],
+          environment: {
+            JWT_SECRET,
+            GITHUB_CLIENT_ID
+          }
+        },
+        {
+          functionName: "netlify-auth-callback",
+          handler: "netlify/index.authCallback",
+          events: [
+            {
+              method: "get",
               path: "/netlify/callback"
             }
-          ]
+          ],
+          environment: {
+            JWT_SECRET,
+            ORIGIN,
+            GITHUB_CLIENT_ID,
+            GITHUB_CLIENT_SECRET
+          }
         },
         {
           functionName: "netlify-auth-success",
-          code: resolve(__dirname, "..", "dist", "backend", "src", "netlify"),
-          handler: "index.authSuccess",
+          handler: "netlify/index.authSuccess",
           events: [
             {
-              method: "GET",
+              method: "get",
               path: "/netlify/success"
-            }
-          ]
-        },
-        {
-          functionName: "netlify-auth-uri",
-          code: resolve(__dirname, "..", "dist", "backend", "src", "netlify"),
-          handler: "index.authUri",
-          events: [
-            {
-              method: "GET",
-              path: "/netlify/auth"
             }
           ]
         }
       ]
     }
-  });
+  };
 
+  if (!synth) {
+    return new FullStack(app, "FullStack", config);
+  }
+
+  await FullStack.create(app, "FullStack", config);
   app.synth();
+  return;
 }
 
-buildInfra();
+if (require.main === module) {
+  buildInfra(true);
+}

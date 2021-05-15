@@ -1,4 +1,7 @@
+import { resolve } from 'path'
 import colors from 'vuetify/es5/util/colors'
+import FMMode from 'frontmatter-markdown-loader/mode'
+// import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 
 export default {
   telemetry: false,
@@ -38,6 +41,7 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/composition-api/module',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -78,5 +82,43 @@ export default {
     babel: {
       plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
     },
+    extend(config) {
+      config?.module?.rules?.push({
+        test: /\.md$/,
+        loader: 'frontmatter-markdown-loader',
+        include: resolve(__dirname, 'assets'),
+        options: {
+          mode: [FMMode.VUE_COMPONENT],
+          vue: {
+            root: 'markdown-body',
+          },
+        },
+      })
+    },
+    // plugins: [
+    //   new VuetifyLoaderPlugin({
+    //     /**
+    //      * This function will be called for every tag used in each vue component
+    //      * It should return an array, the first element will be inserted into the
+    //      * components array, the second should be a corresponding import
+    //      *
+    //      * originalTag - the tag as it was originally used in the template
+    //      * kebabTag    - the tag normalised to kebab-case
+    //      * camelTag    - the tag normalised to PascalCase
+    //      * path        - a relative path to the current .vue file
+    //      * component   - a parsed representation of the current component
+    //      */
+    //     match(_, { kebabTag, camelTag }) {
+    //       if (kebabTag.startsWith('base-')) {
+    //         return [
+    //           camelTag,
+    //           `import ${camelTag} from '@/components/base/${camelTag.substring(
+    //             4
+    //           )}.vue'`,
+    //         ]
+    //       }
+    //     },
+    //   }),
+    // ],
   },
 }

@@ -24,6 +24,8 @@
   "dependencies": {
     "@nuxt/content": "^1.14.0",
     "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/composition-api": "^0.23.4",
+    "@vue/composition-api": "^1.0.0-rc.8",
     "core-js": "^3.9.1",
     "nuxt": "^2.15.3"
   },
@@ -43,6 +45,7 @@
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.7.0",
+    "frontmatter-markdown-loader": "^3.6.2",
     "husky": "^4.3.8",
     "jest": "^26.6.3",
     "lint-staged": "^10.5.4",
@@ -51,6 +54,7 @@
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^21.0.0",
     "ts-jest": "^26.5.4",
-    "vue-jest": "^3.0.4"
+    "vue-jest": "^3.0.4",
+    "vuetify-loader": "^1.7.2"
   }
 }

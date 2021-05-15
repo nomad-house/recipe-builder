@@ -1,5 +1,5 @@
 {
-  "app": "npm run ts-node -- bin/infra.ts",
+  "app": "npm run ts -- bin/infra.ts",
   "context": {
     "aws-cdk:enableDiffNoFail": "true",
     "@aws-cdk/core:enableStackNameDuplicates": "true",

@@ -89,6 +89,7 @@ export default {
         }
       })
     },
+
     loaders: {
       sass: {
         implementation: require('sass'),
