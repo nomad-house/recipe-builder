@@ -11,6 +11,7 @@ cdk.out
 
 
 # local env files
+.env
 .env.local
 .env.*.local
 
