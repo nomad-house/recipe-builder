@@ -9,14 +9,30 @@ media_folder: 'static/media'
 public_folder: 'static/media'
 site_url: https://localhost:3000
 collections:
-  - name: categories
-    label: Categories
-    folder: content/categories
+  - name: tags
+    label: Tags
+    folder: content/tags
     create: true
     slug: '{{slug}}'
     identified_field: name
     fields:
       - { label: Name, name: name, widget: string }
+      - {
+          label: Description,
+          name: description,
+          widget: markdown,
+          required: false,
+        }
+  - name: author
+    label: Author
+    folder: content/author
+    create: true
+    slug: '{{slug}}'
+    identified_field: name
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { name: avatar, label: Avatar Image, widget: image }
+      - { name: img, label: Image, widget: image }
       - {
           label: Description,
           name: description,
@@ -32,11 +48,19 @@ collections:
     fields:
       - { name: title, label: Title, widget: string }
       - { name: subtitle, label: Subtitle, widget: string, required: false }
-      - { name: author, label: Author, widget: string }
-      - { name: hero, lable: Hero Image, widget: image }
+      - {
+          name: author,
+          label: Author,
+          widget: relation,
+          collection: author,
+          searchFields: name,
+          valueField: name,
+          multiple: false,
+        }
+      - { name: hero, label: Hero Image, widget: image }
       - {
           name: prominent,
-          lable: Prominent,
+          label: Prominent,
           widget: boolean,
           default: false,
           required: false,
@@ -55,13 +79,13 @@ collections:
           default: true,
           required: false,
         }
-      - { name: body, label: Body, widget: markdown }
       - {
-          label: Category,
-          name: category,
+          label: Tags,
+          name: tags,
           widget: relation,
-          collection: categories,
+          collection: tags,
           searchFields: name,
           valueField: name,
           multiple: true,
         }
+      - { name: body, label: Body, widget: markdown }

@@ -1,3 +1,3 @@
 ---
-name: 'Political  '
+name: political
 ---

@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "start": "nuxt",
     "netlify": "netlify-cms-proxy-server",
     "build": "nuxt build",
-    "start": "npm run dev; npm run netlify",
     "prod": "nuxt start",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
