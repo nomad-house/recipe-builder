@@ -5,13 +5,13 @@ backend:
   site_domain: codeified.org
   base_url: http://localhost:3001/netlify
 local_backend: true
-media_folder: '@/static/media'
-public_folder: '@/static/media'
+media_folder: 'static/media'
+public_folder: 'static/media'
 site_url: https://localhost:3000
 collections:
   - name: categories
     label: Categories
-    folder: assets/content/categories
+    folder: content/categories
     create: true
     slug: '{{slug}}'
     identified_field: name
@@ -25,7 +25,7 @@ collections:
         }
   - name: posts
     label: Posts
-    folder: assets/content/posts
+    folder: content/posts
     preview_path: '{{slug}}'
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
     create: true
