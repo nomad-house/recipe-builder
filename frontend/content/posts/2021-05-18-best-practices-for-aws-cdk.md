@@ -14,15 +14,15 @@ tags:
 
 Best practices are opinions. And you know what they say about opinions? They are like assholes; everyone has one, but few pass the sniff test. So as long as that is the basis that we are building from feel free to take these and jazz them up to your own liking.
 
-These are a flexible set of guidelines to help you on your journey with using the aws-cdk in production. When you have a rapid-fire development environment coordinating resources can be a challenge. Considering that multiple devs will be working on multiple branches, across multiple accounts we are going to need to be methodically to keep everyone running on the rails.
+These are a flexible set of guidelines to help you on your journey with using the aws-cdk in production. It doesn't matter if you are building [open-source constructs](https://github.com/nomad-house/cdk), or working for internal clients in a rapid-fire development environment, coordinating resources can be a challenge. Considering that multiple devs will be working on multiple branches, across multiple accounts we are going to need to be methodically to keep everyone running on the rails. It's from this spirit that this post was born.
 
 ## Why?
 
-There are many key aspects to a great DX, development experience and two that we will focus on here are consistency and comprehension. We don't write code for computers to read, we write code for other developers to read. When we are detailed in how we name our resources we will make our lives a lot easier.
+There are many key aspects to a great DX, developer experience, and a few that we will focus on are intuitive and easy to use, consistent and extensible. We don't write code for computers to read, we write code for other developers to read. We want to build objects that other developers want to use. When we are detailed in how we go about things, like naming, we make lives easier.
 
-This concept will carry us far beyond the code. By having consistency with how we structure our cdk Constructs we will enable ease of finding what we are looking for in the console. The AWS console is wonderful AND terrible. Its completely overwhelming for newcomers to the cloud realm and fiddling with it never gets easier. When you loathe "going into the console to touch stuff" you are officially a cloud pro. But that won't change the fact that you will need to go to the console. And when you do actually HAVE to go, the issue will be severe, because your Jr. has escalated this to you.... reluctantly.
+This concept will carry us far beyond the code. By having consistency with how we structure our cdk Constructs we will enable ease of finding what we are looking for in the console. The AWS console is wonderful AND terrible. Newcomers to the cloud are completely overwhelmed and fiddling with it never gets easier. When you rarely have to "go into the console to touch stuff" you are officially a cloud pro. But that won't change the fact that you will need to go to now and again. And when you get to the cloud pro level, and you do find yourself HAVING to go, the issue will be severe, because your Jr. has escalated this to you.... reluctantly.
 
-That is when these details will have the **most** benefit. Being able to track down what is what will make your life easier from cradle to grave and we will hold each others' hands as we go down this path together. Just grit your teeth and know we will be better for it. Promise.
+That is when these details will have the **most** benefit. Being able to track down what is what, will make your life easier from cradle to grave and we will hold each others' hands as we go down this path together. Just grit your teeth and know we will be better for it. Promise.
 
 ## What's in a name?
 
@@ -42,20 +42,107 @@ They key is to be precise enough to tell what stuff is but make sure its terse e
 
 If one is using a prod account and a dev account the dev account will get a bit messy. A team development account is another great example of what I'm talking about. There are lots, and lots of branches in progress, and thus lots of stacks. This is when the `-${stage}` comes in handy. In one's own personal account there will come a time when you want to have a couple of branches built at once. A client may want a preview or a hobby can grow into a multi-environment animal.
 
-##
+## Coordinated Resource Names
 
 Now that we have a nice prefix. Use it freely. Everywhere I tell you... Most importantly use it for the stack name. And everything within that stack, ideally, will have a physicalId (name) that starts with that stack name. Then pass around that prefix variable and it'll make a handy way to append on suffixes for more specific names, like functions. There are some things that we create that there will be many of per stack. Functions, log groups, roles, etc being a few examples. For those the way to name them is with a `${prefix}-thingy` name where "thingy" is the thingy you are trying to name.
 
-As an example, to create a function, one needs to make a role, possibly a separate policy, a log group and the function itself. These things are all related to each other, support only each other, and should all share the same name. Ideally the function will have a file that it lives in and it, is called `doesSomethingFancy.ts`. Because we are expressive coders, we have named our function representatively of "what it does" and by extension as cloud coders we want to name our resources expressively. We want to correlate the fancy somethings and thusly
+As an example, to create a function, one needs to make a role, possibly a separate policy, a log group and the function itself. These things are all related to each other, support only each other, and should all share the same name. Ideally the function will have a file that it lives in and it, as an example, is called `doSomethingFancy.ts`. Because we are expressive coders, we have named our function representatively of "what it does" and by extension as cloud coders we want to name our resources expressively. We want to correlate the fancy somethings and thusly we will not only name our function with this but we will also name the log group, role, policy and anything else explicitly tied to the functionality of "doing something fancy."
 
 ```typescript
-const functionName = `${prefix}-does-something-fancy`
+const functionName = `${prefix}-do-something-fancy`;
+
+const function = new Function(this, '', {
+    functionName: functionName
+});
+const role = new Role(this, '', {
+    roleName: functionName
+});
+const policy = new Policy(this, '', {
+    policyName: functionName
+});
+const logGroup = new LogGroup(this, '', {
+    logGroupName: functionName
+});
 ```
 
-and now we will not only name our function with this but we will also name the log group, role, policy and anything else explicitly tied to the functionality of "doing something fancy" will will name it with the `-do-something-fancy` suffix.
+## Asynchronous Constructs
 
-(so we aren't messy and leaving log groups behind because the
+TypeScript is a wonderful language, but it's nuances make it a challenge. One of which being the strictly synchronous constructor function in class syntax. It's a drag for cdk because setting values in `.then()` in a constructor is just not possible, when values are shared between constructs, and still guarantee the cdk token resolution happens correctly. There is a solution though...
 
-easiest to they wouldn't clash.
+```typescript [AsyncStack.ts]
+interface SyncProps extends StackProps {}
+export interface AsyncProps extends SyncProps {}
 
-to accept so I added a "-type" to the end of all my names of things
+export class AsyncStack extends Stack {
+  private constructor(scope: Construct, id: string, props: SyncProps) {}
+  public static async create(scope: Construct, id: string, props: AsyncProps) {
+    /**
+     * Do some async stuff and return values
+     */
+    return new AsyncStack(scop, id, {
+      ...props,
+      prop1: asyncValue1,
+      props2: asyncValue2,
+    })
+  }
+}
+```
+
+```typescript [infra.ts]
+async function buildInfra() {
+  const app = new App()
+  const asyncStack = await AsyncStack.create(app, 'AsyncStack', {})
+  const otherStack = new OtherStack(app, 'OtherStack', {
+    bucket: asyncStack.bucket,
+  })
+}
+
+buildInfra()
+```
+
+## Dealing with Circular References
+
+The dreaded dependency circular reference. They are the worst problem ever the first time you get one, and it's no different with cdk. Debugging them can be a bit differnt than other places though. Generally they refer to values that are not available until after deploy. I've had a situation similar to the one below
+
+```typescript
+const frontEndStack = new FrontEndStack(this, '', {})
+const bucket = frontEndStack.bucketYouExported
+
+const policy = new PolicyStatement({
+  resources: [`${bucket.bucketWebsiteUrl}/for-a-policy-document`],
+})
+```
+
+A value was needed at runtime because of the string literal. The literal value needed to be available. That cannot be available though until after deployment time (ie the template needs to be built already). So you end up in a loop due to the recursive way values are determined during synth time. It showed up in my instance as a circular dependency. The way to solve this problem is to use an intrinsic function.
+
+```typescript
+const frontEndStack = new FrontEndStack(this, '', {})
+const bucket = frontEndStack.bucketYouExported
+
+const policy = new PolicyStatement({
+  resources: [Fn.Join('/', [bucket.bucketWebsiteUrl. "for-a-policy-document"],
+})
+```
+
+By shifting the dependency until cloudformation execution time it allows the templating algorithm to calculate all of the values and synthesize the template. Then the CloudFormation service takes over and handles the order with which resources are built. The other place it happened was when I migrated some constructs to a different format. I developed a nice pattern of allowing both individual stack and nested stack from the same construct.
+
+```typescript
+export class ApiStack extends Stack {}
+// was renamed to be this
+export class ApiConstruct extends Construct {}
+// but this is what I actually did
+export class ApiConstruct extends Stack {}
+
+// so when I built the "new" stack
+export class ApiStack extends Stack {
+  constructor(scope: Construct, id: string, props: ApiStackProps) {
+    const construct = new ApiConstruct(this, 'ApiConstruct', props)
+  }
+}
+```
+
+So I updated the Stack to a Construct for import into the Stack and NestedStack extended classes, but I neglected to change the extended class from Stack to Construct and the error that came back was a circular dependency. Thank god! for Jeff that day, or I would have pulled out my hair. It kept talking about a bucket but that was the first resource inside of the construct. Key being here, stacks cant get built inside other stacks.
+
+## Debugging Templates
+
+## Packaging Constructs
