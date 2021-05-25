@@ -1,0 +1,18 @@
+---
+title: Programming
+subTitle: The overarching term for all things relating making computers do as they aught to
+author: Matthew Keil
+siblingIdeas:
+  - Computer Science
+  - Computer Engineering
+requisiteIdeas:
+  - Algebra
+  - Logic
+  - Typing
+
+segmentation:
+  subTypes:
+    - Frontend $.title
+    - Backend $.title
+    - DevOps $.title
+    - SecOps $.title

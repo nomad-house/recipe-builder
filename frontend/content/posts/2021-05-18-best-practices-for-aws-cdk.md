@@ -7,9 +7,8 @@ prominent: false
 published: 2021-05-18T02:30:38.132Z
 updated: true
 tags:
-  - aws
   - aws-cdk
-  - typescript
+  - advanced-cdk
 ---
 
 Best practices are opinions. And you know what they say about opinions? They are like assholes; everyone has one, but few pass the sniff test. So as long as that is the basis that we are building from feel free to take these and jazz them up to your own liking.
