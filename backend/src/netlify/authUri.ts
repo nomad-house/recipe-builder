@@ -16,15 +16,15 @@ export const handler = (
     const params = {
       client_id,
       scope: "repo,user",
-      state: sign({ nonce: uuidv4() }, secret, { expiresIn: 30 }),
+      state: sign({ nonce: uuidv4() }, secret, { expiresIn: 30 })
     };
 
     callback(null, {
       body: "",
       statusCode: 307,
       headers: {
-        Location: `https://github.com/login/oauth/authorize?${new URLSearchParams(params)}`,
-      },
+        Location: `https://github.com/login/oauth/authorize?${new URLSearchParams(params)}`
+      }
     });
   } catch (err) {
     callback(err);
