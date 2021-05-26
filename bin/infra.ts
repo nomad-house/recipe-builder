@@ -99,7 +99,6 @@ export async function buildInfra(synth: boolean) {
       ]
     }
   };
-
   if (!synth) {
     return new FullStack(app, "FullStack", config);
   }

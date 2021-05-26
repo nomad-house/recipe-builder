@@ -6,6 +6,7 @@
     "neo4j:start": "~/.neo4j/bin/neo4j start",
     "neo4j:stop": "~/.neo4j/bin/neo4j stop",
     "dev": "tsc --project tsconfig.build.json --watch",
+    "ts": "ts-node",
     "build": "cross-env-shell \"rm -rf dist && tsc --project tsconfig.build.json\""
   },
   "license": "ISC",
