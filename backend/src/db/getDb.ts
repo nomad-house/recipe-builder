@@ -53,9 +53,7 @@ export class Neo4jService {
     return secrets;
   }
 
-  constructor(private props: Neo4jServiceProps) {
-    // this.setupDatabase();
-  }
+  constructor(private props: Neo4jServiceProps) {}
 
   async close() {
     await this.props.session.close();
@@ -115,8 +113,6 @@ export class Neo4jService {
     // });
     console.log((results as any)[0].records);
   }
-
-  async createTopic({}: CreateTopicProps) {}
 }
 
 if (require.main === module) {
