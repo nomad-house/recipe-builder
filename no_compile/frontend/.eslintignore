@@ -1,5 +1,0 @@
-/**/*.json
-/.nuxt/
-/dist/
-/node_modules/
-/test/unit/coverage/
