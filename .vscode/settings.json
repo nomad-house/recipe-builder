@@ -25,7 +25,5 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "javascript.preferences.importModuleSpecifier": "auto",
-  "vetur.experimental.templateInterpolationService": true,
   "cSpell.words": ["cloudform", "nuxt"]
 }
