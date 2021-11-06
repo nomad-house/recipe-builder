@@ -5,12 +5,18 @@
   "author": "Matthew Keil",
   "description": "Blockchain Based Decentralized Democratic Governance Through Transparent and Automated Aggregation of Individually CODEified Constitutions",
   "scripts": {
-    "cdk": "cdk",
-    "ts": "ts-node",
+    "node": "node",
+    "ts": "TS_NODE_FILES=true npm run node -- -r ts-node/register",
+    "clean:solidity": "rimraf frontend/public/solidity && rimraf typechain",
+    "build:solidity": "hardhat compile",
+    "deploy:solidity": "npm run clean:sol && hardhat run bin/deployContracts.ts --network localhost",
+    "dev:solidity": "hardhat node",
+    "build": "npm run build:sol",
+
     "start:frontend": "cd frontend && npm run dev",
     "start:backend": "ts-node bin/devServer",
     "start:db": "cd backend && npm run neo4j:start",
-    "start": "concurrently \"cd dev && npm run dev\" \"npm run start:backend\" \"npm run start:db\"",
+    "start": "concurrently \"npm run start:solidity\" \"npm run start:backend\" \"npm run start:db\"",
     "build:f": "cd frontend && npm run generate",
     "build:b": "cd backend && npm run build",
     "build:layer": "cross-env-shell \"rm -rf ./backend/layer && node node_modules/.bin/buildLayer ./backend ./backend/layer\"",
@@ -19,49 +25,19 @@
     "deploy": "cross-env-shell \"node_modules/.bin/cdk deploy --all --require-approval never\""
   },
   "devDependencies": {
-    "@aws-cdk/aws-apigateway": "1.101.0",
-    "@aws-cdk/aws-certificatemanager": "1.101.0",
-    "@aws-cdk/aws-cloudfront": "1.101.0",
-    "@aws-cdk/aws-cloudfront-origins": "1.101.0",
-    "@aws-cdk/aws-cognito": "1.101.0",
-    "@aws-cdk/aws-dynamodb": "1.101.0",
-    "@aws-cdk/aws-lambda": "1.101.0",
-    "@aws-cdk/aws-lambda-event-sources": "1.101.0",
-    "@aws-cdk/aws-logs": "1.101.0",
-    "@aws-cdk/aws-route53": "1.101.0",
-    "@aws-cdk/aws-route53-targets": "1.101.0",
-    "@aws-cdk/aws-s3": "1.101.0",
-    "@aws-cdk/aws-s3-deployment": "1.101.0",
-    "@aws-cdk/core": "1.101.0",
     "@types/jest": "^24.0.19",
     "@types/node": "^15.0.1",
-    "@types/webpack": "^5.28.0",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
-    "aws-cdk": "1.101.0",
-    "aws-sdk": "^2.773.0",
     "concurrently": "^6.2.0",
     "cross-env": "^7.0.3",
     "dotenv": "^8.6.0",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.3",
-    "lint-staged": "^9.5.0",
     "nomad-cdk": "file:../nomad-cdk",
     "prettier": "^1.0.19",
-    "terser-webpack-plugin": "^5.1.1",
-    "ts-loader": "^9.1.2",
     "ts-node": "^9.0.0",
-    "typescript": "~3.9.3",
-    "webpack": "^5.36.2",
-    "webpack-cli": "^4.7.0"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,vue,ts,tsx}": [
-      "git add"
-    ]
+    "typescript": "~3.9.3"
   },
   "dependencies": {
     "custom-resource-provider": "0.0.5"
