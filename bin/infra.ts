@@ -46,13 +46,16 @@ export async function buildInfra(synth: boolean) {
       layers: [resolve(__dirname, "..", "backend", "layer")],
       lambdas: [
         {
-          functionName: "demo-function",
-          handler: "demoFunction.handler",
-          tables: ["demo-table"],
+          functionName: "graphql",
+          handler: "graphql/handler.handler",
           events: [
             {
               method: "get",
-              path: "/"
+              path: "/graphql"
+            },
+            {
+              method: "post",
+              path: "/graphql"
             }
           ]
         },

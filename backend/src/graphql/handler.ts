@@ -1,7 +1,7 @@
 import { ApolloServer, gql } from "apollo-server-lambda";
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { Neo4jGraphQL } from "@neo4j/graphql";
-import { Neo4jService } from "./db/getDb";
+import { Neo4jService } from "../db/getDb";
 
 // // Construct a schema, using GraphQL schema language
 // const typeDefs = gql`
@@ -35,9 +35,9 @@ async function setup() {
     const secrets = await Neo4jService.getSecrets();
     const driver = Neo4jService.getDriver(secrets);
     const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
-
     const server = new ApolloServer({
       schema: neoSchema.schema,
+      introspection: true,
       context: ({ event, context }) => ({
         headers: event.headers,
         functionName: context.functionName,
@@ -45,6 +45,7 @@ async function setup() {
         context
       })
     });
+
     graphqlHandler = server.createHandler();
   }
 }

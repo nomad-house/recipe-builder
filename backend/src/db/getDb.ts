@@ -1,7 +1,5 @@
-import { SSM } from "aws-sdk";
-import { trace } from "console";
+import { config, SharedIniFileCredentials, SSM } from "aws-sdk";
 import neo4j, { Driver, QueryResult, Session } from "neo4j-driver";
-import { toPascal } from "nomad-cdk";
 import { resolve } from "path";
 
 interface Transaction {
@@ -15,7 +13,7 @@ interface Neo4jServiceProps {
 
 interface CreateTopicProps {
   name: string;
-  subTopics?: Topic[];
+  // subTopics?: Topic[];
 }
 
 export class Neo4jService {
@@ -23,15 +21,19 @@ export class Neo4jService {
   static getDriver = ({ user, password }: { user: string; password: string }) =>
     neo4j.driver(Neo4jService.DB_URL, neo4j.auth.basic(user, password));
 
-  static async getSecrets(region?: string) {
-    if (process.env.NEO4J_USER?.length && process.env.NEO4J_PASSWORD?.length) {
+  static async getSecrets({ region, profile }: { region?: string; profile?: string } = {}) {
+    if (process.env.NEO4J_USER && process.env.NEO4J_PASSWORD) {
+      console.log("found credentials on process.env");
       return {
         user: process.env.NEO4J_USER,
         password: process.env.NEO4J_PASSWORD
       };
     }
 
-    const ssm = new SSM({ region: process.env.REGION ?? region });
+    if (profile) {
+      config.credentials = new SharedIniFileCredentials({ profile });
+    }
+    const ssm = new SSM({ region: region ?? process.env.REGION });
     const Names = ["neo4j-user", "neo4j-password"];
     const { Parameters = [], InvalidParameters } = await ssm.getParameters({ Names }).promise();
     if (InvalidParameters) {

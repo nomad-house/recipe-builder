@@ -10,7 +10,7 @@
     "start:frontend": "cd frontend && npm run dev",
     "start:backend": "ts-node bin/devServer",
     "start:db": "cd backend && npm run neo4j:start",
-    "start": "concurrently \"npm run start:backend\" \"npm run start:db\"",
+    "start": "concurrently \"cd dev && npm run dev\" \"npm run start:backend\" \"npm run start:db\"",
     "build:f": "cd frontend && npm run generate",
     "build:b": "cd backend && npm run build",
     "build:layer": "cross-env-shell \"rm -rf ./backend/layer && node node_modules/.bin/buildLayer ./backend ./backend/layer\"",

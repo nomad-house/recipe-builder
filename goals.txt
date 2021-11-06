@@ -1,9 +1,0 @@
-// try out vue 3
-
-// setting up CODEified 
-
-//  Add the Constitution and Bill of Rights
-
-// add accounts to login and change your document
-
-// api that brings to light the changes that have been made.

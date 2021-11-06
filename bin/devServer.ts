@@ -9,10 +9,7 @@ async function devServer(port: number) {
 
   const backend = resolve(__dirname, "..", "backend");
 
-  const neo4j = spawn("npm", ["run", "neo4j:start"], { cwd: backend, stdio: "inherit" });
-  neo4j.on("error", err => console.log(err));
-
-  const ts = spawn("npm", ["run", "dev"], { cwd: backend });
+  const ts = spawn("npm", ["run", "dev"], { cwd: backend, stdio: "inherit" });
   ts.on("error", err => console.log(err));
   process.on("exit", () => ts.kill());
 
