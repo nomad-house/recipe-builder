@@ -1,4 +1,5 @@
 {
   "extends": "../../tsconfig.json",
+  "include": ["services", "typechain"],
   "files": ["hardhat.config.ts"]
 }
