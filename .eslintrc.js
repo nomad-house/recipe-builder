@@ -1,19 +1,23 @@
 module.exports = {
   env: {
-    browser: false,
-    es2021: true,
+    browser: true,
+    es2020: true,
     mocha: true,
-    node: true,
+    node: true
   },
   plugins: ["@typescript-eslint"],
   extends: [
     "standard",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:node/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 2021,
+    ecmaVersion: 2020
   },
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
@@ -21,9 +25,6 @@ module.exports = {
     "node/no-unpublished-import": "off",
     "node/no-missing-import": "off",
     camelcase: "off",
-    "node/no-unsupported-features/es-syntax": [
-      "error",
-      { ignores: ["modules"] },
-    ],
-  },
+    "node/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }]
+  }
 };

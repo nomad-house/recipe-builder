@@ -25,5 +25,14 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": ["cloudform", "nuxt"]
+  "cSpell.words": [
+    "camelcase",
+    "cloudform",
+    "codeified",
+    "Keil",
+    "nomiclabs",
+    "nuxt",
+    "solhint",
+    "typechain"
+  ]
 }

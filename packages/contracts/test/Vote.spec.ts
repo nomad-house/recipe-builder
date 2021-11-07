@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers } from "hardhat";
-import { Vote__factory } from "../../dist/typechain";
-import { VoteResult } from "../types";
+import { Vote__factory } from "../typechain";
+import { VoteResult } from "../services/types";
 
 describe("Vote", function () {
   let Vote: Vote__factory;
@@ -53,9 +53,9 @@ describe("Vote", function () {
       await vote.connect(voter).changePublicity(true);
       expect(await vote.result()).to.equal(VoteResult.Yay);
 
-      await expect(
-        vote.connect(unauthorizedUser).changePublicity(false)
-      ).to.be.revertedWith("Ownable: caller is not the owner");
+      await expect(vote.connect(unauthorizedUser).changePublicity(false)).to.be.revertedWith(
+        "Ownable: caller is not the owner"
+      );
     });
   });
 

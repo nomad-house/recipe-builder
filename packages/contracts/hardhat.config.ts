@@ -23,32 +23,31 @@ task("accounts", "Prints the list of accounts", async (_, hre) => {
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.4",
+    version: "0.8.4"
   },
   paths: {
-    sources: resolve(__dirname, "contracts", "solidity"),
-    artifacts: resolve(__dirname, "dist"),
-    tests: resolve(__dirname, "contracts", "test"),
-    cache: resolve(__dirname, "dist", "cache"),
+    sources: resolve(__dirname, "solidity"),
+    tests: resolve(__dirname, "test"),
+    artifacts: resolve(__dirname, "build"),
+    cache: resolve(__dirname, "build", "cache")
   },
   typechain: {
-    outDir: resolve(__dirname, "dist", "typechain"),
+    outDir: resolve(__dirname, "typechain")
   },
   defaultNetwork: "hardhat",
   networks: {
     ropsten: {
       url: process.env.ROPSTEN_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : []
+    }
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
-    currency: "USD",
+    currency: "USD"
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
-  },
+    apiKey: process.env.ETHERSCAN_API_KEY
+  }
 };
 
 export default config;

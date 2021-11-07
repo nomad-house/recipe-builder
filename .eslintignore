@@ -1,2 +1,4 @@
 no_compile/**/*
 *package.json
+dist
+*dist

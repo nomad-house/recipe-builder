@@ -1,21 +1,26 @@
-import { ethers } from "hardhat";
-import { Vote } from "../../dist/typechain";
+import { Vote, Vote__factory } from "../typechain";
+import { ContractService, ContractServiceProps } from "./ContractService";
 
-export class VoteService {
-  private vote: Promise<Vote>;
+interface VoteServiceProps extends ContractServiceProps {
+  voteAddress: string;
+  voterAddress: string;
+}
+export class VoteService extends ContractService {
+  private vote!: Promise<Vote>;
 
-  constructor(voteAddress: string, voterAddress: string) {
-    const provider = window?.ethereum
-      ? new ethers.providers.Web3Provider(window.ethereum)
-      : new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/");
-
-    const signer = provider.getSigner(voterAddress);
-    this.vote = new Promise<Vote>((resolve, reject) => {
-      ethers
-        .getContractAt("Vote", voteAddress, signer)
-        .then(resolve)
-        .catch(reject);
+  constructor(props: VoteServiceProps) {
+    super(props);
+    // this.provider.then((provider) => {
+    this.getSigner().then(() => {
+      console.log(Vote__factory);
     });
+    //   this.vote = new Promise<Vote>((resolve, reject) => {
+    //     ethers
+    //       .getContractAt("Vote", voteAddress, signer)
+    //       .then((vote) => resolve(vote))
+    //       .catch(reject);
+    //   });
+    // });
   }
 
   async updateVote() {

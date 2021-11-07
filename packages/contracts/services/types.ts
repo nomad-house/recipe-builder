@@ -13,10 +13,7 @@ declare global {
         request: { method: string; params?: Array<any> },
         callback: (error: any, response: any) => void
       ) => void;
-      request?: (request: {
-        method: string;
-        params?: Array<any>;
-      }) => Promise<any>;
+      request?: (request: { method: string; params?: Array<any> }) => Promise<any>;
     };
   }
 }
@@ -25,5 +22,5 @@ export enum VoteResult {
   Private,
   Yay,
   Nay,
-  Abstain,
+  Abstain
 }
