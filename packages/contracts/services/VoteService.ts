@@ -1,6 +1,12 @@
 import { Vote, Vote__factory } from "../typechain";
 import { ContractService, ContractServiceProps } from "./ContractService";
 
+export enum VoteResult {
+  Private,
+  Yay,
+  Nay,
+  Abstain
+}
 interface VoteServiceProps extends ContractServiceProps {
   voteAddress: string;
   voterAddress: string;

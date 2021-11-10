@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers } from "hardhat";
 import { Vote__factory } from "../typechain";
-import { VoteResult } from "../services/types";
+import { VoteResult } from "../services/VoteService";
 
 describe("Vote", function () {
   let Vote: Vote__factory;

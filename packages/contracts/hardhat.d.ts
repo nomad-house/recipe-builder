@@ -1,3 +1,5 @@
+export {};
+
 declare global {
   export interface Window {
     ethereum: {
@@ -16,11 +18,4 @@ declare global {
       request?: (request: { method: string; params?: Array<any> }) => Promise<any>;
     };
   }
-}
-
-export enum VoteResult {
-  Private,
-  Yay,
-  Nay,
-  Abstain
 }
