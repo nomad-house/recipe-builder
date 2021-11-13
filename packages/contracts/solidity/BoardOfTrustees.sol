@@ -22,12 +22,15 @@ contract BoardOfTrustees {
   }
 
   uint32 public requiredApprovals;
+
   uint32 public numberOfTrustees;
   address[] public trusteeList;
+
   mapping(address => Trustee) public trustees;
 
   address[] nominees;
   mapping(address => Submission) public submissions;
+
   mapping(uint32 => Submission) public requiredAppovalUpdates;
 
   event TrusteeRecomended(address indexed nominee, address indexed nominator, uint256 nominations);
