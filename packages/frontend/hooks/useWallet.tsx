@@ -31,7 +31,7 @@ function getChainName(chainId: string) {
 }
 
 export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
-  const [account, setAccount] = useState<string | undefined>(undefined);
+  const [account, setAccount] = useState<string | undefined>("no wallet connected");
   const [chain, setChain] = useState<string | undefined>(undefined);
   const provider = useRef<PROVIDERS.Web3Provider | undefined>(undefined);
 
@@ -51,6 +51,10 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   function getAccount(askPermission?: boolean) {
+    if (!("window" in globalThis) || !window.ethereum) {
+      return;
+    }
+
     window.ethereum
       .request({ method: askPermission ? "eth_requestAccounts" : "eth_accounts" })
       .then((accounts) => {
@@ -92,9 +96,7 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
         account,
         chain,
         provider,
-        getAccount: provider.current
-          ? getAccount
-          : () => console.log("wallet not found. install metamask")
+        getAccount
       }}
     >
       {children}
@@ -102,10 +104,13 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export function useWallet() {
+export function useWallet(askPermission?: boolean) {
   const context = useContext(Context);
   if (!context) {
     throw new Error("useWallet must be used within a WalletProvider");
   }
-  return context;
+  const { account, chain, provider, getAccount } = context;
+  getAccount(askPermission);
+
+  return { account, chain, provider };
 }

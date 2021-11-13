@@ -8,9 +8,8 @@ import styles from "../styles/Home.module.scss";
 import voterStyles from "../styles/BoardOfTrustees.module.scss";
 
 const Home: NextPage<{}, {}> = () => {
-  const { account, getAccount } = useWallet();
+  const { account } = useWallet();
 
-  getAccount();
   return (
     <div className={styles.container}>
       <Head>
