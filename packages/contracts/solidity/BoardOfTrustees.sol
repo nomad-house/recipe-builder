@@ -4,12 +4,15 @@ pragma solidity ^0.8.4;
 contract BoardOfTrustees {
   struct Trustee {
     bool isTrustee;
+    string name;
+    uint64 ratified;
+    address[] nominations;
   }
 
   enum SubmissionType {
     Inactive,
-    Recommendation,
-    Discommendation,
+    Nomination,
+    Censure,
     RequiredApprovalsChange
   }
 
@@ -20,6 +23,7 @@ contract BoardOfTrustees {
 
   uint32 public requiredApprovals;
   uint32 public numberOfTrustees;
+  address[] public trusteeList;
   mapping(address => Trustee) public trustees;
 
   address[] nominees;
@@ -47,35 +51,25 @@ contract BoardOfTrustees {
     for (uint32 i = 0; i < _trustees.length; i++) {}
   }
 
-  modifier notZeroAddress(address _addr) {
-    require(_addr != address(0), "cannot be 0 address");
+  modifier senderIsTrustee(address _addr) {
+    require(!trustees[_addr].isTrustee, "msg.sender not a trustee");
     _;
   }
 
-  modifier isTrustee(address _addr) {
-    require(!trustees[_addr].isTrustee, "not a trustee");
-    _;
+  function nominateTrustee(address _nominee) external senderIsTrustee(msg.sender) {
+    require(!trustees[msg.sender].isTrustee, "msg.sender not a trustee");
+    require(trustees[_nominee].isTrustee, "nominee already a trustee");
+    require(_nominee != address(0), "cannot nominate 0 address");
+    require(trusteeList.length < type(uint32).max, "maximum number of trustee exist");
+    _handleNomination(_nominee, msg.sender, SubmissionType.Nomination);
   }
 
-  modifier isNotTrustee(address _addr) {
-    require(trustees[_addr].isTrustee, "is a trustee");
-    _;
+  function censureTrustee(address _trustee) external senderIsTrustee(msg.sender) {
+    require(!trustees[_trustee].isTrustee, "not censuring a trustee");
+    _handleNomination(_trustee, msg.sender, SubmissionType.Censure);
   }
 
-  function recommendTrustee(address _nominee)
-    external
-    isTrustee(msg.sender)
-    isNotTrustee(_nominee)
-    notZeroAddress(_nominee)
-  {
-    _handleNomination(_nominee, msg.sender, SubmissionType.Recommendation);
-  }
-
-  function discommendTrustee(address _nominee) external isTrustee(msg.sender) isTrustee(_nominee) {
-    _handleNomination(_nominee, msg.sender, SubmissionType.Discommendation);
-  }
-
-  function changeRequiredApprovals(uint32 _numberOfApprovals) external isTrustee(msg.sender) {
+  function changeRequiredApprovals(uint32 _numberOfApprovals) external senderIsTrustee(msg.sender) {
     require(
       _numberOfApprovals != requiredApprovals,
       "requiredApprovals already is suggested numberOfApprovals"
@@ -141,15 +135,15 @@ contract BoardOfTrustees {
     _pruneRemovedTrustees(submission.submitters);
 
     if (submission.submitters.length >= requiredApprovals) {
-      if (_subType == SubmissionType.Recommendation) {
+      if (_subType == SubmissionType.Nomination) {
         _addTrustee(_nominee);
       } else {
         _removeTrustee(_nominee);
       }
       delete submissions[_nominee];
-      _removeNominee(_nominee);
+      _removeAddress(nominees, _nominee);
     } else {
-      if (_subType == SubmissionType.Recommendation) {
+      if (_subType == SubmissionType.Nomination) {
         emit TrusteeRecomended(_nominee, _nominator, submission.submitters.length);
       } else {
         emit TrusteeDiscommended(_nominee, _nominator, submission.submitters.length);
@@ -175,13 +169,15 @@ contract BoardOfTrustees {
 
   function _addTrustee(address _trustee) internal {
     trustees[_trustee].isTrustee = true;
-    numberOfTrustees++;
+    trusteeList.push(_trustee);
+    numberOfTrustees = uint32(trusteeList.length);
     emit AddedTrustee(_trustee);
   }
 
-  function _removeTrustee(address _trustee) internal notZeroAddress(_trustee) isTrustee(_trustee) {
+  function _removeTrustee(address _trustee) internal {
     trustees[_trustee].isTrustee = false;
-    numberOfTrustees--;
+    _removeAddress(trusteeList, _trustee);
+    numberOfTrustees = uint32(trusteeList.length);
     emit RemovedTrustee(_trustee);
     if (numberOfTrustees < requiredApprovals) {
       requiredApprovals = numberOfTrustees;
@@ -189,18 +185,18 @@ contract BoardOfTrustees {
     }
   }
 
-  function _removeNominee(address nominee) internal {
-    bool foundNominee = false;
-    for (uint256 i = 0; i < nominees.length - 1; i++) {
-      if (foundNominee) {
-        nominees[i] = nominees[i + 1];
-      } else if (nominees[i] == nominee) {
-        foundNominee = true;
-        nominees[i] = nominees[i + 1];
+  function _removeAddress(address[] storage array, address _addr) internal {
+    bool foundAddr = false;
+    for (uint256 i = 0; i < array.length - 1; i++) {
+      if (foundAddr) {
+        array[i] = array[i + 1];
+      } else if (array[i] == _addr) {
+        foundAddr = true;
+        array[i] = array[i + 1];
       }
     }
-    if (foundNominee) {
-      nominees.pop();
+    if (foundAddr) {
+      array.pop();
     }
   }
 }

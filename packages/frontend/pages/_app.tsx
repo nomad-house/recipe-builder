@@ -1,8 +1,13 @@
-import '../styles/globals.scss'
-import type { AppProps } from 'next/app'
+import "../styles/globals.scss";
+import type { AppProps } from "next/app";
+import { WalletProvider } from "../hooks/useWallet";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+function CODEified({ Component, pageProps }: AppProps) {
+  return (
+    <WalletProvider>
+      <Component {...pageProps} />
+    </WalletProvider>
+  );
 }
 
-export default MyApp
+export default CODEified;

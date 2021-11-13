@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "include": ["services"],
-  "files": ["hardhat.d.ts"],
+  "files": ["metamask.shim.d.ts"],
   "compilerOptions": {
     "outDir": "dist"
   }
