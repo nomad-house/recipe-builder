@@ -35,8 +35,12 @@ export type CustomElement =
 export const SlateElement = (props: RenderElementProps) => {
   const { attributes, children, element } = props;
   switch (element.type) {
-    // case "paragraph":
-    //   return <p {...attributes}>{children}</p>;
+    case "link":
+      return (
+        <Link {...attributes} href={element.url}>
+          {children}
+        </Link>
+      );
     case "block-quote":
       return <blockquote {...attributes}>{children}</blockquote>;
     case "unordered-list":
@@ -49,13 +53,10 @@ export const SlateElement = (props: RenderElementProps) => {
       return <h1 {...attributes}>{children}</h1>;
     case "heading-two":
       return <h2 {...attributes}>{children}</h2>;
-    case "link":
-      return (
-        <Link {...attributes} href={element.url}>
-          {children}
-        </Link>
-      );
+    // case "paragraph":
+    //   return <p {...attributes}>{children}</p>;
     default:
-      return <div {...attributes}>{children}</div>;
+      return <p {...attributes}>{children}</p>;
+    // return <div {...attributes}>{children}</div>;
   }
 };

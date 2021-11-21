@@ -1,8 +1,9 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { Editor } from "slate";
 import { useSlate } from "slate-react";
-import { createStyles, makeStyles, Theme, withStyles } from "@mui/material/styles";
+import { styled, Theme } from "@mui/material/styles";
 import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
@@ -20,135 +21,123 @@ import { Format } from "./SlateLeaf";
 import { Block } from "./SlateElement";
 
 interface BlockButtonProps {
-  format: Block;
-  icon: ReactNode;
+  block: Block;
 }
-const BlockButton: FC<BlockButtonProps> = ({ format, icon }) => {
+const BlockButton: FC<BlockButtonProps> = ({ block, children }) => {
   const editor = useSlate();
   return (
     <ToggleButton
-      value={format}
-      selected={isBlockActive(editor, format)}
-      onMouseDown={(event: any) => {
+      value={block}
+      selected={isBlockActive(editor, block)}
+      onMouseDown={(event) => {
         event.preventDefault();
-        toggleBlock(editor, format);
+        toggleBlock(editor, block);
       }}
     >
-      {icon}
+      {children}
     </ToggleButton>
   );
 };
 
 interface MarkButtonProps {
   format: Format;
-  icon: ReactNode;
 }
-const MarkButton: FC<MarkButtonProps> = ({ format, icon }) => {
+const MarkButton: FC<MarkButtonProps> = ({ format, children }) => {
   const editor = useSlate();
   return (
     <ToggleButton
       value={format}
       selected={isMarkActive(editor, format)}
-      onMouseDown={(event: any) => {
+      onMouseDown={(event) => {
         event.preventDefault();
         toggleMark(editor, format);
       }}
     >
-      {icon}
+      {children}
     </ToggleButton>
   );
 };
 
-export const SlateToolbar = () => {
-  const classes = useStyles();
-  return (
-    <Paper elevation={2} className={classes.paper}>
-      <StyledToggleButtonGroup size="small" arial-label="text formatting">
-        {MarkButton({ format: "bold", icon: <FaBold size={18} /> })}
-        {MarkButton({
-          format: "italic",
-          icon: <FaItalic size={18} />
-        })}
-        {MarkButton({
-          format: "underline",
-          icon: <FaUnderline size={18} />
-        })}
-        {MarkButton({
-          format: "code",
-          icon: <FaCode size={20} />
-        })}
-      </StyledToggleButtonGroup>
-      <Divider orientation="vertical" className={classes.divider} />
-      <StyledToggleButtonGroup size="small" arial-label="text formatting" exclusive>
-        {BlockButton({ format: "heading-one", icon: <MdLooksOne size={24} /> })}
-        {BlockButton({ format: "heading-two", icon: <MdLooksTwo size={24} /> })}
-        {BlockButton({
-          format: "block-quote",
-          icon: <MdFormatQuote size={24} />
-        })}
-        {BlockButton({
-          format: "numbered-list",
-          icon: <MdFormatListNumbered size={24} />
-        })}
-        {BlockButton({
-          format: "bulleted-list",
-          icon: <MdList size={34} />
-        })}
-      </StyledToggleButtonGroup>
-    </Paper>
-  );
-};
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  display: "flex",
+  border: `2px solid ${theme.palette.divider}`,
+  flexWrap: "wrap"
+}));
 
-export const HoveringToolbar = () => {
-  const editor = useSlate();
-  const [showToolbar, setShowToolbar] = useState(false);
-  const { selection } = editor;
-  useEffect(() => {
-    if (!selection || Editor.string(editor, selection) === "") {
-      setShowToolbar(false);
-    } else {
-      setShowToolbar(true);
-    }
-  }, [selection]);
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  alignSelf: "stretch",
+  height: "auto",
+  margin: theme.spacing(1, 0.5)
+}));
 
-  return (
-    <div hidden={!showToolbar}>
-      <SlateToolbar />
-    </div>
-  );
-};
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    paper: {
-      display: "flex",
-      border: `2px solid ${theme.palette.divider}`,
-      flexWrap: "wrap"
-    },
-    divider: {
-      alignSelf: "stretch",
-      height: "auto",
-      margin: theme.spacing(1, 0.5)
-    },
-    button: {
-      border: "none",
-      paddingBottom: theme.spacing(1)
-    }
-  })
-);
-
-const StyledToggleButtonGroup = withStyles((theme) => ({
-  grouped: {
-    display: "flex",
-    flexWrap: "wrap",
-    margin: theme.spacing(0.5),
-    border: "none",
-    padding: theme.spacing(0, 1.5),
-    "&:not(:first-child)": {
-      borderRadius: theme.shape.borderRadius
-    },
-    "&:first-child": {
-      borderRadius: theme.shape.borderRadius
-    }
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  display: "flex",
+  flexWrap: "wrap",
+  margin: theme.spacing(0.5),
+  border: "none",
+  padding: theme.spacing(0, 1.5),
+  "&:not(:first-of-type)": {
+    borderRadius: theme.shape.borderRadius
+  },
+  "&:first-of-type": {
+    borderRadius: theme.shape.borderRadius
   }
-}))(ToggleButtonGroup);
+}));
+
+export const EditorToolbar = () => {
+  return (
+    <StyledPaper elevation={2}>
+      <StyledToggleButtonGroup size="small" arial-label="text formatting">
+        <MarkButton format="bold">
+          <FormatBoldIcon />
+        </MarkButton>
+        <MarkButton format="italic">
+          <FormatItalicIcon />
+        </MarkButton>
+        <MarkButton format="underline">
+          <FormatUnderlinedIcon />
+        </MarkButton>
+        <MarkButton format="code">
+          <CodeTwoToneIcon />
+        </MarkButton>
+      </StyledToggleButtonGroup>
+      <StyledDivider orientation="vertical" />
+      <StyledToggleButtonGroup size="small" arial-label="text formatting" exclusive>
+        <BlockButton block="heading-one">
+          <LooksOneTwoToneIcon />
+        </BlockButton>
+        <BlockButton block="heading-two">
+          <LooksTwoTwoToneIcon />
+        </BlockButton>
+        <BlockButton block="block-quote">
+          <FormatQuoteTwoToneIcon />
+        </BlockButton>
+        <BlockButton block="unordered-list">
+          <FormatListBulletedTwoToneIcon />
+        </BlockButton>
+        <BlockButton block="ordered-list">
+          <FormatListNumberedTwoToneIcon />
+        </BlockButton>
+      </StyledToggleButtonGroup>
+    </StyledPaper>
+  );
+};
+
+// export const HoveringToolbar = () => {
+//   const editor = useSlate();
+//   const [showToolbar, setShowToolbar] = useState(false);
+//   const { selection } = editor;
+//   useEffect(() => {
+//     if (!selection || Editor.string(editor, selection) === "") {
+//       setShowToolbar(false);
+//     } else {
+//       setShowToolbar(true);
+//     }
+//   }, [selection]);
+
+//   return (
+//     <div hidden={!showToolbar}>
+//       <EditorToolbar />
+//     </div>
+//   );
+// };
