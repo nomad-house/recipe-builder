@@ -11,6 +11,7 @@
     "jsx": "preserve",
     "noEmit": true,
     "skipLibCheck": true,
+    "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": false,
     "checkJs": false,
