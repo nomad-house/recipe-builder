@@ -10,9 +10,11 @@ const Constitution: NextPage = () => {
       children: [
         { text: "This is editable " },
         { text: "rich", bold: true },
-        { text: " text, " },
+        { text: " " },
+        { text: "text,", deletion: 30 },
+        { text: " " },
         { text: "much", italic: true },
-        { text: " better than a " },
+        { text: " better than a ", addition: 50 },
         { text: "<textarea>", code: true },
         { text: "!" }
       ]

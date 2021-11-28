@@ -25,6 +25,7 @@ module.exports = {
     "node/no-unpublished-import": "off",
     "node/no-missing-import": "off",
     camelcase: "off",
-    "node/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }]
+    "node/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
+    "import/no-unresolved": "off"
   }
 };

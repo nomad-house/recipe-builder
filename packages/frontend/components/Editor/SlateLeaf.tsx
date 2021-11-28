@@ -6,6 +6,8 @@ export type CustomText = {
   italic?: boolean;
   underline?: boolean;
   code?: boolean;
+  addition?: number; // percentage approval 0-100
+  deletion?: number; // percentage approval 0-100
 };
 
 export type Format = keyof Omit<CustomText, "text">;
@@ -34,5 +36,23 @@ export const SlateLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
     children = <u>{children}</u>;
   }
 
-  return <span {...attributes}>{children}</span>;
+  let style = {};
+  if (leaf.addition) {
+    style = { backgroundColor: `rgba(51, 255, 51, ${leaf.addition / 100})` };
+  }
+
+  if (leaf.deletion) {
+    style = {
+      backgroundColor: `rgba(255, 51, 51, ${leaf.deletion / 100})`,
+      textDecorationLine: "line-through",
+      textDecorationStyle: "solid",
+      textDecorationColor: "rgba(0, 0, 0, .5)"
+    };
+  }
+
+  return (
+    <span style={style} {...attributes}>
+      {children}
+    </span>
+  );
 };
