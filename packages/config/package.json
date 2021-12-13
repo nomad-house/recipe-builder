@@ -6,6 +6,9 @@
     "ts": "npm run node -- -r ts-node/register",
     "build": "rm -rf dist && tsc"
   },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
+  },
   "license": "MIT",
   "description": "CODEified",
   "main": "dist/index.js",

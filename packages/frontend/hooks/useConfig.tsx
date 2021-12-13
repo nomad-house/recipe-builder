@@ -18,10 +18,10 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
   try {
     config = CONFIG_FILE;
   } catch {
-    console.error("no CONFIG_FILE found");
+    console.error("global.CONFIG_FILE not found, using default config");
     config = {
-      appUrl: "",
-      apiUrl: "",
+      appUrl: "http://localhost:3000",
+      apiUrl: "http://localhost:3001",
       authUrl: "",
       userPoolId: "",
       userPoolClientId: ""
@@ -40,7 +40,7 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
 export function useConfig() {
   const config = useContext(ConfigContext);
   if (!config) {
-    throw new Error("useWallet must be used within a WalletProvider");
+    throw new Error("useConfig must be used within a ConfigProvider");
   }
   return config;
 }

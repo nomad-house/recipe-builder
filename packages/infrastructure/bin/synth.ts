@@ -1,4 +1,4 @@
-import { exec } from "../lib/exec";
+import { exec } from "@codeified/utils";
 import { getConfig } from "../lib/getConfig";
 
 export async function synth(): Promise<void> {

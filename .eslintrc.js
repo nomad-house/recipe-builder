@@ -1,10 +1,12 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2020: true,
     mocha: true,
     node: true
   },
+  parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint"],
   extends: [
     "standard",
@@ -15,7 +17,6 @@ module.exports = {
     "plugin:import/recommended",
     "plugin:import/typescript"
   ],
-  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2020
   },
@@ -26,6 +27,7 @@ module.exports = {
     "node/no-missing-import": "off",
     camelcase: "off",
     "node/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "node/no-extraneous-import": "off"
   }
 };

@@ -4,7 +4,9 @@
   "scripts": {
     "node": "node",
     "ts": "npm run node -- -r ts-node/register",
-    "build": "rm -rf dist && tsc"
+    "build": "tsc",
+    "prebuild": "npm run clean",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "ts-node": "latest",

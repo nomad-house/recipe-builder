@@ -1,3 +1,4 @@
 module.exports = {
-  extends: ["../../.eslintrc.js","next/core-web-vitals"],
+  extends: ["next/core-web-vitals"],
+  root: true
 };

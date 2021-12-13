@@ -28,11 +28,7 @@ export async function buildCdk() {
       logoutCallbackPath: "/"
     },
     cdn: {
-<<<<<<< HEAD
       codePaths: [resolve(__dirname, "..", "..", "frontend", "build")],
-=======
-      codePaths: [resolve(__dirname, "..", "docs", "build")],
->>>>>>> c8bce20e0e3aab829f43e9c83bfd1eabd64777fe
       buildWwwSubdomain: false,
       codeDeploymentProps: {
         prune: false
