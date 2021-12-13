@@ -7,11 +7,11 @@
   "scripts": {
     "node": "node",
     "ts": "TS_NODE_FILES=true npm run node -- -r ts-node/register",
+    "build": "npm run build --workspaces",
     "clean:solidity": "rimraf frontend/public/solidity && rimraf typechain",
     "build:solidity": "hardhat compile",
     "deploy:solidity": "npm run clean:sol && hardhat run bin/deployContracts.ts --network localhost",
     "dev:solidity": "hardhat node",
-    "build": "cross-env-shell \"npm run build:b && npm run build:layer && npm run build:f\"",
     "start:frontend": "cd frontend && npm run dev",
     "start:backend": "ts-node bin/devServer",
     "start:db": "cd backend && npm run neo4j:start",
@@ -25,5 +25,9 @@
   "workspaces": [
     "packages/*"
   ],
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "typescript": "latest",
+    "ts-node": "latest"
+  }
 }

@@ -1,18 +1,14 @@
-import { resolve } from "path";
 import { App } from "@aws-cdk/core";
 import { exec } from "@codeified/utils";
-import { Lambdas, startDevServer } from "full-stack-pattern";
-import { lambdas } from "../src";
+import { startDevServer } from "full-stack-pattern";
+import { loadLambdas } from "../src";
 
 const app = new App();
 
 (async function main() {
   await exec("npm run build");
 
-  const construct = new Lambdas(app, "Lambdas", {
-    lambdas,
-    code: resolve(__dirname, "..", "dist", "src")
-  });
+  loadLambdas(app);
 
   startDevServer({
     verbose: true,

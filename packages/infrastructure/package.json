@@ -12,9 +12,7 @@
     "@aws-cdk/core": "1.134.0",
     "@codeified/serverless": "^0.0.1",
     "dotenv": "^10.0.0",
-    "full-stack-pattern": "^2.0.2",
-    "ts-node": "latest",
-    "typescript": "latest"
+    "full-stack-pattern": "^2.0.3"
   },
   "license": "MIT",
   "description": "CODEified",
