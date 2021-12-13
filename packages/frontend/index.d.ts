@@ -1,3 +1,4 @@
+import "./hooks/useConfig.d.ts";
 export {};
 /**
  *
