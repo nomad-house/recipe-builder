@@ -1,9 +1,9 @@
-import { resolve } from "path";
 import { App, RemovalPolicy } from "@aws-cdk/core";
 import { FullNestedStack } from "full-stack-pattern";
 
 import { getConfig } from "@codeified/config";
-import { SERVERLESS_SRC_DIR, LAYER_SRC_DIR } from "@codeified/serverless";
+import { SERVERLESS_SRC_DIR, LAYER_SRC_DIR, lambdas } from "@codeified/serverless";
+import { FRONTEND_SRC_DIR } from "@codeified/frontend";
 
 const app = new App();
 
@@ -33,7 +33,7 @@ export async function buildCdk() {
     },
     cdn: {
       ...cdn,
-      codePaths: [resolve(__dirname, "..", "..", "frontend", "build"), ...(cdn?.codePaths ?? [])]
+      codePaths: [FRONTEND_SRC_DIR]
     },
     serverless: {
       ...serverless,
@@ -46,63 +46,8 @@ export async function buildCdk() {
         }
       ],
       code: SERVERLESS_SRC_DIR,
-      layers: [LAYER_SRC_DIR]
-      // lambdas: [
-      //   {
-      //     name: "graphql",
-      //     handler: "graphql/handler.handler",
-      //     events: [
-      //       {
-      //         method: "GET",
-      //         path: "/graphql"
-      //       },
-      //       {
-      //         method: "POST",
-      //         path: "/graphql"
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     name: "netlify-auth-uri",
-      //     handler: "netlify/index.authUri",
-      //     events: [
-      //       {
-      //         method: "GET",
-      //         path: "/netlify/auth"
-      //       }
-      //     ],
-      //     environment: {
-      //       JWT_SECRET: "",
-      //       GITHUB_CLIENT_ID: ""
-      //     }
-      //   },
-      //   {
-      //     name: "netlify-auth-callback",
-      //     handler: "netlify/index.authCallback",
-      //     events: [
-      //       {
-      //         method: "GET",
-      //         path: "/netlify/callback"
-      //       }
-      //     ],
-      //     environment: {
-      //       JWT_SECRET: "",
-      //       ORIGIN: "",
-      //       GITHUB_CLIENT_ID: "",
-      //       GITHUB_CLIENT_SECRET: ""
-      //     }
-      //   },
-      //   {
-      //     name: "netlify-auth-success",
-      //     handler: "netlify/index.authSuccess",
-      //     events: [
-      //       {
-      //         method: "GET",
-      //         path: "/netlify/success"
-      //       }
-      //     ]
-      //   }
-      // ]
+      layers: [LAYER_SRC_DIR],
+      lambdas
     }
   });
 }

@@ -26,6 +26,6 @@
     // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["shim.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["shim.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "../contracts/eth.shim.d.ts"],
   "exclude": ["node_modules"]
 }

@@ -17,8 +17,6 @@ interface ProviderRpcError extends Error {
   data?: unknown;
 }
 
-interface Metamask extends EventEm {}
-
 declare global {
   export interface Window {
     ethereum: {

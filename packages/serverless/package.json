@@ -14,7 +14,10 @@
     "slate": "^0.70.0"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.76"
+    "@aws-cdk/core": "1.134.0",
+    "@types/aws-lambda": "^8.10.76",
+    "convert-lambda-to-express": "^1.1.2",
+    "full-stack-pattern": "^2.0.2"
   },
   "description": "codeified",
   "license": "MIT",

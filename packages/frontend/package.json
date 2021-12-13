@@ -29,5 +29,7 @@
     "sass": "^1.43.4",
     "typescript": "4.4.4"
   },
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "private": true
 }
