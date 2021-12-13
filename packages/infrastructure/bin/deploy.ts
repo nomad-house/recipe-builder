@@ -1,5 +1,5 @@
 import { exec } from "@codeified/utils";
-import { getConfig } from "../lib/getConfig";
+import { getConfig } from "@codeified/config";
 
 export async function deploy(): Promise<void> {
   const stackName: string = process.env.STACK || "--all";

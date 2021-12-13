@@ -21,12 +21,13 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "node/no-unpublished-import": "off",
     "node/no-missing-import": "off",
+    "node/no-unsupported-features/es-syntax": "off",
     camelcase: "off",
-    "node/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
     "import/no-unresolved": "off",
     "node/no-extraneous-import": "off"
   }

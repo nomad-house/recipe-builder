@@ -1,5 +1,5 @@
 {
-  "name": "codeified-frontend",
+  "name": "@codeified/frontend",
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export -o dist",

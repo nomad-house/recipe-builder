@@ -1,4 +1,4 @@
-import { getConfig as GET_CONFIG } from "full-stack-pattern";
+import { getConfig as GET_CONFIG, FullStackConstructProps } from "full-stack-pattern";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config();
 
@@ -8,7 +8,7 @@ const staticProps = {
   rootDomain: "codeified.org"
 };
 
-interface Stage {
+interface Stage extends FullStackConstructProps {
   branch: string;
   profile: string;
   env: {
@@ -16,6 +16,11 @@ interface Stage {
     region: string;
   };
 }
+
+// const JWT_SECRET = `${process.env.JWT_SECRET}`;
+// const GITHUB_CLIENT_ID = `${process.env.GITHUB_CLIENT_ID}`;
+// const GITHUB_CLIENT_SECRET = `${process.env.GITHUB_CLIENT_SECRET}`;
+// const ORIGIN = process.env.ORIGIN ?? "http://localhost:3001";
 
 const stages: Stage[] = [
   {

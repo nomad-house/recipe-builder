@@ -1,7 +1,6 @@
 {
-  "name": "codeified-backend",
+  "name": "@codeified/serverless",
   "version": "0.0.1",
-  "description": "codeified-backend",
   "scripts": {
     "node": "node",
     "ts": "npm run node -- -r ts-node/register",
@@ -11,15 +10,18 @@
     "build": "rm -rf dist && tsc",
     "build:watch": "npm run build -- --watch"
   },
-  "license": "ISC",
-  "devDependencies": {
-    "@types/aws-lambda": "^8.10.76",
-    "convert-lambda-to-express": "^1.1.2",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.4"
-  },
   "dependencies": {
     "slate": "^0.70.0"
   },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.76"
+  },
+  "description": "codeified",
+  "license": "MIT",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.js",
+  "files": [
+    "dist"
+  ],
   "private": true
 }

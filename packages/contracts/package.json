@@ -1,5 +1,5 @@
 {
-  "name": "codeified-contracts",
+  "name": "@codeified/contracts",
   "version": "0.0.1",
   "description": "solidity smart contracts for codeified project",
   "scripts": {

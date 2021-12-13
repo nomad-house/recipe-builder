@@ -1,19 +1,27 @@
 {
   "name": "@codeified/infrastructure",
   "version": "0.0.1",
-  "description": "codeified-infrastructure",
   "scripts": {
     "node": "node",
     "ts": "npm run node -- -r ts-node/register",
-    "build": "rm -rf dist && tsc"
+    "build": "tsc",
+    "prebuild": "npm run clean",
+    "clean": "rm -rf dist"
   },
-  "license": "MIT",
   "devDependencies": {
     "@aws-cdk/core": "1.134.0",
+    "@codeified/serverless": "^0.0.1",
     "dotenv": "^10.0.0",
     "full-stack-pattern": "^2.0.2",
     "ts-node": "latest",
     "typescript": "latest"
   },
+  "license": "MIT",
+  "description": "CODEified",
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "private": true
 }
