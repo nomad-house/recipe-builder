@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "description": "solidity smart contracts for codeified project",
   "scripts": {
+    "dev": "npm run ts bin/dev",
+    "build": "npm run build:sol && npm run build:ts && npm run move:sol",
     "node": "node",
     "ts": "TS_NODE_FILES=true npm run node -- -r ts-node/register",
     "test": "hardhat test",
@@ -11,10 +13,8 @@
     "build:ts": "tsc --project tsconfig.build.json",
     "move:sol": "cp -r typechain dist",
     "deploy:sol": "npm run clean:sol && hardhat run bin/deployContracts.ts --network localhost",
-    "build": "npm run build:sol && npm run build:ts && npm run move:sol",
     "dev-node": "hardhat node",
-    "kill-dev-node": "lsof -i tcp:8545 | grep LISTEN | awk '{print $2}' | xargs kill -15",
-    "start": "npm run ts bin/dev"
+    "kill-dev-node": "lsof -i tcp:8545 | grep LISTEN | awk '{print $2}' | xargs kill -15"
   },
   "author": "Matthew Keil",
   "license": "MIT",

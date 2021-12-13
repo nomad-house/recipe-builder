@@ -2,13 +2,12 @@
   "name": "@codeified/serverless",
   "version": "0.0.1",
   "scripts": {
+    "dev": "npm run ts bin/dev",
+    "build": "rm -rf dist && tsc",
     "node": "node",
     "ts": "npm run node -- -r ts-node/register",
     "neo4j:start": "~/.neo4j/bin/neo4j start",
-    "neo4j:stop": "~/.neo4j/bin/neo4j stop",
-    "start": "npm run ts bin/devServer",
-    "build": "rm -rf dist && tsc",
-    "build:watch": "npm run build -- --watch"
+    "neo4j:stop": "~/.neo4j/bin/neo4j stop"
   },
   "dependencies": {
     "slate": "^0.70.0"
