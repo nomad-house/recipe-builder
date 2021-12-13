@@ -26,6 +26,6 @@
     // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["metamask.shim.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["index.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
