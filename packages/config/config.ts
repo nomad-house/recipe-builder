@@ -1,4 +1,4 @@
-import { getConfig as GET_CONFIG } from "nomad-cdk";
+import { getConfig as GET_CONFIG } from "full-stack-pattern";
 
 interface StageConfig {
   env: {

@@ -20,5 +20,6 @@
   },
   "dependencies": {
     "slate": "^0.70.0"
-  }
+  },
+  "private": true
 }

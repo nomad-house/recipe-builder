@@ -1,11 +1,21 @@
 .DS_Store
-node_modules
-*dist
-cdk.out
 
-# local env files
+node_modules
+packages/*/node_modules
+dist/
+packages/*/dist/
+build/
+packages/*/build/
+cdk.out
+packages/*/cdk.out/
+
+# env files
 .env
-.env*
+packages/*/.env
+env.*
+packages/*/env.*
+*.env
+packages/*/*.env
 
 # Log files
 npm-debug.log*

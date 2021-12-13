@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import { App } from "@aws-cdk/core";
-import { getConfig } from "./getConfig";
+import { getConfig } from "@codeified/config";
 import { FullStack, FullStackProps } from "full-stack-pattern";
 require("dotenv").config();
 

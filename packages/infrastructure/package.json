@@ -14,5 +14,6 @@
     "full-stack-pattern": "^2.0.2",
     "ts-node": "latest",
     "typescript": "latest"
-  }
+  },
+  "private": true
 }

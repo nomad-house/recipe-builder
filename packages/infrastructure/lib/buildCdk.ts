@@ -2,7 +2,7 @@ import { resolve } from "path";
 import { App, RemovalPolicy } from "@aws-cdk/core";
 
 import { FullNestedStack } from "full-stack-pattern";
-import { getConfig } from "./getConfig";
+import { getConfig } from "@codeified/config";
 
 const app = new App();
 
@@ -28,7 +28,7 @@ export async function buildCdk() {
       logoutCallbackPath: "/"
     },
     cdn: {
-      codePaths: [resolve(__dirname, "..", "docs", "build")],
+      codePaths: [resolve(__dirname, "..", "..", "frontend", "build")],
       buildWwwSubdomain: false,
       codeDeploymentProps: {
         prune: false

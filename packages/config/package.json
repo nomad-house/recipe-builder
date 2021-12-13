@@ -1,14 +1,10 @@
 {
-  "name": "@codeified/utils",
+  "name": "@codeified/config",
   "version": "0.0.1",
   "scripts": {
     "node": "node",
     "ts": "npm run node -- -r ts-node/register",
     "build": "rm -rf dist && tsc"
-  },
-  "devDependencies": {
-    "ts-node": "latest",
-    "typescript": "latest"
   },
   "license": "MIT",
   "description": "CODEified",

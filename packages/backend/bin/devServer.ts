@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import { HandlerConfig, addToDevServer, startDevServer } from "convert-lambda-to-express";
-import { exec } from "../../utils";
+import { exec } from "@codeified/utils";
 
 const handlers: HandlerConfig[] = [
   {

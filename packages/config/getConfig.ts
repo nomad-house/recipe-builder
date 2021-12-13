@@ -4,10 +4,9 @@ import { getConfig as GET_CONFIG } from "full-stack-pattern";
 require("dotenv").config();
 
 const staticProps = {
-  client: "mk",
-  project: "fsp-docs",
-  rootDomain: "matthewkeil.com",
-  subDomain: "full-stack-pattern"
+  client: "co", // CODEified Org
+  project: "codeified",
+  rootDomain: "codeified.org"
 };
 
 interface Stage {

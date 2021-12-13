@@ -1,11 +1,10 @@
 import { FC } from "react";
-import BaseImage, { ImageLoader } from "next/image";
+import BaseImage, { ImageLoaderProps } from "next/image";
+import { useConfig } from "../hooks/useConfig";
 
 // TODO: Figure this out
-const loader: ImageLoader = ({ src, width, quality }) => {
-  return `${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}${
-    src.startsWith("/") ? src : `/${src}`
-  }?w=${width}&q=${quality}`;
+const loader = ({ appUrl, src, width, quality }: ImageLoaderProps & { appUrl: string }) => {
+  return `${appUrl}${src.startsWith("/") ? src : `/${src}`}?w=${width}&q=${quality}`;
 };
 
 type BaseImageProps = Parameters<typeof BaseImage>[0];
@@ -19,11 +18,13 @@ interface ImageProps extends BaseImageProps {
 }
 
 const Image: FC<ImageProps> = (props) => {
+  const { appUrl } = useConfig();
   return (
     <BaseImage
       {...props}
       loader={() =>
         loader({
+          appUrl,
           src: props.src,
           width: props.width,
           quality: props.quality
