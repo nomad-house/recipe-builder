@@ -1,8 +1,8 @@
-require("dotenv").config();
 import { resolve } from "path";
 import { App } from "@aws-cdk/core";
-import { getConfig } from "../config";
-import { FullStack, FullStackProps } from "nomad-cdk";
+import { getConfig } from "./getConfig";
+import { FullStack, FullStackProps } from "full-stack-pattern";
+require("dotenv").config();
 
 export async function buildInfra(synth: boolean) {
   const { client, project, stage, env, rootDomain, profile } = await getConfig();

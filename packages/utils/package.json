@@ -1,7 +1,7 @@
 {
-  "name": "@codeified/infrastructure",
+  "name": "@codeified/utils",
   "version": "0.0.1",
-  "description": "codeified-infrastructure",
+  "description": "codeified-utils",
   "scripts": {
     "node": "node",
     "ts": "npm run node -- -r ts-node/register",
@@ -9,9 +9,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@aws-cdk/core": "1.134.0",
-    "dotenv": "^10.0.0",
-    "full-stack-pattern": "^2.0.2",
     "ts-node": "latest",
     "typescript": "latest"
   }
