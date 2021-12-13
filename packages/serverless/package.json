@@ -4,6 +4,8 @@
   "scripts": {
     "dev": "npm run ts bin/dev",
     "build": "rm -rf dist && tsc",
+    "prebuild": "npm run build:layer",
+    "build:layer": "npm run ts bin/buildLayer",
     "node": "node",
     "ts": "npm run node -- -r ts-node/register",
     "neo4j:start": "~/.neo4j/bin/neo4j start",

@@ -27,6 +27,7 @@
   ],
   "private": true,
   "devDependencies": {
+    "full-stack-pattern": "^2.0.4",
     "typescript": "latest",
     "ts-node": "latest"
   }
