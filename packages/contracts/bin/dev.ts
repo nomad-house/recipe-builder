@@ -70,7 +70,7 @@ async function watchServices() {
 }
 
 function dev() {
-  exec("npm run dev-node");
+  exec("npm run dev-chain");
   mkdirSync(TYPECHAIN_OUTPUT_DIR, { recursive: true });
   mkdirSync(SERVICES_OUTPUT_DIR, { recursive: true });
   hardhat.run("compile").then(() => {

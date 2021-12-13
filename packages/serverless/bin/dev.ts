@@ -5,7 +5,7 @@ import { exec } from "@codeified/utils";
 const app = new App();
 
 (async function main() {
-  await exec("npm run build");
+  await exec("npm run build:ts");
   exec("tsc --watch", false).catch(process.exit);
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires

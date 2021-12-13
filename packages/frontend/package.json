@@ -1,8 +1,10 @@
 {
   "name": "@codeified/frontend",
   "scripts": {
+    "clean": "rm -rf .next dist contracts",
     "dev": "next dev",
     "build": "next build && next export -o dist",
+    "prebuild": "npm run clean",
     "start": "next start",
     "lint": "next lint"
   },

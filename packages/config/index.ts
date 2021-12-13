@@ -16,11 +16,6 @@ interface Stage extends FullStackConstructProps {
   };
 }
 
-// const JWT_SECRET = `${process.env.JWT_SECRET}`;
-// const GITHUB_CLIENT_ID = `${process.env.GITHUB_CLIENT_ID}`;
-// const GITHUB_CLIENT_SECRET = `${process.env.GITHUB_CLIENT_SECRET}`;
-// const ORIGIN = process.env.ORIGIN ?? "http://localhost:3001";
-
 export function getConfig(branch?: string) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   require("dotenv").config({ path: resolve(__dirname, "..", "..", "..", ".env") });

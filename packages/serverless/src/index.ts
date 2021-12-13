@@ -9,11 +9,11 @@ export const lambdas: LambdasProps["lambdas"] = [
     handler: "handlers/getDocument.handler",
     events: [
       {
-        method: "GET",
+        method: "POST",
         path: "/graphql"
       },
       {
-        method: "POST",
+        method: "GET",
         path: "/graphql"
       }
     ]

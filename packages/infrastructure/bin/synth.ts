@@ -15,7 +15,8 @@ export async function synth(): Promise<void> {
 >>> Using profile ${_profile === "" ? "default" : profile}
 >>>\n\n`);
 
-  await exec(`npm run cdk -- synth${_profile} --quiet`);
+  // eslint-disable-next-line no-process-exit
+  await exec(`npm run cdk -- synth${_profile} --quiet`).catch(() => process.exit(1));
 }
 
 if (require.main === module) {

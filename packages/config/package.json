@@ -2,11 +2,12 @@
   "name": "@codeified/config",
   "version": "0.0.1",
   "scripts": {
-    "node": "node",
-    "ts": "npm run node -- -r ts-node/register",
-    "build": "tsc",
+    "clean": "rm -rf dist",
+    "dev": "npm run build -- --watch",
     "prebuild": "npm run clean",
-    "clean": "rm -rf dist"
+    "build": "tsc",
+    "node": "node",
+    "ts": "npm run node -- -r ts-node/register"
   },
   "devDependencies": {
     "dotenv": "^10.0.0"

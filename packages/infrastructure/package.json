@@ -2,13 +2,15 @@
   "name": "@codeified/infrastructure",
   "version": "0.0.1",
   "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc",
+    "prebuild": "npm run clean",
     "cdk": "cdk",
     "node": "node",
     "ts": "npm run node -- -r ts-node/register",
-    "build": "tsc",
-    "prebuild": "npm run clean",
-    "clean": "rm -rf dist",
-    "synth": "npm run ts bin/synth"
+    "synth": "npm run ts bin/synth",
+    "deploy": "npm run ts bin/deploy",
+    "destroy": "npm run ts bin/destroy"
   },
   "devDependencies": {
     "@aws-cdk/core": "1.134.0",

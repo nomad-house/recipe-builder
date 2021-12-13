@@ -5,30 +5,32 @@
   "author": "Matthew Keil",
   "description": "Blockchain Based Decentralized Democratic Governance Through Transparent and Automated Aggregation of Individually CODEified Constitutions",
   "scripts": {
-    "node": "node",
-    "ts": "TS_NODE_FILES=true npm run node -- -r ts-node/register",
+    "clean": "npm run clean --workspaces",
+    "dev": "run-p dev:*",
+    "dev:serverless": "npm run dev --workspace=@codeified/serverless",
+    "dev:frontend": "npm run dev  --workspace=@codeified/frontend",
+    "dev:contracts": "npm run dev --workspace=@codeified/contracts",
     "build": "npm run build --workspaces",
-    "clean:solidity": "rimraf frontend/public/solidity && rimraf typechain",
-    "build:solidity": "hardhat compile",
-    "deploy:solidity": "npm run clean:sol && hardhat run bin/deployContracts.ts --network localhost",
-    "dev:solidity": "hardhat node",
-    "start:frontend": "cd frontend && npm run dev",
-    "start:backend": "ts-node bin/devServer",
-    "start:db": "cd backend && npm run neo4j:start",
-    "start": "concurrently \"npm run start:solidity\" \"npm run start:backend\" \"npm run start:db\"",
-    "build:f": "cd frontend && npm run generate",
-    "build:b": "cd backend && npm run build",
-    "build:layer": "cross-env-shell \"rm -rf ./backend/layer && node node_modules/.bin/buildLayer ./backend ./backend/layer\"",
-    "synth": "cross-env-shell \"node_modules/.bin/cdk synth\"",
-    "deploy": "cross-env-shell \"node_modules/.bin/cdk deploy --all --require-approval never\""
+    "prebuild": "npm run clean --workspaces",
+    "synth": "npm run synth --workspace=@codeified/infrastructure",
+    "deploy": "npm run deploy --workspace=infrastructure",
+    "destroy": "npm run destroy --workspace=infrastructure",
+    "node": "node",
+    "ts": "npm run node -- -r ts-node/register"
   },
   "workspaces": [
-    "packages/*"
+    "packages/utils",
+    "packages/config",
+    "packages/contracts",
+    "packages/serverless",
+    "packages/frontend",
+    "packages/infrastructure"
   ],
   "private": true,
   "devDependencies": {
     "full-stack-pattern": "^2.0.4",
-    "typescript": "latest",
-    "ts-node": "latest"
+    "npm-run-all": "^4.1.5",
+    "ts-node": "latest",
+    "typescript": "latest"
   }
 }
