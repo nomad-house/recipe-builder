@@ -2,7 +2,7 @@ import { App, RemovalPolicy } from "@aws-cdk/core";
 import { FullNestedStack } from "full-stack-pattern";
 
 import { getConfig } from "@codeified/config";
-import { lambdasProps } from "@codeified/serverless";
+import { serverlessProps } from "@codeified/serverless";
 import { FRONTEND_SRC_DIR } from "@codeified/frontend";
 
 const app = new App();
@@ -31,16 +31,7 @@ export async function buildCdk() {
     },
     serverless: {
       ...(serverless ?? {}),
-      ...lambdasProps,
-      tables: [
-        ...(serverless?.tables ?? []),
-        {
-          name: "demo-table",
-          partitionKey: {
-            id: "string"
-          }
-        }
-      ]
+      ...serverlessProps
     }
   });
 }

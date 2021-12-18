@@ -15,11 +15,13 @@
     "neo4j:stop": "~/.neo4j/bin/neo4j stop"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.44.0",
     "slate": "^0.70.0"
   },
   "devDependencies": {
     "@aws-cdk/core": "1.134.0",
     "@types/aws-lambda": "^8.10.76",
+    "dynamodb-local": "^0.0.31",
     "full-stack-pattern": "^2.0.3"
   },
   "description": "codeified",

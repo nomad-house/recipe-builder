@@ -8,6 +8,7 @@ export type CustomText = {
   code?: boolean;
   addition?: number; // percentage approval 0-100
   deletion?: number; // percentage approval 0-100
+  codeified?: string; // hash of codeification
 };
 
 export type Format = keyof Omit<CustomText, "text">;
@@ -37,6 +38,14 @@ export const SlateLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
   }
 
   let style = {};
+  if (leaf.codeified) {
+    style = {
+      textDecorationLine: "underline",
+      textDecorationStyle: "wavy",
+      textDecorationColor: "rgba(255,153,1, .5)"
+    };
+  }
+
   if (leaf.addition) {
     style = { backgroundColor: `rgba(51, 255, 51, ${leaf.addition / 100})` };
   }
@@ -52,7 +61,9 @@ export const SlateLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
 
   return (
     <span style={style} {...attributes}>
+      {/* <span onFocus={} onBlur={} onMouseEnter={} onMouseLeave={} onMouseOut={}> */}
       {children}
+      {/* </span> */}
     </span>
   );
 };

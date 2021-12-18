@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import { LambdasProps } from "full-stack-pattern";
+import { LambdasProps, ServerlessConstructProps } from "full-stack-pattern";
 
 export const SERVERLESS_SRC_DIR = resolve(__dirname);
 export const LAYER_SRC_DIR = resolve(__dirname, "..", "layer");
@@ -60,8 +60,27 @@ export const lambdas: LambdasProps["lambdas"] = [
   // }
 ];
 
-export const lambdasProps: LambdasProps = {
+export const serverlessProps: ServerlessConstructProps = {
   code: SERVERLESS_SRC_DIR,
   layers: [LAYER_SRC_DIR],
-  lambdas
+  lambdas,
+  tables: [
+    {
+      name: "documents",
+      partitionKey: {
+        id: "string"
+      },
+      sortKey: {
+        version: "string"
+      },
+      lsi: [
+        {
+          indexName: "userId",
+          sortKey: {
+            userId: "string"
+          }
+        }
+      ]
+    }
+  ]
 };
