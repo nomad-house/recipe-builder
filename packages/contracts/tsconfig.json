@@ -1,8 +1,0 @@
-{
-  "extends": "../../tsconfig.json",
-  "include": ["services", "typechain", "test", "bin"],
-  "files": ["hardhat.config.ts", "hardhat.d.ts"],
-  "compilerOptions": {
-    "lib": ["DOM"]
-  }
-}

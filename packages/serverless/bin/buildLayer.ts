@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import { writeFile, mkdir } from "fs/promises";
-import { exec } from "@codeified/utils";
+import { exec } from "@recipe-builder/utils";
 
 import originalPackageJson from "../package.json";
 

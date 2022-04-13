@@ -1,6 +1,6 @@
 import { App } from "@aws-cdk/core";
 import { ServerlessStack, startDevServer } from "full-stack-pattern";
-import { exec } from "@codeified/utils";
+import { exec } from "@recipe-builder/utils";
 import { startLocalDynamo } from "./localDynamo";
 
 const app = new App();

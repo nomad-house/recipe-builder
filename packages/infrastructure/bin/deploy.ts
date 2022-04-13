@@ -1,5 +1,5 @@
-import { exec } from "@codeified/utils";
-import { getConfig } from "@codeified/config";
+import { exec } from "@recipe-builder/utils";
+import { getConfig } from "@recipe-builder/config";
 
 export async function deploy(): Promise<void> {
   const stackName: string = process.env.STACK || "--all";

@@ -1,9 +1,9 @@
 import { App, RemovalPolicy } from "@aws-cdk/core";
 import { FullNestedStack } from "full-stack-pattern";
 
-import { getConfig } from "@codeified/config";
-import { serverlessProps } from "@codeified/serverless";
-import { FRONTEND_SRC_DIR } from "@codeified/frontend";
+import { getConfig } from "@recipe-builder/config";
+import { serverlessProps } from "@recipe-builder/serverless";
+import { FRONTEND_SRC_DIR } from "@recipe-builder/frontend";
 
 const app = new App();
 

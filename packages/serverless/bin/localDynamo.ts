@@ -1,7 +1,7 @@
 import { homedir } from "os";
 import { resolve } from "path";
 import { configureInstaller, launch, stop } from "dynamodb-local";
-import { exec } from "@codeified/utils";
+import { exec } from "@recipe-builder/utils";
 
 const DYNAMODB_PORT = 8000;
 
