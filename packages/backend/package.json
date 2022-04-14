@@ -1,5 +1,5 @@
 {
-  "name": "@recipe-builder/serverless",
+  "name": "@recipe-builder/backend",
   "version": "0.0.1",
   "scripts": {
     "clean": "rm -rf dist",
