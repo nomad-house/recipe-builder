@@ -10,6 +10,7 @@
     "ts": "npm run node -- -r ts-node/register"
   },
   "devDependencies": {
+    "@types/validator": "^13.7.2",
     "aws-sdk": "^2.1113.0",
     "dotenv": "^10.0.0"
   },
@@ -25,6 +26,7 @@
     "@typedorm/common": "^1.14.10",
     "@typedorm/core": "^1.14.10",
     "class-validator": "^0.13.2",
+    "graphql": "^15.8.0",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1"
   }
