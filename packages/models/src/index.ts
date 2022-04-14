@@ -1,6 +1,4 @@
-import { Repository } from "./Repository";
+import "reflect-metadata";
 
-import { Recipe } from "./Recipe";
-export { Recipe };
-
-export const Recipes = new Repository(Recipe);
+export { Recipe } from "./Recipe/Recipe";
+export { Recipes } from "./Recipe/Recipes";

@@ -10,20 +10,15 @@
     "build:ts": "tsc",
     "build:layer": "npm run ts bin/buildLayer",
     "node": "node",
-    "ts": "npm run node -- -r ts-node/register",
-    "neo4j:start": "~/.neo4j/bin/neo4j start",
-    "neo4j:stop": "~/.neo4j/bin/neo4j stop"
+    "ts": "npm run node -- -r ts-node/register"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.44.0",
-    "slate": "^0.70.0"
+    "apollo-server-express": "^3.6.7",
+    "express": "^4.17.3",
+    "graphql": "^16.3.0",
+    "type-graphql": "^1.1.1"
   },
-  "devDependencies": {
-    "@aws-cdk/core": "1.134.0",
-    "@types/aws-lambda": "^8.10.76",
-    "dynamodb-local": "^0.0.31",
-    "full-stack-pattern": "^2.0.3"
-  },
+  "devDependencies": {},
   "description": "codeified",
   "license": "MIT",
   "main": "dist/src/index.js",

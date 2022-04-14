@@ -19,5 +19,8 @@
   "files": [
     "dist"
   ],
-  "private": true
+  "private": true,
+  "dependencies": {
+    "full-stack-pattern": "^2.0.4"
+  }
 }
