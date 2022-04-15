@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { Repository } from "../Repository";
 import { Recipe } from "./Recipe";
 

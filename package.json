@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "npm run clean --workspaces",
     "dev": "run-p dev:*",
-    "dev:serverless": "npm run dev --workspace=@recipe-builder/serverless",
+    "dev:backend": "npm run dev --workspace=@recipe-builder/backend --workspace=@recipe-builder/models",
     "dev:frontend": "npm run dev  --workspace=@recipe-builder/frontend",
     "dev:contracts": "npm run dev --workspace=@recipe-builder/contracts",
     "build": "npm run build --workspaces",
@@ -23,14 +23,20 @@
     "packages/models",
     "packages/config",
     "packages/contracts",
-    "packages/serverless",
+    "packages/backend",
     "packages/frontend",
     "packages/infrastructure"
   ],
   "private": true,
+  "dependencies": {
+    "graphql": "^15.8.0",
+    "type-graphql": "^1.1.1"
+  },
   "devDependencies": {
+    "@types/node": "^17.0.24",
     "npm-run-all": "^4.1.5",
     "ts-node": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "ts-node-dev": "^1.1.8"
   }
 }
