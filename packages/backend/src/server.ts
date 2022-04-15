@@ -5,7 +5,9 @@ import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 
 import { getSchema } from "./schema";
 
-(async function startServer() {
+const PORT = parseInt(process.env.PORT ?? "3001");
+
+async function startServer(port: number) {
   const app = express();
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
@@ -14,6 +16,8 @@ import { getSchema } from "./schema";
   });
   await server.start();
   server.applyMiddleware({ app });
-  await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
+  await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
-})();
+}
+
+startServer(PORT);
