@@ -12,12 +12,13 @@ async function startServer(port: number) {
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
     schema: await getSchema(),
+    introspection: true,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
   });
   await server.start();
   server.applyMiddleware({ app });
   await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
 }
 
 startServer(PORT);
