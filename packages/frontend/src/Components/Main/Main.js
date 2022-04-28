@@ -4,15 +4,6 @@ import Data from "../../data/recipedata.json";
 
 export default function Main() {
   return (
-    // Container
-    // img
-
-    // img
-    // Category? Author?
-    // Title
-
-    // Prep Time
-    // Container
     <div className="Main__container">
       {Data.map((recipe) => (       
         <div className="Recipe__container" key={recipe.id}>
