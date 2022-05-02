@@ -1,7 +1,10 @@
 import React from 'react'
+import "./recipeImage.css";
 
-export default function RecipeImage(props) {
+function RecipeImage({image, recipeName}) {
   return (
-    <img className="Recipe__icon" src={props.image} alt={props.recipeName} />
+    <img className='Recipe__icon' src={image} alt={recipeName} />
   )
 }
+
+export default RecipeImage

@@ -1,0 +1,14 @@
+.Recipe__prepTime {
+    margin-top: .2rem;
+  }
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+  }
