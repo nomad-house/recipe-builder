@@ -1,14 +1,18 @@
 .Recipe__prepTime {
-    margin-top: .2rem;
-  }
+  margin-top: 0.2rem;
+}
 .row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-  .column {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
-    flex: 1;
-  }
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+.Recipe__Category--font-family {
+  font-family: Roboto, Helvetica, sans-serif;
+  color: #ca7c54;
+}
