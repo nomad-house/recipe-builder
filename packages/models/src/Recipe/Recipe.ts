@@ -4,24 +4,26 @@ import { Field, ID, ObjectType, Resolver } from "type-graphql";
 // import { Entity, AutoGenerateAttribute, AUTO_GENERATE_ATTRIBUTE_STRATEGY } from "@typedorm/common";
 // import { Repository } from "../Repository";
 
-// @ObjectType()
-// class Ingredient {
-//   id!: string;
-// }
+@ObjectType()
+class Ingredient {
+  @Field()
+  id!: string;
+}
 
-// @ObjectType()
-// class Step {
-//   id!: string;
-// }
+@ObjectType()
+class Step {
+  @Field()
+  id!: string;
+}
 
-// @ObjectType()
-// class RecipeVersion {
-//   @Field(() => [Ingredient])
-//   ingredients!: Ingredient[];
+@ObjectType()
+class RecipeVersion {
+  @Field(() => [Ingredient])
+  ingredients!: Ingredient[];
 
-//   @Field(() => [Step])
-//   steps!: Step[];
-// }
+  @Field(() => [Step])
+  steps!: Step[];
+}
 
 @ObjectType()
 // @Entity({
@@ -32,15 +34,15 @@ import { Field, ID, ObjectType, Resolver } from "type-graphql";
 //   }
 // })
 export class Recipe {
-  // @AutoGenerateAttribute({
-  //   strategy: AUTO_GENERATE_ATTRIBUTE_STRATEGY.EPOCH_DATE
-  // })
-  // @IsString()
-  @Field(() => ID)
+  @AutoGenerateAttribute({
+    strategy: AUTO_GENERATE_ATTRIBUTE_STRATEGY.EPOCH_DATE
+  })
+  @IsString()
+  @Field()
   id!: string;
 
-  // @Field(() => RecipeVersion)
-  // versions!: RecipeVersion[];
+  @Field(() => RecipeVersion)
+  versions!: RecipeVersion[];
 
   // get ingredients() {
   //   return this.versions[0].ingredients;
@@ -50,6 +52,3 @@ export class Recipe {
   //   return this.versions[0].steps;
   // }
 }
-
-@Resolver(Recipe)
-class RecipeResolver {}

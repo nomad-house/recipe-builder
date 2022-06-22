@@ -4,11 +4,16 @@ import { Recipe } from "./Recipe";
 @Resolver(Recipe)
 export class RecipeResolver {
   @Query(() => [Recipe])
-  async listRecipes() {
+  async ListRecipes(): Promise<Recipe[]> {
     return [
       {
         id: "1",
-        versions: []
+        versions: [
+          {
+            ingredients: [{ id: "ingredient1" }, { id: "ingredient2" }],
+            steps: [{ id: "step1" }, { id: "step2" }]
+          }
+        ]
       }
     ];
   }

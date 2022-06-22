@@ -12,7 +12,6 @@ async function startServer(port: number) {
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
     schema: await getSchema(),
-    introspection: true,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
   });
   await server.start();
