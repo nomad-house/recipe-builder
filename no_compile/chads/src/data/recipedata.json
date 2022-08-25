@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "Example",
+        "image": "https://www.ikea.com/us/en/images/products/ribba-frame-black__0638340_pe698864_s5.jpg",
+        "category": "Category",
+        "prepTime": 0
+    },
+    {
+        "id": 2,
+        "name": "Broccoli",
+        "image": "https://solidstarts.com/wp-content/uploads/Broccoli_edited-scaled.jpg",
+        "category": "Vegetable",
+        "prepTime": 5
+    },
+    {
+        "id": 3,
+        "name": "Cheddar",
+        "image": "https://www.culturesforhealth.com/learn/wp-content/uploads/2016/04/Homemade-Cheddar-Cheese-header-1200x900.jpg",
+        "category": "Dairy",
+        "prepTime": 10
+    }
+]
